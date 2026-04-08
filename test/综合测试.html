@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>综合测试 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 模块选项卡 */
+        .module-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--dark);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .tab-btn:hover {
+            color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* 章节测试 */
+        .test-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .test-item {
+            padding: 1.2rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .test-item:hover {
+            background: #f5f9ff;
+        }
+        
+        .test-item:last-child {
+            border-bottom: none;
+        }
+        
+        .test-icon {
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .test-content {
+            flex-grow: 1;
+        }
+        
+        .test-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .test-content p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .test-meta span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .test-meta i {
+            margin-right: 5px;
+        }
+        
+        .test-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .btn-test {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .btn-test i {
+            margin-right: 5px;
+        }
+        
+        .btn-start {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-start:hover {
+            background: #27ae60;
+        }
+        
+        .btn-preview {
+            background: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-preview:hover {
+            background: #dde4e6;
+        }
+        
+        /* 测试统计 */
+        .test-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-text {
+            color: #666;
+        }
+        
+        /* 测试进度 */
+        .progress-container {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .progress-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .progress-title i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .progress-bar-container {
+            background: white;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 特色测试 */
+        .featured-tests {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .featured-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .featured-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .featured-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .featured-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .featured-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .featured-content {
+            padding: 1.5rem;
+        }
+        
+        .featured-content p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .featured-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .featured-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .featured-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .featured-list i {
+            margin-right: 10px;
+            color: var(--success);
+        }
+        
+        .btn-featured {
+            display: block;
+            text-align: center;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-featured:hover {
+            background: #c0392b;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .test-categories, .featured-tests, .test-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .test-actions {
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .btn-test {
+                flex-grow: 1;
+                justify-content: center;
+            }
+        }
+        
+        /* 测试弹窗 */
+        .test-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+        }
+        
+        .question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .options {
+            list-style: none;
+        }
+        
+        .option {
+            margin-bottom: 0.5rem;
+            padding: 0.8rem;
+            background: var(--light);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .option:hover {
+            background: #dfe6e9;
+        }
+        
+        .option.selected {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .submit-test {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1.5rem;
+        }
+        
+        .submit-test:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="../learning/课程学习.html">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html" class="active">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>综合测试中心</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li>综合测试</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 测试统计 -->
+        <section class="content-section">
+            <h2><i class="fas fa-chart-line"></i> 测试概览</h2>
+            <p>通过测试检验您的网页设计与制作知识掌握程度</p>
+            
+            <div class="test-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-text">模块测试</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="stat-number">8</div>
+                    <div class="stat-text">必修模块</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-number">4</div>
+                    <div class="stat-text">选修模块</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-number">150+</div>
+                    <div class="stat-text">测试题目</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <h3 class="progress-title"><i class="fas fa-tasks"></i> 整体学习进度</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 65%"></div>
+                </div>
+                <div class="progress-info">
+                    <span>已完成: 65%</span>
+                    <span>剩余: 35%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 模块选项卡 -->
+        <section class="content-section">
+            <h2><i class="fas fa-file-alt"></i> 模块测试</h2>
+            <p>按课程模块进行知识测试</p>
+            
+            <div class="module-tabs">
+                <button class="tab-btn active" data-tab="basic">必修模块测试</button>
+                <button class="tab-btn" data-tab="advanced">选修模块测试</button>
+            </div>
+            
+            <!-- 必修模块测试 -->
+            <div class="tab-content active" id="basic">
+                <ul class="test-list">
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块1 网页设计与制作基础 - 基础测试</h3>
+                            <p>网页基本概念、开发环境搭建、第一个HTML页面</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 15题</span>
+                                <span><i class="fas fa-clock"></i> 20分钟</span>
+                                <span><i class="fas fa-star"></i> 初级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块1测试.html" class="btn-test btn-start" data-test="module1"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块2 HTML网页元素 - 综合测试</h3>
+                            <p>HTML5语法、文本标签、图像标签、列表标签、超链接标签、结构标签</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 20题</span>
+                                <span><i class="fas fa-clock"></i> 30分钟</span>
+                                <span><i class="fas fa-star"></i> 中级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块2测试.html" class="btn-test btn-start" data-test="module2"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块3 CSS3基础知识 - 样式应用测试</h3>
+                            <p>CSS3语法基础、文本样式属性、初级选择器、优先级规则</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 18题</span>
+                                <span><i class="fas fa-clock"></i> 25分钟</span>
+                                <span><i class="fas fa-star"></i> 中级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块3测试.html" class="btn-test btn-start" data-test="module3"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块4 CSS3盒子模型 - 布局基础测试</h3>
+                            <p>盒子模型概念、属性、元素类型及转换、综合应用</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 15题</span>
+                                <span><i class="fas fa-clock"></i> 20分钟</span>
+                                <span><i class="fas fa-star"></i> 中级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块4测试.html" class="btn-test btn-start" data-test="module4"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块5 网页布局 - 布局技巧测试</h3>
+                            <p>浮动布局、定位布局、布局类型、综合应用</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 15题</span>
+                                <span><i class="fas fa-clock"></i> 20分钟</span>
+                                <span><i class="fas fa-star"></i> 中级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块5测试.html" class="btn-test btn-start" data-test="module5"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块6 表格与表单 - 交互元素测试</h3>
+                            <p>超链接与列表样式、表格标记及美化、表单标记及美化</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 15题</span>
+                                <span><i class="fas fa-clock"></i> 20分钟</span>
+                                <span><i class="fas fa-star"></i> 中级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块6测试.html" class="btn-test btn-start" data-test="module6"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块7 多媒体嵌入 - 媒体应用测试</h3>
+                            <p>音视频嵌入方法、呈现效果设置、多媒体控件样式定制</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 12题</span>
+                                <span><i class="fas fa-clock"></i> 15分钟</span>
+                                <span><i class="fas fa-star"></i> 中级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块7测试.html" class="btn-test btn-start" data-test="module7"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块8 综合项目实训 - 综合应用测试</h3>
+                            <p>网站开发全流程、HTML5+CSS3综合应用、项目文档撰写</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 25题</span>
+                                <span><i class="fas fa-clock"></i> 40分钟</span>
+                                <span><i class="fas fa-star"></i> 高级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块8测试.html" class="btn-test btn-start" data-test="module8"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 选修模块测试 -->
+            <div class="tab-content" id="advanced">
+                <ul class="test-list">
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块9 CSS3的高级技巧 - 进阶样式测试</h3>
+                            <p>高级选择器、CSS3新属性应用、界面视觉效果优化</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 15题</span>
+                                <span><i class="fas fa-clock"></i> 20分钟</span>
+                                <span><i class="fas fa-star"></i> 高级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块9测试.html" class="btn-test btn-start" data-test="module9"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块10 过渡、变形和动画 - 动态效果测试</h3>
+                            <p>CSS过渡效果、2D/3D变形效果、高级动画技术</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 15题</span>
+                                <span><i class="fas fa-clock"></i> 20分钟</span>
+                                <span><i class="fas fa-star"></i> 高级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块10测试.html" class="btn-test btn-start" data-test="module10"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块11 网页设计素养 - 设计原理测试</h3>
+                            <p>设计原则、色彩搭配、页面排版、用户中心设计思想</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 12题</span>
+                                <span><i class="fas fa-clock"></i> 15分钟</span>
+                                <span><i class="fas fa-star"></i> 中级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块11测试.html" class="btn-test btn-start" data-test="module11"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                    
+                    <li class="test-item">
+                        <div class="test-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="test-content">
+                            <h3>模块12 AI辅助网页开发 - 智能工具测试</h3>
+                            <p>AI工具应用场景、网页结构与样式生成、布局与效果优化</p>
+                            <div class="test-meta">
+                                <span><i class="fas fa-question-circle"></i> 10题</span>
+                                <span><i class="fas fa-clock"></i> 15分钟</span>
+                                <span><i class="fas fa-star"></i> 中级</span>
+                            </div>
+                        </div>
+                        <div class="test-actions">
+                            <a href="模块12测试.html" class="btn-test btn-start" data-test="module12"><i class="fas fa-play"></i> 开始测试</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 测试成绩 -->
+        <section class="content-section">
+            <h2><i class="fas fa-chart-bar"></i> 测试成绩</h2>
+            <p>查看您的测试成绩和学习进度</p>
+            
+            <div class="progress-container">
+                <h3 class="progress-title"><i class="fas fa-check-circle"></i> 平均正确率</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 78%"></div>
+                </div>
+                <div class="progress-info">
+                    <span>正确率: 78%</span>
+                    <span>已完成测试: 8/12</span>
+                </div>
+            </div>
+            
+            <ul class="test-list">
+                <li class="test-item">
+                    <div class="test-icon">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                    </div>
+                    <div class="test-content">
+                        <h3>模块1测试 - 优秀</h3>
+                        <p>网页基本概念、开发环境搭建、第一个HTML页面</p>
+                        <div class="test-meta">
+                            <span><i class="fas fa-percentage"></i> 正确率: 92%</span>
+                            <span><i class="fas fa-clock"></i> 完成时间: 15分钟</span>
+                            <span><i class="fas fa-calendar"></i> 日期: 2023-10-15</span>
+                        </div>
+                    </div>
+                    <div class="test-actions">
+                        <a href="#" class="btn-test btn-preview"><i class="fas fa-eye"></i> 查看详情</a>
+                    </div>
+                </li>
+                
+                <li class="test-item">
+                    <div class="test-icon">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                    </div>
+                    <div class="test-content">
+                        <h3>模块2测试 - 良好</h3>
+                        <p>HTML5语法、文本标签、图像标签、列表标签、超链接标签、结构标签</p>
+                        <div class="test-meta">
+                            <span><i class="fas fa-percentage"></i> 正确率: 85%</span>
+                            <span><i class="fas fa-clock"></i> 完成时间: 25分钟</span>
+                            <span><i class="fas fa-calendar"></i> 日期: 2023-10-20</span>
+                        </div>
+                    </div>
+                    <div class="test-actions">
+                        <a href="#" class="btn-test btn-preview"><i class="fas fa-eye"></i> 查看详情</a>
+                    </div>
+                </li>
+                
+                <li class="test-item">
+                    <div class="test-icon">
+                        <i class="fas fa-check-circle" style="color: var(--warning);"></i>
+                    </div>
+                    <div class="test-content">
+                        <h3>模块3测试 - 需改进</h3>
+                        <p>CSS3语法基础、文本样式属性、初级选择器、优先级规则</p>
+                        <div class="test-meta">
+                            <span><i class="fas fa-percentage"></i> 正确率: 65%</span>
+                            <span><i class="fas fa-clock"></i> 完成时间: 22分钟</span>
+                            <span><i class="fas fa-calendar"></i> 日期: 2023-10-25</span>
+                        </div>
+                    </div>
+                    <div class="test-actions">
+                        <a href="#" class="btn-test btn-preview"><i class="fas fa-eye"></i> 查看详情</a>
+                        <a href="#" class="btn-test btn-start"><i class="fas fa-redo"></i> 重新测试</a>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- 测试弹窗 -->
+    <div class="test-modal" id="testModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2><i class="fas fa-file-alt"></i> 模块1测试</h2>
+            
+            <div class="question">
+                <p class="question-text">1. 以下哪个是网页的根标签？</p>
+                <ul class="options">
+                    <li class="option">A. &lt;head&gt;</li>
+                    <li class="option">B. &lt;body&gt;</li>
+                    <li class="option">C. &lt;html&gt;</li>
+                    <li class="option">D. &lt;DOCTYPE&gt;</li>
+                </ul>
+            </div>
+            
+            <div class="question">
+                <p class="question-text">2. 在HTML中，用于定义网页字符编码的meta标签属性是？</p>
+                <ul class="options">
+                    <li class="option">A. name="charset"</li>
+                    <li class="option">B. charset="UTF-8"</li>
+                    <li class="option">C. type="text/html"</li>
+                    <li class="option">D. encoding="UTF-8"</li>
+                </ul>
+            </div>
+            
+            <div class="question">
+                <p class="question-text">3. CSS样式应该写在哪个标签内？</p>
+                <ul class="options">
+                    <li class="option">A. &lt;script&gt;</li>
+                    <li class="option">B. &lt;style&gt;</li>
+                    <li class="option">C. &lt;css&gt;</li>
+                    <li class="option">D. &lt;link&gt;</li>
+                </ul>
+            </div>
+            
+            <button class="submit-test">提交答案</button>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 选项卡切换功能
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // 添加active类到当前按钮和对应内容
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 测试弹窗功能
+        // 只保留弹窗相关代码，移除“开始测试”按钮阻止跳转的代码
+        const testModal = document.getElementById('testModal');
+        const closeModal = document.getElementById('closeModal');
+        const options = document.querySelectorAll('.option');
+        const submitTest = document.querySelector('.submit-test');
+        
+        closeModal.addEventListener('click', () => {
+            testModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === testModal) {
+                testModal.style.display = 'none';
+            }
+        });
+        
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                // 移除所有选项的selected类
+                option.parentNode.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                // 为当前选项添加selected类
+                option.classList.add('selected');
+            });
+        });
+        
+        submitTest.addEventListener('click', () => {
+            alert('测试已提交！');
+            testModal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

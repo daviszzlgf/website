@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块12测试 - AI辅助网页开发工具</title>
+    <link rel="stylesheet" href="css/all.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 测试说明 */
+        .test-info {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .test-info h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .test-info ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .test-info li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .test-info i {
+            color: var(--secondary);
+            margin-right: 10px;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 题目区域 */
+        .question-section {
+            margin-bottom: 2rem;
+        }
+        
+        .question-type {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-type i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .question {
+            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            border-radius: 8px;
+            background: var(--light);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .question-title span {
+            color: var(--secondary);
+            margin-right: 5px;
+        }
+        
+        .options {
+            list-style: none;
+        }
+        
+        .option {
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid #ddd;
+        }
+        
+        .option:hover {
+            background: #f0f7ff;
+            border-color: var(--secondary);
+        }
+        
+        .option.selected {
+            background: #e3f2fd;
+            border-color: var(--secondary);
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        /* 判断题样式 */
+        .true-false-options {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .tf-option {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid #ddd;
+            font-weight: 500;
+        }
+        
+        .tf-option.selected-true {
+            background: #e8f5e9;
+            border-color: var(--success);
+            color: var(--success);
+        }
+        
+        .tf-option.selected-false {
+            background: #ffebee;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* 按钮区域 */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-submit {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            background: #27ae60;
+        }
+        
+        .btn-reset {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            background: #e67e22;
+        }
+        
+        /* 结果区域 */
+        .result-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .result-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .result-message {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .result-details {
+            margin-top: 2rem;
+        }
+        
+        .result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .result-correct .result-icon {
+            background: var(--success);
+            color: white;
+        }
+        
+        .result-incorrect .result-icon {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .true-false-options {
+                flex-direction: column;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="../learning/课程学习.html">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块12：AI辅助网页开发工具测试</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../test/综合测试.html">综合测试</a></li>
+                <li>模块12测试</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 测试说明 -->
+        <section class="test-info">
+            <h2><i class="fas fa-info-circle"></i> 测试说明</h2>
+            <p>本模块测试涵盖《模块12：AI辅助网页开发工具》中的所有知识点，包括AI工具分类、Prompt设计原则、代码生成与优化、调试技巧等。</p>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> 选择题：10题，每题5分</li>
+                <li><i class="fas fa-check-circle"></i> 判断题：10题，每题5分</li>
+                <li><i class="fas fa-check-circle"></i> 总分：100分</li>
+                <li><i class="fas fa-check-circle"></i> 建议完成时间：30分钟</li>
+            </ul>
+        </section>
+
+        <!-- 选择题部分 -->
+        <section class="content-section">
+            <h2><i class="fas fa-question-circle"></i> 选择题</h2>
+            <p>请选择正确的答案，每题只有一个正确答案。</p>
+            
+            <div class="question-section">
+                <h3 class="question-type"><i class="fas fa-list-ol"></i> 一、选择题（共10题，每题5分）</h3>
+                
+                <!-- 选择题1 -->
+                <div class="question" data-correct="B" data-type="choice">
+                    <div class="question-title"><span>1.</span> 以下哪个工具适合实时辅助编码？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q1" id="q1_a" value="A">
+                            <label for="q1_a">A. ChatGPT</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q1" id="q1_b" value="B">
+                            <label for="q1_b">B. GitHub Copilot</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q1" id="q1_c" value="C">
+                            <label for="q1_c">C. Figma AI</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q1" id="q1_d" value="D">
+                            <label for="q1_d">D. MidJourney</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 选择题2 -->
+                <div class="question" data-correct="C" data-type="choice">
+                    <div class="question-title"><span>2.</span> 以下哪项不是Prompt设计的核心原则？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q2" id="q2_a" value="A">
+                            <label for="q2_a">A. 清晰性</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q2" id="q2_b" value="B">
+                            <label for="q2_b">B. 具体性</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q2" id="q2_c" value="C">
+                            <label for="q2_c">C. 模糊性</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q2" id="q2_d" value="D">
+                            <label for="q2_d">D. 上下文</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 选择题3 -->
+                <div class="question" data-correct="B" data-type="choice">
+                    <div class="question-title"><span>3.</span> 哪个功能允许GitHub Copilot根据自然语言指令自动规划并执行复杂开发任务？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q3" id="q3_a" value="A">
+                            <label for="q3_a">A. 内联聊天</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q3" id="q3_b" value="B">
+                            <label for="q3_b">B. 代理模式</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q3" id="q3_c" value="C">
+                            <label for="q3_c">C. 智能操作</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q3" id="q3_d" value="D">
+                            <label for="q3_d">D. 代码补全</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 选择题4 -->
+                <div class="question" data-correct="C" data-type="choice">
+                    <div class="question-title"><span>4.</span> 以下哪个工具可以将设计稿（如Figma）转为HTML/CSS？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q4" id="q4_a" value="A">
+                            <label for="q4_a">A. GitHub Copilot</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q4" id="q4_b" value="B">
+                            <label for="q4_b">B. ChatGPT</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q4" id="q4_c" value="C">
+                            <label for="q4_c">C. Figma AI / Magicul</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q4" id="q4_d" value="D">
+                            <label for="q4_d">D. CodeGuru</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 选择题5 -->
+                <div class="question" data-correct="A" data-type="choice">
+                    <div class="question-title"><span>5.</span> 在生成响应式导航栏时，以下哪项技术最常用？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q5" id="q5_a" value="A">
+                            <label for="q5_a">A. Flex + Media Query</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q5" id="q5_b" value="B">
+                            <label for="q5_b">B. 仅使用Grid</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q5" id="q5_c" value="C">
+                            <label for="q5_c">C. Float布局</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q5" id="q5_d" value="D">
+                            <label for="q5_d">D. Position绝对定位</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 选择题6 -->
+                <div class="question" data-correct="B" data-type="choice">
+                    <div class="question-title"><span>6.</span> 关于AI生成代码，下列哪项是需要人工审核的主要原因？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q6" id="q6_a" value="A">
+                            <label for="q6_a">A. 代码过于简洁</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q6" id="q6_b" value="B">
+                            <label for="q6_b">B. 可能存在兼容性问题</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q6" id="q6_c" value="C">
+                            <label for="q6_c">C. AI一定生成完美代码</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q6" id="q6_d" value="D">
+                            <label for="q6_d">D. 生成速度太慢</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 选择题7 -->
+                <div class="question" data-correct="B" data-type="choice">
+                    <div class="question-title"><span>7.</span> 哪个Prompt示例最有可能生成语义化HTML？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q7" id="q7_a" value="A">
+                            <label for="q7_a">A. "做一个导航"</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q7" id="q7_b" value="B">
+                            <label for="q7_b">B. "生成博客页面，使用header、main、article等标签"</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q7" id="q7_c" value="C">
+                            <label for="q7_c">C. "写个div"</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q7" id="q7_d" value="D">
+                            <label for="q7_d">D. "红色按钮"</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 选择题8 -->
+                <div class="question" data-correct="A" data-type="choice">
+                    <div class="question-title"><span>8.</span> 想要简化冗余CSS代码，应该使用什么Prompt？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q8" id="q8_a" value="A">
+                            <label for="q8_a">A. "优化这段CSS，合并重复规则"</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q8" id="q8_b" value="B">
+                            <label for="q8_b">B. "添加更多样式"</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q8" id="q8_c" value="C">
+                            <label for="q8_c">C. "解释代码"</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q8" id="q8_d" value="D">
+                            <label for="q8_d">D. "转为LESS"</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 选择题9 -->
+                <div class="question" data-correct="B" data-type="choice">
+                    <div class="question-title"><span>9.</span> 在移动端适配中，通常使用哪个媒体查询特性？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q9" id="q9_a" value="A">
+                            <label for="q9_a">A. max-device-width</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q9" id="q9_b" value="B">
+                            <label for="q9_b">B. max-width</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q9" id="q9_c" value="C">
+                            <label for="q9_c">C. orientation</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q9" id="q9_d" value="D">
+                            <label for="q9_d">D. resolution</label>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 选择题10 -->
+                <div class="question" data-correct="B" data-type="choice">
+                    <div class="question-title"><span>10.</span> 关于AI辅助调试，以下哪个说法正确？</div>
+                    <ul class="options">
+                        <li class="option">
+                            <input type="radio" name="q10" id="q10_a" value="A">
+                            <label for="q10_a">A. AI可以完美修复所有错误</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q10" id="q10_b" value="B">
+                            <label for="q10_b">B. AI可以分析问题并提供修复建议</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q10" id="q10_c" value="C">
+                            <label for="q10_c">C. 使用AI后不需要人工验证</label>
+                        </li>
+                        <li class="option">
+                            <input type="radio" name="q10" id="q10_d" value="D">
+                            <label for="q10_d">D. AI不能理解代码逻辑</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 判断题部分 -->
+        <section class="content-section">
+            <h2><i class="fas fa-check-circle"></i> 判断题</h2>
+            <p>判断下列说法的对错，正确的选"对"，错误的选"错"。</p>
+            
+            <div class="question-section">
+                <h3 class="question-type"><i class="fas fa-balance-scale"></i> 二、判断题（共10题，每题5分）</h3>
+                
+                <!-- 判断题1 -->
+                <div class="question" data-correct="false" data-type="true-false">
+                    <div class="question-title"><span>1.</span> GitHub Copilot只能进行代码补全，不能与开发者聊天交互。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+                
+                <!-- 判断题2 -->
+                <div class="question" data-correct="true" data-type="true-false">
+                    <div class="question-title"><span>2.</span> Prompt设计得越具体，AI生成的代码质量可能越高。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+                
+                <!-- 判断题3 -->
+                <div class="question" data-correct="false" data-type="true-false">
+                    <div class="question-title"><span>3.</span> AI生成的代码无需检查兼容性，可以直接用于生产环境。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+                
+                <!-- 判断题4 -->
+                <div class="question" data-correct="false" data-type="true-false">
+                    <div class="question-title"><span>4.</span> 响应式布局只需要在CSS中设置像素宽度即可适应所有设备。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+                
+                <!-- 判断题5 -->
+                <div class="question" data-correct="true" data-type="true-false">
+                    <div class="question-title"><span>5.</span> 语义化HTML有利于SEO和可访问性。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+                
+                <!-- 判断题6 -->
+                <div class="question" data-correct="false" data-type="true-false">
+                    <div class="question-title"><span>6.</span> 使用AI工具可以完全替代人工开发，实现全自动编程。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+                
+                <!-- 判断题7 -->
+                <div class="question" data-correct="true" data-type="true-false">
+                    <div class="question-title"><span>7.</span> GitHub Copilot的代理模式允许根据自然语言指令跨文件协调修改。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+                
+                <!-- 判断题8 -->
+                <div class="question" data-correct="false" data-type="true-false">
+                    <div class="question-title"><span>8.</span> CSS代码存在一些冗余不会影响页面性能，因此无需优化。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+                
+                <!-- 判断题9 -->
+                <div class="question" data-correct="true" data-type="true-false">
+                    <div class="question-title"><span>9.</span> 在设计Prompt时提供详细的上下文有助于生成更准确的代码。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+                
+                <!-- 判断题10 -->
+                <div class="question" data-correct="false" data-type="true-false">
+                    <div class="question-title"><span>10.</span> 所有AI工具（如ChatGPT、Copilot）生成的代码风格和逻辑完全一致。</div>
+                    <div class="true-false-options">
+                        <div class="tf-option" data-value="true">对</div>
+                        <div class="tf-option" data-value="false">错</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 按钮区域 -->
+        <div class="button-group">
+            <button class="btn btn-submit" id="submitTest">
+                <i class="fas fa-paper-plane"></i> 提交测试
+            </button>
+            <button class="btn btn-reset" id="resetTest">
+                <i class="fas fa-redo"></i> 重置答案
+            </button>
+        </div>
+
+        <!-- 结果区域 -->
+        <section class="result-section" id="resultSection">
+            <div class="result-header">
+                <h2><i class="fas fa-award"></i> 测试结果</h2>
+                <div class="result-score" id="finalScore">0</div>
+                <p class="result-message" id="resultMessage">您的测试结果将显示在这里</p>
+            </div>
+            
+            <div class="result-details" id="resultDetails">
+                <!-- 结果详情将动态生成 -->
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 选择题交互逻辑
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.question');
+                const radio = this.querySelector('input[type="radio"]');
+                
+                // 选中当前选项
+                radio.checked = true;
+                
+                // 移除同一问题中其他选项的选中样式
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // 添加当前选项的选中样式
+                this.classList.add('selected');
+            });
+        });
+        
+        // 判断题交互逻辑
+        document.querySelectorAll('.tf-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.question');
+                const value = this.getAttribute('data-value');
+                
+                // 移除同一问题中其他选项的选中样式
+                question.querySelectorAll('.tf-option').forEach(opt => {
+                    opt.classList.remove('selected-true', 'selected-false');
+                });
+                
+                // 添加当前选项的选中样式
+                if (value === 'true') {
+                    this.classList.add('selected-true');
+                } else {
+                    this.classList.add('selected-false');
+                }
+                
+                // 存储用户的选择
+                this.setAttribute('data-selected', 'true');
+            });
+        });
+        
+        // 提交测试按钮逻辑
+        document.getElementById('submitTest').addEventListener('click', function() {
+            let score = 0;
+            let totalQuestions = 20; // 10个选择题 + 10个判断题
+            let correctAnswers = 0;
+            let resultDetailsHTML = '';
+            
+            // 检查所有选择题
+            document.querySelectorAll('.question[data-type="choice"]').forEach((question, index) => {
+                const questionNumber = index + 1;
+                const correctAnswer = question.getAttribute('data-correct');
+                const selectedOption = question.querySelector('input[type="radio"]:checked');
+                let isCorrect = false;
+                
+                if (selectedOption && selectedOption.value === correctAnswer) {
+                    score += 5;
+                    correctAnswers++;
+                    isCorrect = true;
+                }
+                
+                // 构建结果详情
+                resultDetailsHTML += `
+                    <div class="result-item ${isCorrect ? 'result-correct' : 'result-incorrect'}">
+                        <div class="result-icon">
+                            ${isCorrect ? '✓' : '✗'}
+                        </div>
+                        <div>
+                            <strong>第${questionNumber}题（选择题）</strong><br>
+                            <span>您的答案：${selectedOption ? selectedOption.value : '未作答'}</span><br>
+                            <span>正确答案：${correctAnswer}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // 检查所有判断题
+            document.querySelectorAll('.question[data-type="true-false"]').forEach((question, index) => {
+                const questionNumber = index + 1 + 10; // 判断题从第11题开始
+                const correctAnswer = question.getAttribute('data-correct');
+                const selectedOption = question.querySelector('.tf-option[data-selected="true"]');
+                let userAnswer = '';
+                let isCorrect = false;
+                
+                if (selectedOption) {
+                    userAnswer = selectedOption.getAttribute('data-value');
+                    if (userAnswer === correctAnswer) {
+                        score += 5;
+                        correctAnswers++;
+                        isCorrect = true;
+                    }
+                }
+                
+                // 构建结果详情
+                resultDetailsHTML += `
+                    <div class="result-item ${isCorrect ? 'result-correct' : 'result-incorrect'}">
+                        <div class="result-icon">
+                            ${isCorrect ? '✓' : '✗'}
+                        </div>
+                        <div>
+                            <strong>第${questionNumber}题（判断题）</strong><br>
+                            <span>您的答案：${userAnswer ? (userAnswer === 'true' ? '对' : '错') : '未作答'}</span><br>
+                            <span>正确答案：${correctAnswer === 'true' ? '对' : '错'}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // 显示结果
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('resultDetails').innerHTML = resultDetailsHTML;
+            
+            // 根据分数显示不同的消息
+            let message = '';
+            if (score >= 90) {
+                message = '优秀！您对AI辅助开发工具的知识掌握得非常扎实！';
+            } else if (score >= 70) {
+                message = '良好！您已经掌握了大部分核心知识，但还有一些细节需要加强。';
+            } else if (score >= 60) {
+                message = '及格！您有基本了解，建议复习模块12的相关知识点。';
+            } else {
+                message = '需要加强！建议重新学习模块12的内容，打好AI辅助开发基础。';
+            }
+            
+            document.getElementById('resultMessage').textContent = `您答对了${correctAnswers}题，共${totalQuestions}题。${message}`;
+            
+            // 显示结果区域
+            document.getElementById('resultSection').style.display = 'block';
+            
+            // 滚动到结果区域
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // 重置测试按钮逻辑
+        document.getElementById('resetTest').addEventListener('click', function() {
+            // 重置所有选择题
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // 移除所有选项的选中样式
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // 重置所有判断题
+            document.querySelectorAll('.tf-option').forEach(option => {
+                option.classList.remove('selected-true', 'selected-false');
+                option.removeAttribute('data-selected');
+            });
+            
+            // 隐藏结果区域
+            document.getElementById('resultSection').style.display = 'none';
+            
+            // 滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

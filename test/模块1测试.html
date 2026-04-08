@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块1测试 - 网页设计与制作基础</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 测试说明 */
+        .test-info {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--secondary);
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .test-info .info-item {
+            text-align: center;
+            margin: 0 1rem;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .test-info .info-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-info .info-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 题目区域 */
+        .question-section {
+            margin-bottom: 2rem;
+        }
+        
+        .question-type {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-type i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .question {
+            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            border-radius: 8px;
+            background: var(--light);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .question-title span {
+            color: var(--secondary);
+            margin-right: 5px;
+        }
+        
+        .options {
+            list-style: none;
+        }
+        
+        .option {
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid #ddd;
+        }
+        
+        .option:hover {
+            background: #f0f7ff;
+            border-color: var(--secondary);
+        }
+        
+        .option.selected {
+            background: #e3f2fd;
+            border-color: var(--secondary);
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        /* 判断题样式 */
+        .true-false-options {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .tf-option {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid #ddd;
+            font-weight: 500;
+        }
+        
+        .tf-option:hover {
+            background: #f0f7ff;
+            border-color: var(--secondary);
+        }
+        
+        .tf-option.selected-true {
+            background: #e8f5e9;
+            border-color: var(--success);
+            color: var(--success);
+        }
+        
+        .tf-option.selected-false {
+            background: #ffebee;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* 按钮区域 */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-submit {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            background: #27ae60;
+        }
+        
+        .btn-reset {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            background: #e67e22;
+        }
+        
+        .btn-back {
+            background: var(--info);
+            color: white;
+        }
+        
+        .btn-back:hover {
+            background: #8e44ad;
+        }
+        
+        /* 结果区域 */
+        .result-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+        
+        .result-panel h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-panel h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .score-display {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        .score-text {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .result-details {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 8px;
+        }
+        
+        .result-details h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-question {
+            flex: 2;
+        }
+        
+        .result-status {
+            flex: 1;
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .correct-answer {
+            color: var(--success);
+        }
+        
+        .wrong-answer {
+            color: var(--accent);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .test-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .test-info .info-item {
+                margin-bottom: 1.5rem;
+            }
+            
+            .true-false-options {
+                flex-direction: column;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .result-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .result-status {
+                margin-top: 0.5rem;
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="../learning/课程学习.html">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 (依据模块1.doc修改) -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块1：网页设计与制作基础 - 综合测试</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../test/综合测试.html">综合测试</a></li>
+                <li>模块1测试</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 测试说明 (保留原数据) -->
+        <section class="test-info">
+            <div class="info-item">
+                <div class="info-value" id="total-questions">11</div>
+                <div class="info-label">题目总数</div>
+            </div>
+            <div class="info-item">
+                <div class="info-value" id="total-score">100</div>
+                <div class="info-label">满分</div>
+            </div>
+            <div class="info-item">
+                <div class="info-value" id="time-limit">20</div>
+                <div class="info-label">分钟</div>
+            </div>
+            <div class="info-item">
+                <div class="info-value">初级</div>
+                <div class="info-label">难度</div>
+            </div>
+        </section>
+
+        <!-- 题目区域 (题目内容依据模块1.doc调整) -->
+        <div id="testQuestions">
+            <!-- 选择题部分 -->
+            <section class="content-section">
+                <h2><i class="fas fa-question-circle"></i> 选择题</h2>
+                <p>请选择正确的答案，每题只有一个正确答案。</p>
+                
+                <div class="question-section">
+                    <h3 class="question-type"><i class="fas fa-list-ol"></i> 一、选择题（共5题，每题约9分）</h3>
+                    
+                    <!-- 第1题 (与doc一致，保留) -->
+                    <div class="question" data-correct="C" data-type="choice">
+                        <div class="question-title"><span>1.</span> 以下哪个选项是网页的根标签？</div>
+                        <ul class="options">
+                            <li class="option">
+                                <input type="radio" name="q1" id="q1_a" value="A">
+                                <label for="q1_a">A. &lt;head&gt;</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q1" id="q1_b" value="B">
+                                <label for="q1_b">B. &lt;body&gt;</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q1" id="q1_c" value="C">
+                                <label for="q1_c">C. &lt;html&gt;</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q1" id="q1_d" value="D">
+                                <label for="q1_d">D. &lt;DOCTYPE&gt;</label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 第2题：修正选项D为“由W3C组织标准化...” (依据doc) -->
+                    <div class="question" data-correct="A" data-type="choice">
+                        <div class="question-title"><span>2.</span> 以下哪项最准确地描述了CSS的"层叠性"这一核心特点？</div>
+                        <ul class="options">
+                            <li class="option">
+                                <input type="radio" name="q2" id="q2_a" value="A">
+                                <label for="q2_a">A. 允许样式继承和叠加，使得多个样式规则可以共同作用于同一元素</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q2" id="q2_b" value="B">
+                                <label for="q2_b">B. 能够完全取代HTML的样式功能，实现网页结构与表现的彻底分离</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q2" id="q2_c" value="C">
+                                <label for="q2_c">C. 只能静态地修饰页面，无法对元素进行动态样式控制</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q2" id="q2_d" value="D">
+                                <label for="q2_d">D. 由W3C组织标准化，确保所有浏览器对样式的解析完全一致</label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 第3题 (与doc一致) -->
+                    <div class="question" data-correct="B" data-type="choice">
+                        <div class="question-title"><span>3.</span> CSS样式应该写在哪个标签内？</div>
+                        <ul class="options">
+                            <li class="option">
+                                <input type="radio" name="q3" id="q3_a" value="A">
+                                <label for="q3_a">A. &lt;script&gt;</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q3" id="q3_b" value="B">
+                                <label for="q3_b">B. &lt;style&gt;</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q3" id="q3_c" value="C">
+                                <label for="q3_c">C. &lt;css&gt;</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q3" id="q3_d" value="D">
+                                <label for="q3_d">D. &lt;link&gt;</label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 第4题 (与doc一致) -->
+                    <div class="question" data-correct="B" data-type="choice">
+                        <div class="question-title"><span>4.</span> 以下哪个VS Code插件可以提供实时预览功能？</div>
+                        <ul class="options">
+                            <li class="option">
+                                <input type="radio" name="q4" id="q4_a" value="A">
+                                <label for="q4_a">A. Prettier</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q4" id="q4_b" value="B">
+                                <label for="q4_b">B. Live Server</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q4" id="q4_c" value="C">
+                                <label for="q4_c">C. Auto Rename Tag</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q4" id="q4_d" value="D">
+                                <label for="q4_d">D. HTML Hint</label>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 第5题 (与doc一致) -->
+                    <div class="question" data-correct="B" data-type="choice">
+                        <div class="question-title"><span>5.</span> URL 全称的正确解释是？</div>
+                        <ul class="options">
+                            <li class="option">
+                                <input type="radio" name="q5" id="q5_a" value="A">
+                                <label for="q5_a">A. 全球文件定位器</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q5" id="q5_b" value="B">
+                                <label for="q5_b">B. 统一资源定位符</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q5" id="q5_c" value="C">
+                                <label for="q5_c">C. 用户请求链接</label>
+                            </li>
+                            <li class="option">
+                                <input type="radio" name="q5" id="q5_d" value="D">
+                                <label for="q5_d">D. 超文本传输地址</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 判断题部分 (依据模块1.doc修正第6题题干) -->
+            <section class="content-section">
+                <h2><i class="fas fa-check-circle"></i> 判断题</h2>
+                <p>判断下列说法的对错，正确的选"对"，错误的选"错"。</p>
+                
+                <div class="question-section">
+                    <h3 class="question-type"><i class="fas fa-balance-scale"></i> 二、判断题（共6题，每题约9分）</h3>
+                    
+                    <!-- 第6题 (去掉“可以”，与doc一致) -->
+                    <div class="question" data-correct="true" data-type="true-false">
+                        <div class="question-title"><span>6.</span> HTML标签有一个或多个属性值。</div>
+                        <div class="true-false-options">
+                            <div class="tf-option" data-value="true">对</div>
+                            <div class="tf-option" data-value="false">错</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第7题 (与doc一致) -->
+                    <div class="question" data-correct="false" data-type="true-false">
+                        <div class="question-title"><span>7.</span> 有动态效果的网页就是动态网页。</div>
+                        <div class="true-false-options">
+                            <div class="tf-option" data-value="true">对</div>
+                            <div class="tf-option" data-value="false">错</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第8题 (与doc一致) -->
+                    <div class="question" data-correct="true" data-type="true-false">
+                        <div class="question-title"><span>8.</span> 域名是由一串用点分隔的名字组成的互联网上某一台计算机或计算机组的名称，用于在数据传输时对计算机的定位标识。</div>
+                        <div class="true-false-options">
+                            <div class="tf-option" data-value="true">对</div>
+                            <div class="tf-option" data-value="false">错</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第9题 (与doc一致) -->
+                    <div class="question" data-correct="false" data-type="true-false">
+                        <div class="question-title"><span>9.</span> HTML 是用于定义网页样式的语言。</div>
+                        <div class="true-false-options">
+                            <div class="tf-option" data-value="true">对</div>
+                            <div class="tf-option" data-value="false">错</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第10题 (与doc一致) -->
+                    <div class="question" data-correct="false" data-type="true-false">
+                        <div class="question-title"><span>10.</span> URL只能定位除本地计算机外的资源。</div>
+                        <div class="true-false-options">
+                            <div class="tf-option" data-value="true">对</div>
+                            <div class="tf-option" data-value="false">错</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第11题 (与doc一致) -->
+                    <div class="question" data-correct="true" data-type="true-false">
+                        <div class="question-title"><span>11.</span> CSS不仅可以静态地修饰网页，还可以配合各种脚本语言动态地对网页各元素进行格式化。</div>
+                        <div class="true-false-options">
+                            <div class="tf-option" data-value="true">对</div>
+                            <div class="tf-option" data-value="false">错</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 按钮区域 -->
+            <div class="button-group">
+                <button class="btn btn-submit" id="submitTest">
+                    <i class="fas fa-paper-plane"></i> 提交测试
+                </button>
+                <button class="btn btn-reset" id="resetTest">
+                    <i class="fas fa-redo"></i> 重置答案
+                </button>
+                <a href="../test/综合测试.html" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> 返回测试中心
+                </a>
+            </div>
+        </div>
+        
+        <!-- 结果区域 -->
+        <section class="result-panel" id="resultPanel">
+            <h2><i class="fas fa-chart-line"></i> 测试结果</h2>
+            <div class="score-display" id="finalScore">0</div>
+            <div class="score-text" id="scoreText">您在本次测试中获得了 <span id="scorePercent">0</span> 分</div>
+            <p style="text-align: center;">答对 <span id="correctCount" style="color: var(--success); font-weight: bold;">0</span> 题，答错 <span id="wrongCount" style="color: var(--accent); font-weight: bold;">0</span> 题，未答 <span id="unansweredCount" style="color: var(--warning); font-weight: bold;">0</span> 题</p>
+            
+            <div class="result-details">
+                <h3>答题详情：</h3>
+                <div id="resultDetails">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+            
+            <div class="button-group" style="margin-top: 2rem;">
+                <button class="btn btn-reset" id="backToTest">
+                    <i class="fas fa-redo"></i> 重新测试
+                </button>
+                <a href="../test/综合测试.html" class="btn btn-submit">
+                    <i class="fas fa-home"></i> 返回测试中心
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 (保持不变) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 选择题交互逻辑 (保持不变)
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.question');
+                const radio = this.querySelector('input[type="radio"]');
+                
+                radio.checked = true;
+                
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                this.classList.add('selected');
+            });
+        });
+        
+        // 判断题交互逻辑 (保持不变)
+        document.querySelectorAll('.tf-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.question');
+                const value = this.getAttribute('data-value');
+                
+                question.querySelectorAll('.tf-option').forEach(opt => {
+                    opt.classList.remove('selected-true', 'selected-false');
+                });
+                
+                if (value === 'true') {
+                    this.classList.add('selected-true');
+                } else {
+                    this.classList.add('selected-false');
+                }
+                
+                this.setAttribute('data-selected', 'true');
+            });
+        });
+        
+        // 提交测试按钮逻辑 (优化计分，保证满分100)
+        document.getElementById('submitTest').addEventListener('click', function() {
+            const totalQuestions = 11; // 5选择 + 6判断
+            const POINTS_PER_QUESTION = 100 / totalQuestions; // 约9.0909
+            
+            let score = 0;               // 浮点累加
+            let correctAnswers = 0;
+            let wrongAnswers = 0;
+            let unansweredQuestions = 0;
+            let resultDetailsHTML = '';
+            
+            // 检查所有选择题
+            document.querySelectorAll('.question[data-type="choice"]').forEach((question, index) => {
+                const questionNumber = index + 1;
+                const correctAnswer = question.getAttribute('data-correct');
+                const selectedOption = question.querySelector('input[type="radio"]:checked');
+                let isCorrect = false;
+                
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswer) {
+                        score += POINTS_PER_QUESTION;
+                        correctAnswers++;
+                        isCorrect = true;
+                    } else {
+                        wrongAnswers++;
+                    }
+                } else {
+                    unansweredQuestions++;
+                }
+                
+                resultDetailsHTML += `
+                    <div class="result-item">
+                        <div class="result-question">第${questionNumber}题（选择题）</div>
+                        <div class="result-status ${isCorrect ? 'correct-answer' : selectedOption ? 'wrong-answer' : ''}">
+                            ${selectedOption ? (isCorrect ? '✓ 正确' : '✗ 错误') : '未作答'}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // 检查所有判断题
+            document.querySelectorAll('.question[data-type="true-false"]').forEach((question, index) => {
+                const questionNumber = index + 1 + 5; // 从第6题开始
+                const correctAnswer = question.getAttribute('data-correct');
+                const selectedOption = question.querySelector('.tf-option[data-selected="true"]');
+                let isCorrect = false;
+                
+                if (selectedOption) {
+                    const userAnswer = selectedOption.getAttribute('data-value');
+                    if (userAnswer === correctAnswer) {
+                        score += POINTS_PER_QUESTION;
+                        correctAnswers++;
+                        isCorrect = true;
+                    } else {
+                        wrongAnswers++;
+                    }
+                } else {
+                    unansweredQuestions++;
+                }
+                
+                resultDetailsHTML += `
+                    <div class="result-item">
+                        <div class="result-question">第${questionNumber}题（判断题）</div>
+                        <div class="result-status ${isCorrect ? 'correct-answer' : selectedOption ? 'wrong-answer' : ''}">
+                            ${selectedOption ? (isCorrect ? '✓ 正确' : '✗ 错误') : '未作答'}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // 四舍五入得到最终分数（满分100）
+            const finalScoreValue = Math.round(score);
+            
+            // 更新结果显示
+            document.getElementById('finalScore').textContent = finalScoreValue;
+            document.getElementById('scorePercent').textContent = finalScoreValue;
+            document.getElementById('correctCount').textContent = correctAnswers;
+            document.getElementById('wrongCount').textContent = wrongAnswers;
+            document.getElementById('unansweredCount').textContent = unansweredQuestions;
+            document.getElementById('resultDetails').innerHTML = resultDetailsHTML;
+            
+            // 根据分数显示不同的消息
+            let message = '';
+            if (finalScoreValue >= 90) {
+                message = '优秀！您对模块1内容掌握得很好！';
+            } else if (finalScoreValue >= 70) {
+                message = '良好！继续努力，您可以做得更好！';
+            } else if (finalScoreValue >= 60) {
+                message = '及格！建议复习一下模块1的内容。';
+            } else {
+                message = '需要加强学习，请认真复习模块1的内容。';
+            }
+            
+            document.getElementById('scoreText').innerHTML = 
+                `您在本次测试中获得了 <span id="scorePercent">${finalScoreValue}</span> 分<br><small>${message}</small>`;
+            
+            // 显示结果区域，隐藏题目区域
+            document.getElementById('testQuestions').style.display = 'none';
+            document.getElementById('resultPanel').style.display = 'block';
+            
+            document.getElementById('resultPanel').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // 重置测试按钮逻辑 (保持不变)
+        document.getElementById('resetTest').addEventListener('click', function() {
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.querySelectorAll('.tf-option').forEach(option => {
+                option.classList.remove('selected-true', 'selected-false');
+                option.removeAttribute('data-selected');
+            });
+            
+            document.getElementById('resultPanel').style.display = 'none';
+            document.getElementById('testQuestions').style.display = 'block';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // 返回测试按钮逻辑 (与重置一致)
+        document.getElementById('backToTest').addEventListener('click', function() {
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.querySelectorAll('.tf-option').forEach(option => {
+                option.classList.remove('selected-true', 'selected-false');
+                option.removeAttribute('data-selected');
+            });
+            
+            document.getElementById('resultPanel').style.display = 'none';
+            document.getElementById('testQuestions').style.display = 'block';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

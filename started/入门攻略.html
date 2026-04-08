@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>入门攻略 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <style>
+        /* 全局重置和基础设置 */
+        /* 将所有元素的内外边距重置为0，设置盒模型为border-box，统一字体 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* 盒模型设置，使宽度和高度包含内边距和边框 */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 设置默认字体栈 */
+        }
+        
+        /* CSS自定义属性（CSS变量）定义 */
+        /* 定义一系列颜色和效果变量，方便在整个样式表中统一使用和修改 */
+        :root {
+            --primary: #2c3e50;    /* 主色调 - 深蓝色 */
+            --secondary: #3498db;  /* 辅助色 - 蓝色 */
+            --accent: #e74c3c;     /* 强调色 - 红色 */
+            --light: #ecf0f1;      /* 浅色背景 */
+            --dark: #2c3e50;       /* 深色背景 */
+            --success: #2ecc71;    /* 成功色 - 绿色 */
+            --warning: #f39c12;    /* 警告色 - 橙色 */
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+            --transition: all 0.3s ease; /* 过渡动画效果 */
+        }
+        
+        /* 页面主体样式 */
+        body {
+            background-color: #f9f9f9; /* 页面背景色 */
+            color: #333; /* 默认文字颜色 */
+            line-height: 1.6; /* 行高设置，提高可读性 */
+        }
+        
+        /* 容器样式 - 用于限制内容宽度并居中 */
+        .container {
+            width: 90%; /* 宽度为视口的90% */
+            max-width: 1200px; /* 最大宽度限制 */
+            margin: 0 auto; /* 水平居中 */
+        }
+        
+        /* ========== 头部样式 ========== */
+        header {
+            background-image: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); /* 渐变背景 */
+            color: white; /* 文字颜色 */
+            padding: 1rem 0; /* 上下内边距 */
+            position: sticky; /* 粘性定位，滚动时保持可见 */
+            top: 0; /* 粘性定位的顶部位置 */
+            z-index: 1000; /* 确保头部在其他内容之上 */
+            box-shadow: var(--shadow); /* 添加阴影效果 */
+        }
+        
+        /* 头部内容布局 */
+        .header-content {
+            display: flex; /* 使用Flex布局 */
+            justify-content: space-between; /* 两端对齐 */
+            align-items: center; /* 垂直居中 */
+        }
+        
+        /* 网站Logo样式 */
+        .logo {
+            display: flex;
+            align-items: center; /* 垂直居中 */
+            font-size: 1.5rem; /* 字体大小 */
+            font-weight: bold; /* 字体粗细 */
+        }
+        
+        /* Logo图标样式 */
+        .logo i {
+            margin-right: 10px; /* 图标右侧间距 */
+            color: var(--accent); /* 图标颜色使用强调色 */
+        }
+        
+        /* 导航菜单样式 */
+        nav ul {
+            display: flex; /* 使用Flex布局使菜单项水平排列 */
+            list-style: none; /* 移除列表默认样式 */
+        }
+        
+        /* 导航菜单项样式 */
+        nav li {
+            margin-left: 1.5rem; /* 左侧间距 */
+        }
+        
+        /* 导航链接样式 */
+        nav a {
+            color: white; /* 链接颜色 */
+            text-decoration: none; /* 移除下划线 */
+            font-weight: 500; /* 字体粗细 */
+            padding: 0.5rem 0.8rem; /* 内边距 */
+            border-radius: 4px; /* 圆角 */
+            transition: var(--transition); /* 过渡效果 */
+        }
+        
+        /* 导航链接悬停和激活状态样式 */
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2); /* 半透明背景 */
+        }
+        
+        /* ========== 页面标题区域样式 ========== */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary)); /* 水平渐变背景 */
+            color: white; /* 文字颜色 */
+            padding: 3rem 0; /* 上下内边距 */
+            text-align: center; /* 文字居中 */
+            margin-bottom: 2rem; /* 底部外边距 */
+        }
+        
+        /* 页面主标题样式 */
+        .page-header h1 {
+            font-size: 2.5rem; /* 字体大小 */
+            margin-bottom: 1rem; /* 底部外边距 */
+        }
+        
+        /* 面包屑导航样式 */
+        .breadcrumb {
+            display: flex; /* 使用Flex布局 */
+            justify-content: center; /* 水平居中 */
+            list-style: none; /* 移除列表默认样式 */
+        }
+        
+        /* 面包屑导航项样式 */
+        .breadcrumb li {
+            margin: 0 0.5rem; /* 左右外边距 */
+        }
+        
+        /* 面包屑导航项之间的分隔符 */
+        .breadcrumb li:not(:last-child)::after {
+            content: ">"; /* 添加分隔符 */
+            margin-left: 1rem; /* 左侧间距 */
+        }
+        
+        /* 面包屑导航链接样式 */
+        .breadcrumb a {
+            color: var(--light); /* 链接颜色 */
+            text-decoration: none; /* 移除下划线 */
+        }
+        
+        /* 面包屑导航链接悬停样式 */
+        .breadcrumb a:hover {
+            text-decoration: underline; /* 添加下划线 */
+        }
+        
+        /* ========== 内容区域样式 ========== */
+        .content-section {
+            background: white; /* 背景色 */
+            border-radius: 10px; /* 圆角 */
+            padding: 2rem; /* 内边距 */
+            margin-bottom: 2rem; /* 底部外边距 */
+            box-shadow: var(--shadow); /* 阴影效果 */
+        }
+        
+        /* 内容区域标题样式 */
+        .content-section h2 {
+            color: var(--primary); /* 标题颜色 */
+            margin-bottom: 1.5rem; /* 底部外边距 */
+            padding-bottom: 0.5rem; /* 底部内边距 */
+            border-bottom: 2px solid var(--secondary); /* 底部边框 */
+            display: flex; /* 使用Flex布局 */
+            align-items: center; /* 垂直居中 */
+        }
+        
+        /* 内容区域标题图标样式 */
+        .content-section h2 i {
+            margin-right: 10px; /* 图标右侧间距 */
+            color: var(--secondary); /* 图标颜色 */
+        }
+        
+        /* 内容区域段落样式 */
+        .content-section p {
+            margin-bottom: 1rem; /* 底部外边距 */
+        }
+        
+        /* ========== 特色卡片样式 ========== */
+        .feature-cards {
+            display: grid; /* 使用Grid布局 */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 自适应列布局 */
+            gap: 1.5rem; /* 卡片间距 */
+            margin: 2rem 0; /* 上下外边距 */
+        }
+        
+        /* 单个特色卡片样式 */
+        .feature-card {
+            background: var(--light); /* 背景色 */
+            padding: 1.5rem; /* 内边距 */
+            border-radius: 8px; /* 圆角 */
+            transition: var(--transition); /* 过渡效果 */
+            border-left: 4px solid var(--secondary); /* 左侧边框 */
+        }
+        
+        /* 特色卡片悬停效果 */
+        .feature-card:hover {
+            transform: translateY(-5px); /* 向上移动 */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* 增强阴影 */
+        }
+        
+        /* 特色卡片标题样式 */
+        .feature-card h3 {
+            color: var(--primary); /* 标题颜色 */
+            margin-bottom: 1rem; /* 底部外边距 */
+            display: flex; /* 使用Flex布局 */
+            align-items: center; /* 垂直居中 */
+        }
+        
+        /* 特色卡片标题图标样式 */
+        .feature-card h3 i {
+            margin-right: 10px; /* 图标右侧间距 */
+            color: var(--accent); /* 图标颜色 */
+        }
+        
+        /* ========== 时间线样式 ========== */
+        .timeline {
+            position: relative; /* 相对定位，为伪元素定位做准备 */
+            max-width: 800px; /* 最大宽度 */
+            margin: 2rem auto; /* 上下外边距，水平居中 */
+        }
+        
+        /* 时间线中间的竖线 */
+        .timeline::after {
+            content: ''; /* 伪元素内容为空 */
+            position: absolute; /* 绝对定位 */
+            width: 4px; /* 宽度 */
+            background-color: var(--secondary); /* 背景色 */
+            top: 0; /* 顶部对齐 */
+            bottom: 0; /* 底部对齐 */
+            left: 50%; /* 水平居中 */
+            margin-left: -2px; /* 向左移动一半宽度，实现完全居中 */
+        }
+        
+        /* 时间线项目样式 */
+        .timeline-item {
+            padding: 10px 40px; /* 内边距 */
+            position: relative; /* 相对定位，为伪元素定位做准备 */
+            width: 50%; /* 宽度为容器的一半 */
+            box-sizing: border-box; /* 盒模型设置 */
+        }
+        
+        /* 奇数项（左侧）定位 */
+        .timeline-item:nth-child(odd) {
+            left: 0; /* 左侧对齐 */
+        }
+        
+        /* 偶数项（右侧）定位 */
+        .timeline-item:nth-child(even) {
+            left: 50%; /* 左侧偏移50% */
+        }
+        
+        /* 时间线项目指示点 */
+        .timeline-item::after {
+            content: ''; /* 伪元素内容为空 */
+            position: absolute; /* 绝对定位 */
+            width: 20px; /* 宽度 */
+            height: 20px; /* 高度 */
+            background-color: white; /* 背景色 */
+            border: 4px solid var(--secondary); /* 边框 */
+            border-radius: 50%; /* 圆形 */
+            top: 15px; /* 距离顶部位置 */
+            right: -12px; /* 距离右侧位置 */
+            z-index: 1; /* 确保在时间线之上 */
+        }
+        
+        /* 偶数项指示点位置调整 */
+        .timeline-item:nth-child(even)::after {
+            left: -12px; /* 距离左侧位置 */
+        }
+        
+        /* 时间线内容区域样式 */
+        .timeline-content {
+            padding: 1.5rem; /* 内边距 */
+            background-color: white; /* 背景色 */
+            border-radius: 6px; /* 圆角 */
+            box-shadow: var(--shadow); /* 阴影效果 */
+            transition: var(--transition); /* 过渡效果 */
+        }
+        
+        /* 时间线内容悬停效果 */
+        .timeline-content:hover {
+            transform: translateY(-5px); /* 向上移动 */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* 增强阴影 */
+        }
+        
+        /* 时间线内容标题样式 */
+        .timeline-content h3 {
+            color: var(--secondary); /* 标题颜色 */
+            margin-bottom: 0.5rem; /* 底部外边距 */
+            display: flex; /* 使用Flex布局 */
+            align-items: center; /* 垂直居中 */
+        }
+        
+        /* 时间线内容标题图标样式 */
+        .timeline-content h3 i {
+            margin-right: 8px; /* 图标右侧间距 */
+        }
+        
+        /* ========== 工具卡片样式 ========== */
+        .tool-cards {
+            display: grid; /* 使用Grid布局 */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 自适应列布局 */
+            gap: 1.5rem; /* 卡片间距 */
+            margin: 2rem 0; /* 上下外边距 */
+        }
+        
+        /* 单个工具卡片样式 */
+        .tool-card {
+            background: white; /* 背景色 */
+            border-radius: 8px; /* 圆角 */
+            padding: 1.5rem; /* 内边距 */
+            text-align: center; /* 文字居中 */
+            box-shadow: var(--shadow); /* 阴影效果 */
+            transition: var(--transition); /* 过渡效果 */
+            border-top: 4px solid var(--secondary); /* 顶部边框 */
+        }
+        
+        /* 工具卡片悬停效果 */
+        .tool-card:hover {
+            transform: translateY(-5px); /* 向上移动 */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* 增强阴影 */
+        }
+        
+        /* 工具图标样式 */
+        .tool-icon {
+            font-size: 2.5rem; /* 图标大小 */
+            margin-bottom: 1rem; /* 底部外边距 */
+            color: var(--primary); /* 图标颜色 */
+        }
+        
+        /* 工具卡片标题样式 */
+        .tool-card h3 {
+            margin-bottom: 1rem; /* 底部外边距 */
+            color: var(--primary); /* 标题颜色 */
+        }
+        
+        /* ========== FAQ样式 ========== */
+        .faq-item {
+            margin-bottom: 1.5rem; /* 底部外边距 */
+            border-bottom: 1px solid #eee; /* 底部边框 */
+            padding-bottom: 1.5rem; /* 底部内边距 */
+        }
+        
+        /* FAQ问题样式 */
+        .faq-question {
+            font-weight: bold; /* 字体粗细 */
+            color: var(--primary); /* 文字颜色 */
+            margin-bottom: 0.5rem; /* 底部外边距 */
+            cursor: pointer; /* 鼠标指针样式 */
+            display: flex; /* 使用Flex布局 */
+            align-items: center; /* 垂直居中 */
+        }
+        
+        /* FAQ问题图标样式 */
+        .faq-question i {
+            margin-right: 10px; /* 图标右侧间距 */
+            color: var(--accent); /* 图标颜色 */
+        }
+        
+        /* FAQ答案样式 */
+        .faq-answer {
+            color: #555; /* 文字颜色 */
+            padding-left: 28px; /* 左侧内边距，与问题图标对齐 */
+        }
+        
+        /* ========== 资源列表样式 ========== */
+        .resource-list {
+            list-style: none; /* 移除列表默认样式 */
+        }
+        
+        /* 资源列表项样式 */
+        .resource-list li {
+            margin-bottom: 1rem; /* 底部外边距 */
+            padding: 1rem; /* 内边距 */
+            background: var(--light); /* 背景色 */
+            border-radius: 5px; /* 圆角 */
+            transition: var(--transition); /* 过渡效果 */
+        }
+        
+        /* 资源列表项悬停效果 */
+        .resource-list li:hover {
+            background: #e0e7eb; /* 悬停背景色 */
+        }
+        
+        /* 资源链接样式 */
+        .resource-list a {
+            color: var(--secondary); /* 链接颜色 */
+            text-decoration: none; /* 移除下划线 */
+            font-weight: 500; /* 字体粗细 */
+            display: flex; /* 使用Flex布局 */
+            align-items: center; /* 垂直居中 */
+        }
+        
+        /* 资源链接悬停效果 */
+        .resource-list a:hover {
+            text-decoration: underline; /* 添加下划线 */
+        }
+        
+        /* 资源列表图标样式 */
+        .resource-list i {
+            margin-right: 10px; /* 图标右侧间距 */
+            color: var(--accent); /* 图标颜色 */
+        }
+        
+        /* ========== 提示框样式 ========== */
+        .tip-box {
+            background: #e8f4fc; /* 背景色 */
+            border-left: 4px solid var(--secondary); /* 左侧边框 */
+            padding: 1.5rem; /* 内边距 */
+            margin: 1.5rem 0; /* 上下外边距 */
+            border-radius: 4px; /* 圆角 */
+        }
+        
+        /* 提示框标题样式 */
+        .tip-box h4 {
+            color: var(--primary); /* 标题颜色 */
+            margin-bottom: 0.5rem; /* 底部外边距 */
+            display: flex; /* 使用Flex布局 */
+            align-items: center; /* 垂直居中 */
+        }
+        
+        /* 提示框标题图标样式 */
+        .tip-box h4 i {
+            margin-right: 10px; /* 图标右侧间距 */
+            color: var(--accent); /* 图标颜色 */
+        }
+        
+        /* ========== 步骤列表样式 ========== */
+        .step-list {
+            counter-reset: step-counter; /* 初始化步骤计数器 */
+            list-style: none; /* 移除列表默认样式 */
+        }
+        
+        /* 步骤列表项样式 */
+        .step-list li {
+            margin-bottom: 1.5rem; /* 底部外边距 */
+            padding-left: 3rem; /* 左侧内边距，为步骤编号留空间 */
+            position: relative; /* 相对定位，为伪元素定位做准备 */
+        }
+        
+        /* 步骤列表项前的编号样式 */
+        .step-list li::before {
+            counter-increment: step-counter; /* 递增步骤计数器 */
+            content: counter(step-counter); /* 显示当前计数 */
+            position: absolute; /* 绝对定位 */
+            left: 0; /* 左侧对齐 */
+            top: 0; /* 顶部对齐 */
+            width: 2rem; /* 宽度 */
+            height: 2rem; /* 高度 */
+            background: var(--secondary); /* 背景色 */
+            color: white; /* 文字颜色 */
+            border-radius: 50%; /* 圆形 */
+            display: flex; /* 使用Flex布局 */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            font-weight: bold; /* 字体粗细 */
+        }
+        
+        /* ========== 页脚样式 ========== */
+        footer {
+            background: var(--dark); /* 背景色 */
+            color: white; /* 文字颜色 */
+            padding: 3rem 0 1rem; /* 上、左右、下内边距 */
+            margin-top: 3rem; /* 顶部外边距 */
+        }
+        
+        /* 页脚内容布局 */
+        .footer-content {
+            display: grid; /* 使用Grid布局 */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 自适应列布局 */
+            gap: 2rem; /* 列间距 */
+            margin-bottom: 2rem; /* 底部外边距 */
+        }
+        
+        /* 页脚区块标题样式 */
+        .footer-section h3 {
+            margin-bottom: 1.5rem; /* 底部外边距 */
+            position: relative; /* 相对定位，为伪元素定位做准备 */
+            padding-bottom: 0.5rem; /* 底部内边距 */
+        }
+        
+        /* 页脚区块标题下划线 */
+        .footer-section h3::after {
+            content: ''; /* 伪元素内容为空 */
+            position: absolute; /* 绝对定位 */
+            bottom: 0; /* 底部对齐 */
+            left: 0; /* 左侧对齐 */
+            width: 50px; /* 宽度 */
+            height: 2px; /* 高度 */
+            background: var(--accent); /* 背景色 */
+        }
+        
+        /* 页脚联系信息样式 */
+        .footer-contact span {
+            display: block; /* 块级显示 */
+            margin-bottom: 0.5rem; /* 底部外边距 */
+        }
+        
+        /* 页脚链接列表样式 */
+        .footer-links ul {
+            list-style: none; /* 移除列表默认样式 */
+        }
+        
+        /* 页脚链接列表项样式 */
+        .footer-links li {
+            margin-bottom: 0.8rem; /* 底部外边距 */
+        }
+        
+        /* 页脚链接样式 */
+        .footer-links a {
+            color: #ddd; /* 链接颜色 */
+            text-decoration: none; /* 移除下划线 */
+            transition: var(--transition); /* 过渡效果 */
+        }
+        
+        /* 页脚链接悬停效果 */
+        .footer-links a:hover {
+            color: var(--accent); /* 悬停颜色 */
+            padding-left: 5px; /* 左侧内边距，创建移动效果 */
+        }
+        
+        /* 页脚社交媒体图标容器 */
+        .footer-social {
+            display: flex; /* 使用Flex布局 */
+            gap: 1rem; /* 图标间距 */
+            margin-top: 1.5rem; /* 顶部外边距 */
+        }
+        
+        /* 页脚社交媒体图标样式 */
+        .footer-social a {
+            display: inline-flex; /* 内联Flex布局 */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            width: 40px; /* 宽度 */
+            height: 40px; /* 高度 */
+            background: rgba(255, 255, 255, 0.1); /* 半透明背景 */
+            border-radius: 50%; /* 圆形 */
+            color: white; /* 图标颜色 */
+            transition: var(--transition); /* 过渡效果 */
+        }
+        
+        /* 页脚社交媒体图标悬停效果 */
+        .footer-social a:hover {
+            background: var(--secondary); /* 悬停背景色 */
+            transform: translateY(-3px); /* 向上移动 */
+        }
+        
+        /* 页脚底部版权信息样式 */
+        .footer-bottom {
+            text-align: center; /* 文字居中 */
+            padding-top: 2rem; /* 顶部内边距 */
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* 顶部边框 */
+        }
+        
+        /* ========== 响应式设计 ========== */
+        /* 当屏幕宽度小于768px时应用以下样式 */
+        @media (max-width: 768px) {
+            /* 头部内容垂直排列 */
+            .header-content {
+                flex-direction: column; /* 垂直排列 */
+                text-align: center; /* 文字居中 */
+            }
+            
+            /* 导航菜单调整 */
+            nav ul {
+                margin-top: 1rem; /* 顶部外边距 */
+                flex-wrap: wrap; /* 允许换行 */
+                justify-content: center; /* 水平居中 */
+            }
+            
+            /* 导航菜单项间距调整 */
+            nav li {
+                margin: 0.5rem; /* 四周外边距 */
+            }
+            
+            /* 时间线竖线位置调整 */
+            .timeline::after {
+                left: 31px; /* 左侧位置 */
+            }
+            
+            /* 时间线项目调整 */
+            .timeline-item {
+                width: 100%; /* 宽度100% */
+                padding-left: 70px; /* 左侧内边距 */
+                padding-right: 25px; /* 右侧内边距 */
+            }
+            
+            /* 偶数项位置调整 */
+            .timeline-item:nth-child(even) {
+                left: 0; /* 左侧对齐 */
+            }
+            
+            /* 时间线项目指示点位置调整 */
+            .timeline-item::after {
+                left: 18px; /* 左侧位置 */
+                right: auto; /* 重置右侧位置 */
+            }
+            
+            /* 卡片布局调整为单列 */
+            .feature-cards, .tool-cards {
+                grid-template-columns: 1fr; /* 单列布局 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="课程概况.html">课程概况</a></li>
+                    <li><a href="入门攻略.html" class="active">入门攻略</a></li>
+                    <li><a href="../learning/课程学习.html">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+               </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>入门攻略</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">首页</a></li>
+                <li>入门攻略</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 学习路径 -->
+        <section class="content-section">
+            <h2><i class="fas fa-route"></i> 学习路径</h2>
+            <p>本课程依据《河南省中等职业学校网页设计与制作课程标准（2025）》，采用理论与实践相结合的教学模式，以“精品课程网站”项目贯穿全课程。以下是建议的六阶段学习路径，帮助您系统掌握网页设计与制作核心技能：</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><i class="fas fa-map-signs"></i> 第一阶段：基础知识与HTML核心 </h3>
+                        <p>理解网页“结构-样式-行为”三层分离原理，掌握HTML5语法与标签，能够搭建包含文本、图像、列表、超链接等元素的网页结构。</p>
+                        <p><strong>重点：</strong>Web标准规范、HTML5标签应用、开发工具配置</p>
+                        <p><strong>项目任务：</strong>完成网站首页基础结构搭建</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><i class="fas fa-paint-brush"></i> 第二阶段：CSS基础与样式控制</h3>
+                        <p>掌握CSS3语法与选择器，能够设置文本、背景样式，理解CSS优先级规则，解决样式冲突问题。</p>
+                        <p><strong>重点：</strong>CSS3基础选择器、文本样式属性、优先级机制</p>
+                        <p><strong>项目任务：</strong>设计网站全局样式与导航栏美化</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><i class="fas fa-th"></i> 第三阶段：盒子模型与布局技术</h3>
+                        <p>深入理解盒子模型，掌握块级与行内元素特性及转换，能够运用浮动与定位技术实现多种页面布局。</p>
+                        <p><strong>重点：</strong>盒子模型属性、元素类型转换、浮动与定位布局</p>
+                        <p><strong>项目任务：</strong>实现课程卡片与页面多列布局</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><i class="fas fa-table"></i> 第四阶段：交互元素与多媒体嵌入</h3>
+                        <p>掌握表格与表单的创建与美化方法，能够在网页中嵌入音频、视频等多媒体元素并控制其呈现样式。</p>
+                        <p><strong>重点：</strong>表格样式美化、表单交互设计、音视频嵌入与样式控制</p>
+                        <p><strong>项目任务：</strong>制作课程信息表格与学员注册表单，嵌入课程视频</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><i class="fas fa-rocket"></i> 第五阶段：高级技巧与综合实训</h3>
+                        <p>掌握CSS3高级选择器与新属性，能够运用过渡、变形和动画效果增强用户体验，完成完整静态网站项目。</p>
+                        <p><strong>重点：</strong>CSS3高级特性、动画效果实现、综合项目开发</p>
+                        <p><strong>项目任务：</strong>为网站添加交互动画，完成“精品课程网站”全站开发</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><i class="fas fa-brain"></i> 第六阶段：设计素养与AI辅助开发</h3>
+                        <p>培养网页审美能力与设计原则应用，了解AI辅助工具在网页效果实现与代码优化中的基本应用。</p>
+                        <p><strong>重点：</strong>设计原则与色彩排版、AI工具辅助开发、代码规范与团队协作</p>
+                        <p><strong>项目任务：</strong>优化网站视觉设计，运用AI工具辅助代码生成与优化</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 开发环境配置 -->
+        <section class="content-section">
+            <h2><i class="fas fa-tools"></i> 开发环境配置</h2>
+            <p>开始学习前，请按照以下步骤配置专业的网页开发环境：</p>
+            
+            <ol class="step-list">
+                <li>
+                    <h3>安装代码编辑器 - Visual Studio Code</h3>
+                    <p>从VS Code官网下载并安装，这是目前最流行的前端开发编辑器。</p>
+                    <div class="tip-box">
+                        <h4><i class="fas fa-lightbulb"></i> 提示</h4>
+                        <p>建议安装以下必备插件：Live Server（实时预览）、Prettier（代码格式化）、Auto Rename Tag（自动重命名标签）、HTML CSS Support（代码提示）</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <h3>安装现代浏览器</h3>
+                    <p>推荐使用Chrome、Firefox或Edge，并学会使用开发者工具（按F12打开）。</p>
+                </li>
+                
+                <li>
+                    <h3>创建项目文件夹结构</h3>
+                    <p>建立清晰的项目结构：</p>
+                    <ul>
+                        <li>根目录：存放主页(index.html)</li>
+                        <li>css文件夹：存放样式文件</li>
+                        <li>images文件夹：存放图片资源</li>
+                        <li>pages文件夹：存放其他网页文件</li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <h3>配置实时预览</h3>
+                    <p>使用VS Code的Live Server插件，实现代码修改后自动刷新浏览器预览效果。</p>
+                </li>
+            </ol>
+            
+            <div class="tool-cards">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>VS Code</h3>
+                    <p>功能强大的代码编辑器，拥有丰富的扩展生态系统</p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fab fa-chrome"></i>
+                    </div>
+                    <h3>Chrome 浏览器</h3>
+                    <p>开发者工具功能强大，适合网页调试和测试</p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fab fa-git-alt"></i>
+                    </div>
+                    <h3>Git 版本控制</h3>
+                    <p>管理代码版本，协作开发必备工具</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 学习建议 -->
+        <section class="content-section">
+            <h2><i class="fas fa-graduation-cap"></i> 学习建议</h2>
+            <p>遵循以下学习建议，可以帮助您更高效地掌握网页设计与制作技能：</p>
+            
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <h3><i class="fas fa-project-diagram"></i> 项目驱动学习</h3>
+                    <p>以"精品课程网站"项目为主线，每学习一个知识点就立即应用到项目中，通过实践巩固理论。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-code"></i><a href="/started/Html+css开发编码规范.html">代码规范先行</a></h3>
+                    <p>从一开始就养成良好的代码习惯：正确缩进、使用语义化标签、添加注释、遵循命名规范。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-sync-alt"></i> 反复练习</h3>
+                    <p>网页设计需要大量练习，重复编写代码直到熟练掌握。不要满足于"看懂"，要追求"熟练写出"。</p>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-hand-point-right"></i> 高效学习法</h4>
+                <p>采用"看-练-查-问"循环学习法：先观看教学视频或阅读教材，然后动手实践，遇到问题先自己查找资料（MDN文档等），最后再向老师或同学请教。</p>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section class="content-section">
+            <h2><i class="fas fa-question-circle"></i> 常见问题</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> 我没有编程基础，可以学习网页设计吗？</div>
+                <div class="faq-answer">
+                    <p>当然可以！本课程专为初学者设计，从最基础的概念讲起。HTML和CSS不是编程语言，而是标记语言和样式语言，相对容易入门。只要您有学习的热情和持之以恒的态度，完全可以掌握网页设计与制作技能。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> 为什么我的网页在不同浏览器上显示效果不一样？</div>
+                <div class="faq-answer">
+                    <p>这是常见的浏览器兼容性问题。解决方案：1) 使用Reset CSS或Normalize.css统一基础样式；2) 使用现代浏览器前缀；3) 遵循Web标准编写代码；4) 使用Can I网站查询属性兼容性。本课程项目5将详细讲解兼容性处理方法。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> 学习HTML和CSS后，可以制作什么样的网站？</div>
+                <div class="faq-answer">
+                    <p>掌握HTML和CSS后，您可以制作各种静态网站，包括企业官网、个人博客、产品介绍页、活动页面等。通过本课程的"精品课程网站"项目实战，您将具备独立设计并开发完整网站的能力。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question"><i class="fas fa-question"></i> 如何提高网页设计的审美和视觉效果？</div>
+                <div class="faq-answer">
+                    <p>1) 多观察优秀网站的设计，分析其布局、配色和交互；2) 学习设计基本原则（对比、重复、对齐、亲密性）；3) 使用设计工具（如Figma）进行原型设计；4) 参考设计网站（Dribbble、Behance）获取灵感；5) 不断练习和反思改进。</p>
+                </div>
+            </div>
+        </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+              
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的FAQ切换功能
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

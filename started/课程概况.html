@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程概况 - 网页设计与制作</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 清除浮动 */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: block;
+        }
+        
+        .logo {
+            float: left;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 0.5rem 0;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav {
+            float: right;
+        }
+        
+        nav ul {
+            list-style: none;
+        }
+        
+        nav li {
+            float: left;
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            display: block;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            list-style: none;
+            text-align: center;
+        }
+        
+        .breadcrumb li {
+            display: inline-block;
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .content-section p {
+            margin-bottom: 1rem;
+        }
+        
+        /* 特色卡片 - 浮动布局 (修复排列问题) */
+        .feature-cards {
+            margin: 2rem 0;
+            width: 100%;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            border-left: 4px solid var(--secondary);
+            width: 48%;
+            float: left;
+            margin: 0 1% 1.5rem 1%;
+            min-height: 200px;
+        }
+        
+        /* 修复排列问题：每行第一个卡片清除左边距，第二个卡片清除右边距 */
+        .feature-card:nth-child(odd) {
+            margin-left: 0;
+            margin-right: 2%;
+        }
+        
+        .feature-card:nth-child(even) {
+            margin-left: 2%;
+            margin-right: 0;
+        }
+        
+        /* 修复高度不一致导致的排列问题 */
+        .feature-cards:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        /* 课程模块卡片 - 浮动布局 */
+        .module-cards {
+            margin: 2rem 0;
+            width: 100%;
+        }
+        
+        .module-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            width: 48%;
+            float: left;
+        }
+        
+        .module-card:first-child {
+            margin-right: 4%;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .module-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .module-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .module-header .hours {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .module-content {
+            padding: 1.5rem;
+            background: white;
+        }
+        
+        .chapter-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            overflow: hidden;
+        }
+        
+        .chapter-item:last-child {
+            border-bottom: none;
+        }
+        
+        .chapter-name {
+            font-weight: 500;
+            float: left;
+        }
+        
+        .chapter-hours {
+            background: var(--light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            float: right;
+        }
+        
+        /* 目标卡片 - 浮动布局 */
+        .goal-cards {
+            margin: 2rem 0;
+            width: 100%;
+        }
+        
+        .goal-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--secondary);
+            width: 31.33%;
+            float: left;
+            margin: 0 1% 1.5rem 1%;
+            min-height: 250px;
+        }
+        
+        /* 修复三列布局的排列问题 */
+        .goal-card:nth-child(3n+1) {
+            margin-left: 0;
+            margin-right: 2%;
+        }
+        
+        .goal-card:nth-child(3n+2) {
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+        
+        .goal-card:nth-child(3n) {
+            margin-left: 2%;
+            margin-right: 0;
+        }
+        
+        .goal-cards:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        .goal-card.knowledge {
+            border-top-color: var(--secondary);
+        }
+        
+        .goal-card.skill {
+            border-top-color: var(--success);
+        }
+        
+        .goal-card.quality {
+            border-top-color: var(--warning);
+        }
+        
+        .goal-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .goal-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* 评估方式 - 浮动布局 */
+        .assessment-cards {
+            margin: 2rem 0;
+            width: 100%;
+        }
+        
+        .assessment-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            width: 23%;
+            float: left;
+            margin: 0 1% 1.5rem 1%;
+        }
+        
+        /* 修复四列布局的排列问题 */
+        .assessment-card:nth-child(4n+1) {
+            margin-left: 0;
+            margin-right: 1.33%;
+        }
+        
+        .assessment-card:nth-child(4n+2) {
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+        
+        .assessment-card:nth-child(4n+3) {
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+        
+        .assessment-card:nth-child(4n) {
+            margin-left: 1.33%;
+            margin-right: 0;
+        }
+        
+        .assessment-cards:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        .assessment-percentage {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .assessment-name {
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        /* 页脚 - 浮动布局 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+            clear: both;
+        }
+        
+        .footer-content {
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+        
+        .footer-section {
+            width: 31.33%;
+            float: left;
+            margin: 0 1% 1.5rem 1%;
+        }
+        
+        /* 修复页脚三列布局的排列问题 */
+        .footer-section:nth-child(3n+1) {
+            margin-left: 0;
+            margin-right: 2%;
+        }
+        
+        .footer-section:nth-child(3n+2) {
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+        
+        .footer-section:nth-child(3n) {
+            margin-left: 2%;
+            margin-right: 0;
+        }
+        
+        .footer-content:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            clear: both;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .feature-card, .goal-card {
+                width: 48%;
+                margin: 0 1% 1.5rem 1% !important;
+            }
+            
+            .feature-card:nth-child(odd) {
+                margin-left: 0 !important;
+                margin-right: 2% !important;
+            }
+            
+            .feature-card:nth-child(even) {
+                margin-left: 2% !important;
+                margin-right: 0 !important;
+            }
+            
+            .goal-card:nth-child(odd) {
+                margin-left: 0 !important;
+                margin-right: 2% !important;
+            }
+            
+            .goal-card:nth-child(even) {
+                margin-left: 2% !important;
+                margin-right: 0 !important;
+            }
+            
+            .assessment-card {
+                width: 48%;
+                margin: 0 1% 1.5rem 1% !important;
+            }
+            
+            .assessment-card:nth-child(odd) {
+                margin-left: 0 !important;
+                margin-right: 2% !important;
+            }
+            
+            .assessment-card:nth-child(even) {
+                margin-left: 2% !important;
+                margin-right: 0 !important;
+            }
+            
+            .footer-section {
+                width: 48%;
+                margin: 0 1% 1.5rem 1% !important;
+            }
+            
+            .footer-section:nth-child(odd) {
+                margin-left: 0 !important;
+                margin-right: 2% !important;
+            }
+            
+            .footer-section:nth-child(even) {
+                margin-left: 2% !important;
+                margin-right: 0 !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo, nav {
+                float: none;
+                text-align: center;
+            }
+            
+            nav ul {
+                display: block;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            
+            nav li {
+                float: none;
+                display: inline-block;
+                margin: 0.5rem;
+            }
+            
+            .feature-card, .module-card, .goal-card, .assessment-card, .footer-section {
+                width: 100%;
+                margin: 0 0 1.5rem 0 !important;
+            }
+            
+            .module-card:first-child {
+                margin-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .chapter-name, .chapter-hours {
+                float: none;
+            }
+            
+            .chapter-hours {
+                display: inline-block;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content clearfix">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul class="clearfix">
+                    <li><a href="课程概况.html" class="active">课程概况</a></li>
+                    <li><a href="入门攻略.html">入门攻略</a></li>
+                    <li><a href="../learning/课程学习.html">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>课程概况</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li>课程概况</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 课程介绍 -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 课程介绍</h2>
+            <p>《网页设计与制作》是一门面向中职学生的前端开发核心课程，采用"任务驱动、做中学"的教学模式，以完整的"精品课程网站"项目贯穿全课程。本课程旨在帮助学生掌握HTML5和CSS3核心技术，培养符合行业标准的开发习惯和职业素养。</p>
+            <p>通过本课程的学习，学生将能够独立设计并开发具有专业水准的静态网站，理解企业级开发流程和规范，为后续学习高级前端框架和全栈开发打下坚实基础。通过完成"精品课程网站"项目，学生将系统掌握网页设计与制作的全流程，从基础布局到高级动效</p>
+        </section>
+        
+        <!-- 编写理念 -->
+        <section class="content-section">
+            <h2><i class="fas fa-star"></i> 编写理念</h2>
+            <div class="feature-cards clearfix">
+                <div class="feature-card">
+                    <h3><i class="fas fa-graduation-cap"></i> 立德树人，素养导向</h3>
+                    <p>将思政元素有机融入技术教学，培养学生严谨、协作、创新的职业素养，体现工匠精神和诚信守法的价值观。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-project-diagram"></i> 任务驱动，实践引领</h3>
+                    <p>以完整的"精品课程网站"项目贯穿全书，将知识点分解到具体任务中，贯彻"做中学，学中做"的教学模式。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-industry"></i> 对接企业，规范先行</h3>
+                    <p>融入企业开发流程、协作工具、编码规范，培养符合行业标准的开发习惯，强调代码规范和浏览器兼容性处理。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-industry"></i> 数字赋能，资源融合</h3>
+                    <p>结合在线资源、交互式课件、实训平台，支持混合式学习与自主探究。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-industry"></i> 分层设计，弹性拓展</h3>
+                    <p>兼顾基础与拓展模块，满足不同层次学生的学习需求，为学习高级框架打下坚实基础。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-industry"></i> 课程网站建设</h3>
+                    <p>最好的学习是创造。本教材将带你从一个想法开始，亲手打造本教材的课程网站。在构建的每一步中，让学生不再孤立地学习HTML、CSS，而是掌握如何将这些技术融会贯通，解决真实世界中的问题。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 教学目标 -->
+        <section class="content-section">
+            <h2><i class="fas fa-bullseye"></i> 教学目标</h2>
+            <div class="goal-cards clearfix">
+                <div class="goal-card knowledge">
+                    <div class="goal-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>知识目标</h3>
+                    <p>掌握HTML5/CSS3语法、网页结构、布局原理、兼容性处理等基础知识</p>
+                </div>
+                <div class="goal-card skill">
+                    <div class="goal-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>能力目标</h3>
+                    <p>能独立完成静态网页设计、布局、美化、测试与发布</p>
+                </div>
+                <div class="goal-card quality">
+                    <div class="goal-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>素养目标</h3>
+                    <p>培养代码规范意识、团队协作能力、用户体验思维、终身学习习惯</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 课程模块 -->
+        <section class="content-section">
+            <h2><i class="fas fa-sitemap"></i> 课程模块</h2>
+            <div class="module-cards clearfix">
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>基础模块</h3>
+                        <div class="hours">96学时</div>
+                    </div>
+                    <div class="module-content">
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块1 网页设计与制作基础</span>
+                            <span class="chapter-hours">4学时</span>
+                        </div>
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块2 HTML网页元素</span>
+                            <span class="chapter-hours">18学时</span>
+                        </div>
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块3 CSS3基础知识</span>
+                            <span class="chapter-hours">16学时</span>
+                        </div>
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块4 CSS盒子模型</span>
+                            <span class="chapter-hours">12学时</span>
+                        </div>
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块5 网页布局</span>
+                            <span class="chapter-hours">18学时</span>
+                        </div>
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块6 表格与表单</span>
+                            <span class="chapter-hours">12学时</span>
+                        </div>
+                         <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块7 多媒体嵌入</span>
+                            <span class="chapter-hours">4学时</span>
+                        </div>
+                      
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块8 综合项目实训</span>
+                            <span class="chapter-hours">12学时</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>拓展模块</h3>
+                        <div class="hours">32学时</div>
+                    </div>
+                    <div class="module-content">
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块9 *CSS3的高级技巧</span>
+                            <span class="chapter-hours">12学时</span>
+                        </div>
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块10 *过渡、变形和动画</span>
+                            <span class="chapter-hours">12学时</span>
+                        </div>
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块11 *网页设计素养</span>
+                            <span class="chapter-hours">4学时</span>
+                        </div>
+                        <div class="chapter-item clearfix">
+                            <span class="chapter-name">模块12 *AI辅助网页开发</span>
+                            <span class="chapter-hours">4学时</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 评估方式 -->
+        <section class="content-section">
+            <h2><i class="fas fa-clipboard-check"></i> 评估方式</h2>
+            <p>本课程采用多元评估方式，注重过程性评价与终结性评价相结合，全面考核学生的学习成果：</p>
+            
+            <div class="assessment-cards clearfix">
+                <div class="assessment-card">
+                    <div class="assessment-percentage">40%</div>
+                    <div class="assessment-name">项目实践</div>
+                </div>
+                <div class="assessment-card">
+                    <div class="assessment-percentage">30%</div>
+                    <div class="assessment-name">平时作业</div>
+                </div>
+                <div class="assessment-card">
+                    <div class="assessment-percentage">20%</div>
+                    <div class="assessment-name">课堂参与</div>
+                </div>
+                <div class="assessment-card">
+                    <div class="assessment-percentage">10%</div>
+                    <div class="assessment-name">期末考试</div>
+                </div>
+            </div>
+            
+            <p>注：项目实践包括7个阶段性实训项目，涵盖从环境搭建到网站上线的完整开发流程。</p>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content clearfix">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

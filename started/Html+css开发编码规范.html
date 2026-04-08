@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML+CSS开发编码规范</title>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        /* 从课程概况.html复制的头部样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 以下是原有的Html+css开发编码规范.html样式 */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --border-radius: 4px;
+            --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .content {
+            display: flex;
+            min-height: 600px;
+            margin: 2rem 0;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            margin-right: 2rem;
+        }
+        
+        .sidebar h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar a {
+            color: var(--dark-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            transition: all 0.3s;
+        }
+        
+        .sidebar a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 80px;
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .code-comment {
+            color: #75715e;
+        }
+        
+        .code-tag {
+            color: #f92672;
+        }
+        
+        .code-attr {
+            color: #a6e22e;
+        }
+        
+        .code-value {
+            color: #e6db74;
+        }
+        
+        .example {
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: #fafafa;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .bad-example {
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .good-example {
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .tip {
+            background: #e8f4fd;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 新的头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/课程概况.html" class="active">课程概况</a></li>
+                    <li><a href="/入门攻略.html">入门攻略</a></li>
+                    <li><a href="/课程学习.html">课程学习</a></li>
+                    <li><a href="/教学资源.html">教学资源</a></li>
+                    <li><a href="/综合测试.html">综合测试</a></li>
+                    <li><a href="/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>HTML+CSS开发编码规范</h1>
+            <ul class="breadcrumb">
+                <li><a href="/index.html">首页</a></li>
+                <li><a href="/课程概况.html">课程概况</a></li>
+                <li>HTML+CSS开发编码规范</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+     <div class="container">
+        <div class="content">
+            <aside class="sidebar">
+                <h3>目录</h3>
+                <ul>
+                    <li><a href="#html-basics">HTML基础规范</a></li>
+                    <li><a href="#html-structure">HTML文档结构</a></li>
+                    <li><a href="#html-attributes">HTML属性规范</a></li>
+                    <li><a href="#html-semantics">HTML语义化标签</a></li>
+                    <li><a href="#css-basics">CSS基础规范</a></li>
+                    <li><a href="#css-selectors">CSS选择器</a></li>
+                    <li><a href="#css-organization">CSS代码组织</a></li>
+                    <li><a href="#css-methodology">CSS方法论</a></li>
+                    <li><a href="#naming-bem">BEM命名规范</a></li>
+                    <li><a href="#responsive-basics">响应式基础</a></li>
+                    <li><a href="#responsive-units">响应式单位</a></li>
+                </ul>
+            </aside>
+            
+            <main class="main-content">
+                <section id="html-basics">
+                    <h2>HTML基础规范</h2>
+                    
+                    <h3>文档类型声明</h3>
+                    <p>始终使用HTML5的文档类型声明：</p>
+                    <div class="code-block">
+                        <span class="code-tag">&lt;!DOCTYPE html&gt;</span>
+                    </div>
+                    
+                    <h3>语言属性</h3>
+                    <p>明确指定文档的语言：</p>
+                    <div class="code-block">
+                        <span class="code-tag">&lt;html lang="zh-CN"&gt;</span>
+                    </div>
+                    
+                    <h3>字符编码</h3>
+                    <p>在&lt;head&gt;中首先声明字符编码：</p>
+                    <div class="code-block">
+                        <span class="code-tag">&lt;meta charset="UTF-8"&gt;</span>
+                    </div>
+                    
+                    <h3>Viewport设置</h3>
+                    <p>为移动设备正确设置viewport：</p>
+                    <div class="code-block">
+                        <span class="code-tag">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span>
+                    </div>
+                </section>
+                
+                <section id="html-structure">
+                    <h3>HTML文档结构</h3>
+                    
+                    <div class="example good-example">
+                        <div class="example-title">良好示例：</div>
+                        <div class="code-block">
+                            <span class="code-tag">&lt;!DOCTYPE html&gt;</span><br>
+                            <span class="code-tag">&lt;html lang="zh-CN"&gt;</span><br>
+                            <span class="code-tag">&lt;head&gt;</span><br>
+                            &nbsp;&nbsp;<span class="code-tag">&lt;meta charset="UTF-8"&gt;</span><br>
+                            &nbsp;&nbsp;<span class="code-tag">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span><br>
+                            &nbsp;&nbsp;<span class="code-tag">&lt;title&gt;</span>页面标题<span class="code-tag">&lt;/title&gt;</span><br>
+                            &nbsp;&nbsp;<span class="code-tag">&lt;link rel="stylesheet" href="styles.css"&gt;</span><br>
+                            <span class="code-tag">&lt;/head&gt;</span><br>
+                            <span class="code-tag">&lt;body&gt;</span><br>
+                            &nbsp;&nbsp;<span class="code-comment">&lt;!-- 页面内容 --&gt;</span><br>
+                            <span class="code-tag">&lt;/body&gt;</span><br>
+                            <span class="code-tag">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="html-attributes">
+                    <h3>HTML属性规范</h3>
+                    
+                    <p>属性使用双引号，不要使用单引号：</p>
+                    <div class="example bad-example">
+                        <div class="example-title">不良示例：</div>
+                        <div class="code-block">
+                            <span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-value">'container'</span><span class="code-tag">&gt;</span>
+                        </div>
+                    </div>
+                    
+                    <div class="example good-example">
+                        <div class="example-title">良好示例：</div>
+                        <div class="code-block">
+                            <span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-value">"container"</span><span class="code-tag">&gt;</span>
+                        </div>
+                    </div>
+                    
+                    <p>布尔属性可以省略值：</p>
+                    <div class="code-block">
+                        <span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-value">"checkbox"</span> <span class="code-attr">checked</span><span class="code-tag">&gt;</span><br>
+                        <span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-value">"text"</span> <span class="code-attr">disabled</span><span class="code-tag">&gt;</span>
+                    </div>
+                </section>
+                
+                <section id="html-semantics">
+                    <h2>HTML语义化</h2>
+                    
+                    <p>使用语义化标签提高可访问性和SEO：</p>
+                    <div class="code-block">
+                        <span class="code-tag">&lt;header&gt;</span><br>
+                        &nbsp;&nbsp;<span class="code-tag">&lt;nav&gt;</span><span class="code-comment">&lt;!-- 导航 --&gt;</span><span class="code-tag">&lt;/nav&gt;</span><br>
+                        <span class="code-tag">&lt;/header&gt;</span><br>
+                        <span class="code-tag">&lt;main&gt;</span><br>
+                        &nbsp;&nbsp;<span class="code-tag">&lt;article&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;section&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;h1&gt;</span>文章标题<span class="code-tag">&lt;/h1&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;p&gt;</span>文章内容<span class="code-tag">&lt;/p&gt;</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;/section&gt;</span><br>
+                        &nbsp;&nbsp;<span class="code-tag">&lt;/article&gt;</span><br>
+                        &nbsp;&nbsp;<span class="code-tag">&lt;aside&gt;</span><span class="code-comment">&lt;!-- 侧边栏 --&gt;</span><span class="code-tag">&lt;/aside&gt;</span><br>
+                        <span class="code-tag">&lt;/main&gt;</span><br>
+                        <span class="code-tag">&lt;footer&gt;</span><br>
+                        &nbsp;&nbsp;<span class="code-tag">&lt;p&gt;</span>版权信息<span class="code-tag">&lt;/p&gt;</span><br>
+                        <span class="code-tag">&lt;/footer&gt;</span>
+                    </div>
+                    
+                    <div class="tip">
+                        <strong>提示：</strong> 避免滥用&lt;div&gt;标签，优先使用语义化标签如&lt;header&gt;、&lt;nav&gt;、&lt;main&gt;、&lt;article&gt;、&lt;section&gt;、&lt;aside&gt;和&lt;footer&gt;。
+                    </div>
+                </section>
+                
+                <section id="css-basics">
+                    <h2>CSS基础规范</h2>
+                    
+                    <h3>CSS书写顺序</h3>
+                    <p>建议按照以下顺序组织CSS属性：</p>
+                    <div class="code-block">
+                        <span class="code-tag">.selector</span> {<br>
+                        &nbsp;&nbsp;<span class="code-comment">/* 布局属性 */</span><br>
+                        &nbsp;&nbsp;display: block;<br>
+                        &nbsp;&nbsp;position: absolute;<br>
+                        &nbsp;&nbsp;top: 0;<br>
+                        &nbsp;&nbsp;left: 0;<br>
+                        <br>
+                        &nbsp;&nbsp;<span class="code-comment">/* 盒模型属性 */</span><br>
+                        &nbsp;&nbsp;width: 100px;<br>
+                        &nbsp;&nbsp;height: 100px;<br>
+                        &nbsp;&nbsp;margin: 10px;<br>
+                        &nbsp;&nbsp;padding: 10px;<br>
+                        &nbsp;&nbsp;border: 1px solid #ccc;<br>
+                        <br>
+                        &nbsp;&nbsp;<span class="code-comment">/* 文本属性 */</span><br>
+                        &nbsp;&nbsp;font-family: Arial, sans-serif;<br>
+                        &nbsp;&nbsp;font-size: 16px;<br>
+                        &nbsp;&nbsp;line-height: 1.5;<br>
+                        &nbsp;&nbsp;color: #333;<br>
+                        <br>
+                        &nbsp;&nbsp;<span class="code-comment">/* 视觉属性 */</span><br>
+                        &nbsp;&nbsp;background-color: #f5f5f5;<br>
+                        &nbsp;&nbsp;border-radius: 4px;<br>
+                        &nbsp;&nbsp;box-shadow: 0 2px 5px rgba(0,0,0,0.1);<br>
+                        <br>
+                        &nbsp;&nbsp;<span class="code-comment">/* 其他属性 */</span><br>
+                        &nbsp;&nbsp;opacity: 1;<br>
+                        &nbsp;&nbsp;transition: all 0.3s ease;<br>
+                        }
+                    </div>
+                    
+                    <h3>CSS选择器规范</h3>
+                    <p>避免使用过于具体的选择器：</p>
+                    <div class="example bad-example">
+                        <div class="example-title">不良示例：</div>
+                        <div class="code-block">
+                            <span class="code-tag">div#header ul.nav li a</span> {<br>
+                            &nbsp;&nbsp;<span class="code-comment">/* 样式 */</span><br>
+                            }
+                        </div>
+                    </div>
+                    
+                    <div class="example good-example">
+                        <div class="example-title">良好示例：</div>
+                        <div class="code-block">
+                            <span class="code-tag">.nav-link</span> {<br>
+                            &nbsp;&nbsp;<span class="code-comment">/* 样式 */</span><br>
+                            }
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="css-organization">
+                    <h2>CSS代码组织</h2>
+                    
+                    <h3>CSS文件结构</h3>
+                    <p>建议按功能模块组织CSS文件：</p>
+                    <div class="code-block">
+                        <span class="code-comment">/* 1. 重置和基本样式 */</span><br>
+                        <span class="code-comment">/* 2. 工具类（Utilities） */</span><br>
+                        <span class="code-comment">/* 3. 布局（Layout） */</span><br>
+                        <span class="code-comment">/* 4. 组件（Components） */</span><br>
+                        <span class="code-comment">/* 5. 页面特定样式（Pages） */</span><br>
+                        <span class="code-comment">/* 6. 主题（Themes） */</span><br>
+                        <span class="code-comment">/* 7. 响应式（Responsive） */</span>
+                    </div>
+                    
+                    <h3>使用CSS变量</h3>
+                    <p>定义可复用的CSS变量：</p>
+                    <div class="code-block">
+                        <span class="code-tag">:root</span> {<br>
+                        &nbsp;&nbsp;--primary-color: #3498db;<br>
+                        &nbsp;&nbsp;--secondary-color: #2c3e50;<br>
+                        &nbsp;&nbsp;--font-size-base: 16px;<br>
+                        &nbsp;&nbsp;--spacing-unit: 1rem;<br>
+                        &nbsp;&nbsp;--border-radius: 4px;<br>
+                        }<br>
+                        <br>
+                        <span class="code-tag">.button</span> {<br>
+                        &nbsp;&nbsp;background-color: var(--primary-color);<br>
+                        &nbsp;&nbsp;padding: var(--spacing-unit);<br>
+                        &nbsp;&nbsp;border-radius: var(--border-radius);<br>
+                        }
+                    </div>
+                </section>
+                
+                <section id="css-methodology">
+                    <h3>CSS方法论</h3>
+                    
+                    <p>使用BEM（Block Element Modifier）命名方法论：</p>
+                    <div class="code-block">
+                        <span class="code-comment">/* Block */</span><br>
+                        <span class="code-tag">.card</span> { }<br>
+                        <br>
+                        <span class="code-comment">/* Element */</span><br>
+                        <span class="code-tag">.card__header</span> { }<br>
+                        <span class="code-tag">.card__body</span> { }<br>
+                        <span class="code-tag">.card__footer</span> { }<br>
+                        <br>
+                        <span class="code-comment">/* Modifier */</span><br>
+                        <span class="code-tag">.card--highlighted</span> { }<br>
+                        <span class="code-tag">.card--small</span> { }
+                    </div>
+                </section>
+                
+                <section id="naming-bem">
+                    <h2>BEM命名规范</h2>
+                    
+                    <p>BEM示例：</p>
+                    <div class="code-block">
+                        <span class="code-tag">&lt;div class="search-form"&gt;</span><br>
+                        &nbsp;&nbsp;<span class="code-tag">&lt;input class="search-form__input"&gt;</span><br>
+                        &nbsp;&nbsp;<span class="code-tag">&lt;button class="search-form__button search-form__button--disabled"&gt;</span>搜索<span class="code-tag">&lt;/button&gt;</span><br>
+                        <span class="code-tag">&lt;/div&gt;</span>
+                    </div>
+                    
+                    <div class="code-block">
+                        <span class="code-tag">.search-form</span> {<br>
+                        &nbsp;&nbsp;display: flex;<br>
+                        }<br>
+                        <br>
+                        <span class="code-tag">.search-form__input</span> {<br>
+                        &nbsp;&nbsp;flex: 1;<br>
+                        &nbsp;&nbsp;padding: 0.5rem;<br>
+                        }<br>
+                        <br>
+                        <span class="code-tag">.search-form__button</span> {<br>
+                        &nbsp;&nbsp;padding: 0.5rem 1rem;<br>
+                        &nbsp;&nbsp;background: blue;<br>
+                        &nbsp;&nbsp;color: white;<br>
+                        }<br>
+                        <br>
+                        <span class="code-tag">.search-form__button--disabled</span> {<br>
+                        &nbsp;&nbsp;background: gray;<br>
+                        &nbsp;&nbsp;cursor: not-allowed;<br>
+                        }
+                    </div>
+                </section>
+                
+                <section id="responsive-basics">
+                    <h2>响应式设计规范</h2>
+                    
+                    <h3>移动优先</h3>
+                    <p>采用移动优先的响应式设计方法：</p>
+                    <div class="code-block">
+                        <span class="code-comment">/* 基础样式（移动设备） */</span><br>
+                        <span class="code-tag">.container</span> {<br>
+                        &nbsp;&nbsp;padding: 1rem;<br>
+                        &nbsp;&nbsp;width: 100%;<br>
+                        }<br>
+                        <br>
+                        <span class="code-comment">/* 中等屏幕（平板） */</span><br>
+                        <span class="code-tag">@media (min-width: 768px)</span> {<br>
+                        &nbsp;&nbsp;<span class="code-tag">.container</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;padding: 2rem;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;max-width: 720px;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;margin: 0 auto;<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br>
+                        <br>
+                        <span class="code-comment">/* 大屏幕（桌面） */</span><br>
+                        <span class="code-tag">@media (min-width: 1200px)</span> {<br>
+                        &nbsp;&nbsp;<span class="code-tag">.container</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;max-width: 1140px;<br>
+                        &nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                </section>
+                
+                <section id="responsive-units">
+                    <h3>响应式单位</h3>
+                    
+                    <p>合理使用不同的CSS单位：</p>
+                    <div class="code-block">
+                        <span class="code-comment">/* 固定单位 - 适用于边框等 */</span><br>
+                        <span class="code-tag">.element</span> {<br>
+                        &nbsp;&nbsp;border: 1px solid #ccc;<br>
+                        }<br>
+                        <br>
+                        <span class="code-comment">/* 相对单位 - 适用于字体大小 */</span><br>
+                        <span class="code-tag">.element</span> {<br>
+                        &nbsp;&nbsp;font-size: 1rem; <span class="code-comment">/* 相对于根元素 */</span><br>
+                        &nbsp;&nbsp;line-height: 1.5; <span class="code-comment">/* 无单位，相对于字体大小 */</span><br>
+                        }<br>
+                        <br>
+                        <span class="code-comment">/* 视口单位 - 适用于全屏元素 */</span><br>
+                        <span class="code-tag">.hero-section</span> {<br>
+                        &nbsp;&nbsp;height: 100vh; <span class="code-comment">/* 视口高度的100% */</span><br>
+                        &nbsp;&nbsp;width: 100vw; <span class="code-comment">/* 视口宽度的100% */</span><br>
+                        }
+                    </div>
+                    
+                    <div class="tip">
+                        <strong>提示：</strong> 使用rem单位设置字体大小，使用em单位设置与字体大小相关的属性，使用%设置容器宽度，使用vw/vh设置与视口相关的尺寸。
+                    </div>
+                </section>
+            </main>
+        </div>
+    <!-- 新的页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 修复导航栏脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 平滑滚动
+            document.querySelectorAll('nav a, .sidebar a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    // 如果是页面间导航，不阻止默认行为
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                    
+                    // 更新活动导航项
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    
+                    // 只对页面间导航设置active类
+                    if (!this.getAttribute('href').startsWith('#')) {
+                        this.classList.add('active');
+                    }
+                });
+            });
+            
+            // 导航高亮
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section');
+                const navLinks = document.querySelectorAll('nav a[href^="#"]');
+                
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 120) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
