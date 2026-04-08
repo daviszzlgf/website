@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教学资源 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 资源分类 */
+        .resource-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-icon {
+            font-size: 2.5rem;
+            margin: 1.5rem 0;
+            color: var(--secondary);
+        }
+        
+        .category-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding: 0 1rem;
+        }
+        
+        .category-card p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        .btn-category {
+            display: block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-category:hover {
+            background: #2980b9;
+        }
+        
+        /* 资源列表 */
+        .resource-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .resource-item {
+            padding: 1.2rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .resource-item:hover {
+            background: #f5f9ff;
+        }
+        
+        .resource-item:last-child {
+            border-bottom: none;
+        }
+        
+        .resource-icon {
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .resource-content {
+            flex-grow: 1;
+        }
+        
+        .resource-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .resource-content p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .resource-meta span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .resource-meta i {
+            margin-right: 5px;
+        }
+        
+        .resource-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .btn-resource {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .btn-resource i {
+            margin-right: 5px;
+        }
+        
+        .btn-download {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-download:hover {
+            background: #2980b9;
+        }
+        
+        .btn-preview {
+            background: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-preview:hover {
+            background: #dde4e6;
+        }
+        
+        /* 特色资源 */
+        .featured-resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .featured-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .featured-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .featured-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .featured-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .featured-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .featured-content {
+            padding: 1.5rem;
+        }
+        
+        .featured-content p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .featured-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .featured-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .featured-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .featured-list i {
+            margin-right: 10px;
+            color: var(--success);
+        }
+        
+        .btn-featured {
+            display: block;
+            text-align: center;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-featured:hover {
+            background: #c0392b;
+        }
+        
+        /* 资源搜索 */
+        .resource-search {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .search-input {
+            flex-grow: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .search-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .search-btn:hover {
+            background: #2980b9;
+        }
+        
+        .search-filters {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        /* 资源统计 */
+        .resource-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-text {
+            color: #666;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .resource-categories, .featured-resources, .resource-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .resource-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .resource-actions {
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .btn-resource {
+                flex-grow: 1;
+                justify-content: center;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-btn {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="../learning/课程学习.html">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html" class="active">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>教学资源中心</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../resources/教学资源.html">教学资源</a></li>
+                <li>习题参考答案</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+
+        <!-- 按模块浏览 -->
+        <section class="content-section">
+            <h2><i class="fas fa-list-ol"></i> 按模块浏览</h2>
+            <p>按课程模块顺序查找相关教学资源</p>
+            
+            <ul class="resource-list">
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块1 网页设计与制作基础</h3>
+                        <p>网页基本概念、开发环境搭建、第一个HTML页面</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 3个PPT</span>
+                            <span><i class="fas fa-video"></i> 5个视频</span>
+                            <span><i class="fas fa-code"></i> 2个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案(模块1).doc" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块2 HTML网页元素</h3>
+                        <p>文本、图像、列表、结构等HTML元素的使用</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 4个PPT</span>
+                            <span><i class="fas fa-video"></i> 8个视频</span>
+                            <span><i class="fas fa-code"></i> 6个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块2）.docx" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块3 CSS3基础知识</h3>
+                        <p>CSS语法、选择器、文本样式、优先级和继承规则</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 3个PPT</span>
+                            <span><i class="fas fa-video"></i> 7个视频</span>
+                            <span><i class="fas fa-code"></i> 5个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块3）.docx" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块4 CSS盒子模型</h3>
+                        <p>盒子模型概念、属性、元素类型转换和综合应用</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="#" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                 <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块4 CSS盒子模型</h3>
+                        <p>盒子模型概念、属性、元素类型转换和综合应用</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="#" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块5 网页布局</h3>
+                        <p>布局类型、元素的定位、布局类型</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块5）.docx" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块6 表格与表单</h3>
+                        <p>超链接、列表样式、表格标记及样式美化、表单标记及样式美化</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块6）.doc" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块7 多媒体嵌入</h3>
+                        <p>音视频嵌入及呈现效果设置</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块7）.doc" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块8 综合项目实训</h3>
+                        <p>主题静态网站设计与制作</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块8）.docx" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块9 *CSS3的高级技巧</h3>
+                        <p>CSS3高级选择器、CSS3新属性应用</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块9）.docx" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块10 *过渡、变形和动画</h3>
+                        <p>过渡效果、变形效果、高级动画</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块10）.docx" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块11 *网页设计素养</h3>
+                        <p>设计原则、色彩与排版</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块11）.docx" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+                <li class="resource-item">
+                    <div class="resource-icon">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="resource-content">
+                        <h3>模块12 *AI辅助网页开发</h3>
+                        <p>AI工具应用及辅助设计</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-file-powerpoint"></i> 2个PPT</span>
+                            <span><i class="fas fa-video"></i> 6个视频</span>
+                            <span><i class="fas fa-code"></i> 4个示例</span>
+                        </div>
+                    </div>
+                    <div class="resource-actions">
+                        <a href="参考答案/习题答案（模块12）.docx" class="btn-resource btn-download"><i class="fas fa-folder-open"></i>下载文档</a>
+                    </div>
+                </li>
+               
+            </ul>
+            
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <a href="#" class="btn-resource btn-download"><i class="fas fa-ellipsis-h"></i> 查看更多章节</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的筛选功能
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有active类
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // 添加active类到当前按钮
+                button.classList.add('active');
+                
+                // 这里可以添加实际的筛选逻辑
+                const filter = button.textContent;
+                console.log(`筛选条件: ${filter}`);
+            });
+        });
+        
+        // 简单的搜索功能
+        document.querySelector('.search-btn').addEventListener('click', () => {
+            const searchTerm = document.querySelector('.search-input').value;
+            if (searchTerm) {
+                console.log(`搜索关键词: ${searchTerm}`);
+                alert(`搜索关键词: ${searchTerm}`);
+            }
+        });
+        
+        // 回车键搜索
+        document.querySelector('.search-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.querySelector('.search-btn').click();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxuria - 高端产品展示</title>
+    <style>
+        /* 基础样式与高级选择器应用 */
+        :root {
+            --primary-color: #d4af37; /* 金色 */
+            --secondary-color: #1a1a1a; /* 深灰 */
+            --accent-color: #f5f5f5; /* 浅灰 */
+            --text-color: #333;
+            --transition: all 0.3s ease;
+        }
+        
+        /* 通用重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        /* 高级选择器：伪元素创建装饰线 */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary-color);
+            margin: 15px auto 30px;
+        }
+        
+        /* 高级选择器：属性选择器 */
+        [data-featured="true"] {
+            border: 2px solid var(--primary-color);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 高级选择器：子选择器和相邻兄弟选择器 */
+        .product-card > .product-image {
+            transition: var(--transition);
+            overflow: hidden;
+        }
+        
+        .product-card > .product-image + .product-info {
+            padding-top: 20px;
+        }
+        
+        /* 高级选择器：通用兄弟选择器 */
+        .product-name ~ .product-price {
+            margin-top: 10px;
+        }
+        
+        /* 高级选择器：否定伪类 */
+        .product-card:not([data-featured="true"]) {
+            opacity: 0.9;
+        }
+        
+        /* 高级选择器：目标伪类 */
+        .product-card:target {
+            animation: highlight 2s ease;
+        }
+        
+        @keyframes highlight {
+            0% { background-color: transparent; }
+            50% { background-color: rgba(212, 175, 55, 0.1); }
+            100% { background-color: transparent; }
+        }
+        
+        /* 高级选择器：结构伪类 */
+        .product-list .product-card:nth-child(odd) {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .product-list .product-card:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .product-list .product-card:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        
+        .product-list .product-card:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        
+        /* 高级选择器：状态伪类 */
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cta-button:active {
+            transform: scale(0.98);
+        }
+        
+        /* 布局样式 */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        /* 高级选择器：伪元素创建下划线效果 */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            animation: fadeIn 2s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #e6c44a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 产品展示区域 */
+        .products {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: var(--secondary-color);
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .product-image {
+            height: 220px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: var(--primary-color);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+        
+        /* 特色区域样式 */
+        .features {
+            padding: 80px 0;
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .feature-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #111;
+            color: #aaa;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 14px;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 20px;
+            }
+            
+            .nav-links li {
+                margin: 0 15px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">LUXURIA</div>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#products">产品</a></li>
+                    <li><a href="#features">特色</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>极致奢华体验</h1>
+            <p>探索我们精心打造的高端产品系列，每一件都是匠心独运的艺术品，为您的生活增添非凡质感。</p>
+            <a href="#products" class="cta-button">探索产品</a>
+        </div>
+    </section>
+
+    <!-- 产品展示区域 -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">精选产品</h2>
+            <div class="product-grid">
+                <!-- 产品1 - 使用高级选择器控制的特色产品 -->
+                <div class="product-card" data-featured="true" id="product1">
+                    <div class="product-image">⌚</div>
+                    <div class="product-info">
+                        <h3 class="product-name">永恒时光腕表</h3>
+                        <p class="product-description">瑞士精密工艺，18K玫瑰金表壳，蓝宝石水晶镜面，限量珍藏版。</p>
+                        <div class="product-price">¥ 68,888</div>
+                    </div>
+                </div>
+                
+                <!-- 产品2 -->
+                <div class="product-card" id="product2">
+                    <div class="product-image">💎</div>
+                    <div class="product-info">
+                        <h3 class="product-name">璀璨钻石项链</h3>
+                        <p class="product-description">精选顶级钻石，精湛切割工艺，展现无与伦比的璀璨光芒。</p>
+                        <div class="product-price">¥ 128,000</div>
+                    </div>
+                </div>
+                
+                <!-- 产品3 -->
+                <div class="product-card" id="product3">
+                    <div class="product-image">👜</div>
+                    <div class="product-info">
+                        <h3 class="product-name">经典奢华手袋</h3>
+                        <p class="product-description">意大利顶级皮革，手工缝制，彰显尊贵气质与不凡品味。</p>
+                        <div class="product-price">¥ 45,600</div>
+                    </div>
+                </div>
+                
+                <!-- 产品4 -->
+                <div class="product-card" id="product4">
+                    <div class="product-image">🍷</div>
+                    <div class="product-info">
+                        <h3 class="product-name">典藏红酒套装</h3>
+                        <p class="product-description">法国波尔多顶级酒庄，陈年佳酿，品味时光沉淀的醇香。</p>
+                        <div class="product-price">¥ 32,800</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色区域 -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">我们的特色</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3 class="feature-title">精湛工艺</h3>
+                    <p>每一件产品都由资深工匠精心打造，传承百年工艺。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">专属定制</h3>
+                    <p>提供个性化定制服务，满足您独特的品味与需求。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">全球配送</h3>
+                    <p>安全可靠的全球配送服务，确保产品完好送达。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <h3 class="feature-title">品质保证</h3>
+                    <p>严格的质量控制体系，确保每一件产品都达到最高标准。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">品牌故事</a></li>
+                        <li><a href="#">我们的理念</a></li>
+                        <li><a href="#">社会责任</a></li>
+                        <li><a href="#">职业机会</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>客户服务</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">配送信息</a></li>
+                        <li><a href="#">退换政策</a></li>
+                        <li><a href="#">保养指南</a></li>
+                        <li><a href="#">常见问题</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">客服热线: 400-888-9999</a></li>
+                        <li><a href="#">邮箱: service@luxuria.com</a></li>
+                        <li><a href="#">门店地址</a></li>
+                        <li><a href="#">预约咨询</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>关注我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">微信公众号</a></li>
+                        <li><a href="#">微博</a></li>
+                        <li><a href="#">小红书</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 LUXURIA 高端奢华品牌. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

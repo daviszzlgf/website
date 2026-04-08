@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创意图片画廊 | CSS过渡、变形与动画</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 126, 95, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(255, 126, 95, 0.8), 0 0 30px rgba(255, 126, 95, 0.6);
+            }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        /* 使用CSS实现标签切换 */
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-controls input[type="radio"] {
+            display: none;
+        }
+        
+        .filter-label {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .filter-label:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        #filter-all:checked ~ .gallery-container .gallery-item,
+        #filter-nature:checked ~ .gallery-container .gallery-item[data-tag="自然风光"],
+        #filter-city:checked ~ .gallery-container .gallery-item[data-tag="城市建筑"],
+        #filter-abstract:checked ~ .gallery-container .gallery-item[data-tag="抽象艺术"] {
+            display: block;
+        }
+        
+        .gallery-item {
+            display: none;
+        }
+        
+        #filter-all:checked ~ .filter-controls label[for="filter-all"],
+        #filter-nature:checked ~ .filter-controls label[for="filter-nature"],
+        #filter-city:checked ~ .filter-controls label[for="filter-city"],
+        #filter-abstract:checked ~ .filter-controls label[for="filter-abstract"] {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .gallery-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            aspect-ratio: 4/3;
+            background-color: #333;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        /* 交错加载动画 */
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+        .gallery-item:nth-child(7) { animation-delay: 0.7s; }
+        .gallery-item:nth-child(8) { animation-delay: 0.8s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: all 0.5s ease;
+            transform: scale(0.8);
+        }
+        
+        /* 悬停效果 */
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1) rotate(2deg);
+            filter: brightness(0.7);
+        }
+        
+        .gallery-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+            transform: translateY(-20px);
+            transition: transform 0.5s ease 0.2s;
+        }
+        
+        .gallery-item:hover .gallery-title {
+            transform: translateY(0);
+        }
+        
+        .gallery-desc {
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-desc {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .gallery-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-top: 10px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* 技术展示区域 */
+        .tech-showcase {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+            gap: 20px;
+            max-width: 1000px;
+        }
+        
+        .tech-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            width: 150px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+        
+        .tech-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ff7e5f;
+        }
+        
+        .tech-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tech-desc {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>创意图片画廊</h1>
+        <p class="subtitle">CSS过渡、变形与动画技术综合运用</p>
+    </header>
+    
+    <!-- 使用CSS实现标签切换 -->
+    <input type="radio" id="filter-all" name="filter" checked>
+    <input type="radio" id="filter-nature" name="filter">
+    <input type="radio" id="filter-city" name="filter">
+    <input type="radio" id="filter-abstract" name="filter">
+    
+    <div class="filter-controls">
+        <label for="filter-all" class="filter-label active">全部图片</label>
+        <label for="filter-nature" class="filter-label">自然风光</label>
+        <label for="filter-city" class="filter-label">城市建筑</label>
+        <label for="filter-abstract" class="filter-label">抽象艺术</label>
+    </div>
+    
+    <div class="gallery-container">
+        <div class="gallery-grid">
+            <!-- 图片1 -->
+            <div class="gallery-item" data-tag="抽象艺术">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%231a2a6c'/%3E%3Ccircle cx='300' cy='200' r='80' fill='%23fdbb2d'/%3E%3Cpath d='M200,300 L400,300 L300,100 Z' fill='%23b21f1f'/%3E%3C/svg%3E" alt="抽象几何" class="gallery-img">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">抽象几何</h3>
+                    <p class="gallery-desc">几何形状的现代艺术组合</p>
+                    <span class="gallery-tag">抽象艺术</span>
+                </div>
+            </div>
+            
+            <!-- 图片2 -->
+            <div class="gallery-item" data-tag="自然风光">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%2300595a'/%3E%3Crect x='100' y='150' width='400' height='200' fill='%23008b8b'/%3E%3Ccircle cx='150' cy='100' r='40' fill='%23ffd700'/%3E%3Cpath d='M50,250 L550,250 L300,50 Z' fill='%23008000'/%3E%3C/svg%3E" alt="山湖日出" class="gallery-img">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">山湖日出</h3>
+                    <p class="gallery-desc">宁静的湖泊与远山日出</p>
+                    <span class="gallery-tag">自然风光</span>
+                </div>
+            </div>
+            
+            <!-- 图片3 -->
+            <div class="gallery-item" data-tag="城市建筑">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23333'/%3E%3Crect x='100' y='100' width='80' height='200' fill='%23555'/%3E%3Crect x='200' y='50' width='80' height='250' fill='%23777'/%3E%3Crect x='300' y='120' width='80' height='180' fill='%23999'/%3E%3Crect x='400' y='80' width='80' height='220' fill='%23bbb'/%3E%3Ccircle cx='300' cy='50' r='30' fill='%23ffd700'/%3E%3C/svg%3E" alt="城市天际线" class="gallery-img">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">城市天际线</h3>
+                    <p class="gallery-desc">现代都市的摩天大楼剪影</p>
+                    <span class="gallery-tag">城市建筑</span>
+                </div>
+            </div>
+            
+            <!-- 图片4 -->
+            <div class="gallery-item" data-tag="自然风光">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23001f3f'/%3E%3Ccircle cx='150' cy='100' r='30' fill='%23ffffff' opacity='0.8'/%3E%3Ccircle cx='250' cy='80' r='20' fill='%23ffffff' opacity='0.6'/%3E%3Ccircle cx='350' cy='120' r='25' fill='%23ffffff' opacity='0.7'/%3E%3Cpath d='M50,350 Q300,50 550,350' stroke='%23ffffff' stroke-width='3' fill='none'/%3E%3C/svg%3E" alt="星空银河" class="gallery-img">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">星空银河</h3>
+                    <p class="gallery-desc">夜空中的璀璨星辰与银河</p>
+                    <span class="gallery-tag">自然风光</span>
+                </div>
+            </div>
+            
+            <!-- 图片5 -->
+            <div class="gallery-item" data-tag="抽象艺术">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23440044'/%3E%3Ccircle cx='200' cy='200' r='70' fill='%23ff00ff' opacity='0.7'/%3E%3Ccircle cx='400' cy='200' r='70' fill='%2300ffff' opacity='0.7'/%3E%3Ccircle cx='300' cy='200' r='70' fill='%23ffff00' opacity='0.7'/%3E%3C/svg%3E" alt="色彩融合" class="gallery-img">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">色彩融合</h3>
+                    <p class="gallery-desc">多彩圆形的重叠与混合</p>
+                    <span class="gallery-tag">抽象艺术</span>
+                </div>
+            </div>
+            
+            <!-- 图片6 -->
+            <div class="gallery-item" data-tag="城市建筑">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23002244'/%3E%3Cpath d='M100,300 L500,300 L500,200 L400,150 L300,200 L200,150 L100,200 Z' fill='%23005588'/%3E%3Crect x='150' y='250' width='60' height='50' fill='%23ccaa88'/%3E%3Crect x='250' y='250' width='60' height='50' fill='%23ccaa88'/%3E%3Crect x='350' y='250' width='60' height='50' fill='%23ccaa88'/%3E%3C/svg%3E" alt="现代建筑" class="gallery-img">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">现代建筑</h3>
+                    <p class="gallery-desc">几何形态的现代建筑设计</p>
+                    <span class="gallery-tag">城市建筑</span>
+                </div>
+            </div>
+            
+            <!-- 图片7 -->
+            <div class="gallery-item" data-tag="自然风光">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23006633'/%3E%3Ccircle cx='300' cy='200' r='120' fill='%2300aa55'/%3E%3Cpath d='M200,100 L400,100 L450,300 L350,350 L250,350 L150,300 Z' fill='%23008844'/%3E%3Ccircle cx='250' cy='150' r='20' fill='%23ffffff'/%3E%3Ccircle cx='350' cy='150' r='20' fill='%23ffffff'/%3E%3C/svg%3E" alt="自然生态" class="gallery-img">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">自然生态</h3>
+                    <p class="gallery-desc">充满生机的绿色自然环境</p>
+                    <span class="gallery-tag">自然风光</span>
+                </div>
+            </div>
+            
+            <!-- 图片8 -->
+            <div class="gallery-item" data-tag="抽象艺术">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23551133'/%3E%3Cpath d='M100,100 L500,100 L500,300 L300,150 L100,300 Z' fill='%23aa2266'/%3E%3Ccircle cx='300' cy='200' r='50' fill='%23ff44aa'/%3E%3Cpath d='M250,200 L350,200 M300,150 L300,250' stroke='%23ffffff' stroke-width='10'/%3E%3C/svg%3E" alt="抽象构成" class="gallery-img">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">抽象构成</h3>
+                    <p class="gallery-desc">线条与形状的抽象组合</p>
+                    <span class="gallery-tag">抽象艺术</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tech-showcase">
+        <div class="tech-item">
+            <div class="tech-icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <div class="tech-title">过渡</div>
+            <div class="tech-desc">平滑的状态变化</div>
+        </div>
+        
+        <div class="tech-item">
+            <div class="tech-icon">
+                <i class="fas fa-expand-alt"></i>
+            </div>
+            <div class="tech-title">变形</div>
+            <div class="tech-desc">元素的旋转与缩放</div>
+        </div>
+        
+        <div class="tech-item">
+            <div class="tech-icon">
+                <i class="fas fa-film"></i>
+            </div>
+            <div class="tech-title">动画</div>
+            <div class="tech-desc">复杂的动效序列</div>
+        </div>
+        
+        <div class="tech-item">
+            <div class="tech-icon">
+                <i class="fas fa-magic"></i>
+            </div>
+            <div class="tech-title">悬停效果</div>
+            <div class="tech-desc">丰富的交互反馈</div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>创意图片画廊 &copy; 2025 | CSS过渡、变形与动画技术综合运用</p>
+    </footer>
+</body>
+</html>
