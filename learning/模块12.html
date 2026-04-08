@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块12：AI辅助网页开发 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        /* 完全保留原有样式，未作任何修改 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 项目概述 */
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 任务列表 */
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        /* 代码示例 */
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        
+        .code-title {
+            font-weight: 500;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-content {
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* 学习资源卡片 (原样保留) */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        /* 总结与回顾 (保留渐变风格) */
+        .summary-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .summary-section h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 拓展练习列表 */
+        .practice-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .practice-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .practice-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .practice-list i {
+            margin-right: 10px;
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+        
+        /* 习题部分 */
+        .quiz-section {
+            margin: 2rem 0;
+        }
+        
+        .quiz-category {
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-category h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .quiz-question {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .quiz-options {
+            list-style: none;
+        }
+        
+        .quiz-options li {
+            padding: 0.3rem 0;
+        }
+        
+        .quiz-fill {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 0 0.3rem;
+            min-width: 100px;
+            display: inline-block;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 (完全保留) */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 (保持不变) -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 (修改为模块12) -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块12：AI辅助网页开发</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="课程学习.html">课程学习</a></li>
+                <li>模块12：AI辅助网页开发</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容容器 -->
+    <div class="container">
+        <!-- ========= 项目概述 / 学习目标 ========= -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 学习目标</h2>
+            
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 知识·能力·素养</h3>
+                    <ul class="objective-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div><strong>知识目标：</strong>了解主流AI辅助网页开发工具（DeepSeek、ChatGPT、GitHub Copilot等）的应用场景；掌握AI代码生成的Prompt设计核心技巧（清晰性、具体性、上下文引导）；理解AI生成代码的局限性与优化方向；熟悉AI辅助调试、性能优化的方法。</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div><strong>能力目标：</strong>能使用AI工具生成基础HTML/CSS结构与响应式布局；能通过Prompt优化AI生成的代码质量（语义化、简洁性）；能利用AI辅助调试网页代码中的常见问题；能结合AI工具快速实现创意交互效果。</div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div><strong>素养目标：</strong>拥抱技术变革，树立“人机协同”的开发思维；培养批判性思维，对AI生成内容进行合理性验证；强化终身学习意识，跟踪AI工具的迭代与应用新场景。</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="duration-box">
+                    <h3>建议学时</h3>
+                    <div class="hours">4学时</div>
+                    <p>核心模块</p>
+                </div>
+            </div>
+            
+            <p>本模块将系统介绍AI辅助网页开发的核心流程：从AI工具基础操作到代码生成、布局设计、优化调试。借助AI工具显著提升开发效率，同时培养“人机协同”的批判性思维。</p>
+        </section>
+
+        <!-- ========= 任务列表 (12.1 ~ 12.4) ========= -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 核心任务</h2>
+            
+            <ul class="task-list">
+                <!-- 任务12.1：熟悉AI工具基础操作 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务12.1：熟悉AI工具基础操作</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p><strong>任务描述：</strong>本任务将介绍主流AI辅助网页开发工具的基础操作，帮助你快速上手AI工具，理解其核心功能与适用场景，为后续代码生成与优化打下基础。</p>
+                        <p><strong>任务分析：</strong>AI工具已成为网页开发的重要辅助手段，但不同工具的定位与用法差异较大。例如：GitHub Copilot适合实时辅助编码，ChatGPT适合生成完整结构与解决复杂问题，Figma AI插件适合设计转代码。</p>
+                        
+                        <h4>📌 知识链接：主流AI辅助工具分类</h4>
+                        <!-- 用资源卡片风格展示表格内容 (保留原风格) -->
+                        <div class="resource-cards" style="margin-top:1rem; margin-bottom:1rem;">
+                            <div class="resource-card">
+                                <div class="resource-icon"><i class="fas fa-code"></i></div>
+                                <h4>代码生成助手</h4>
+                                <p><strong>代表：</strong>GitHub Copilot、Codeium</p>
+                                <p>实时代码补全、函数生成</p>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon"><i class="fas fa-comment-dots"></i></div>
+                                <h4>对话式代码生成</h4>
+                                <p><strong>代表：</strong>ChatGPT、Claude</p>
+                                <p>基于自然语言生成完整代码块</p>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon"><i class="fas fa-paint-brush"></i></div>
+                                <h4>设计转代码</h4>
+                                <p><strong>代表：</strong>Figma AI、Magicul</p>
+                                <p>将设计稿转为HTML/CSS</p>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon"><i class="fas fa-bug"></i></div>
+                                <h4>调试优化助手</h4>
+                                <p><strong>代表：</strong>ChatGPT、CodeGuru</p>
+                                <p>错误分析、性能优化建议</p>
+                            </div>
+                        </div>
+                        
+                        <h4>📌 Prompt设计基础三原则</h4>
+                        <ul>
+                            <li><i class="fas fa-check" style="color:var(--success);"></i> <strong>清晰性：</strong>明确需求（如“生成响应式导航栏，使用Flex布局”）</li>
+                            <li><i class="fas fa-check" style="color:var(--success);"></i> <strong>具体性：</strong>指定技术细节（如“使用语义化标签，颜色#333，hover效果为下划线”）</li>
+                            <li><i class="fas fa-check" style="color:var(--success);"></i> <strong>上下文：</strong>提供前置信息（如“基于已有HTML结构，补充CSS样式”）</li>
+                        </ul>
+
+                        <h4>🔧 任务实施步骤</h4>
+                        <ul>
+                            <li><i class="fas fa-arrow-right"></i> 步骤1：在VSCode中安装GitHub Copilot扩展并登录</li>
+                            <li><i class="fas fa-arrow-right"></i> 步骤2：体验代码自动补全与注释引导生成</li>
+                            <li><i class="fas fa-arrow-right"></i> 步骤3：了解Copilot高级功能（代理模式、内联聊天、智能操作）</li>
+                            <li><i class="fas fa-arrow-right"></i> 步骤4：熟悉ChatGPT/DeepSeek等对话工具，输入简单Prompt生成HTML框架</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-flask"></i> 试一试</h4>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> 对比ChatGPT与DeepSeek对同一Prompt（“生成包含导航栏、banner和卡片列表的HTML页面框架”）生成代码的差异。</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- 任务12.2：使用AI工具生成网页结构与样式代码 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务12.2：生成网页结构与样式代码</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p><strong>任务描述：</strong>利用AI工具快速生成网页核心结构与布局，掌握通过Prompt引导AI生成高质量、可维护的代码。</p>
+                        <p><strong>任务分析：</strong>AI生成代码的质量取决于Prompt的精准度。需重点解决：如何让AI生成语义化HTML、如何引导响应式布局、如何复用组件。</p>
+                        
+                        <h4>📌 语义化HTML生成技巧</h4>
+                        <p>Prompt示例：“生成一个博客文章页面的HTML结构，使用语义化标签，包含标题、作者、发布时间、正文和相关推荐”</p>
+                        
+                        <h4>📌 响应式布局生成技巧</h4>
+                        <p>Prompt示例：“生成一个响应式导航栏，桌面端显示水平菜单，移动端（≤768px）显示汉堡菜单，使用CSS Flex和Media Query实现”</p>
+                        
+                        <h4>📌 组件复用引导</h4>
+                        <p>Prompt示例：“基于之前生成的产品卡片，生成一个包含3张卡片的网格布局，桌面端3列，平板端2列，移动端1列”</p>
+
+                        <h4>🔧 任务实施步骤</h4>
+                        <ul>
+                            <li><i class="fas fa-arrow-right"></i> 步骤1：生成个人作品集页面结构（导航、英雄区、项目卡片、关于、联系、页脚）</li>
+                            <li><i class="fas fa-arrow-right"></i> 步骤2：补充CSS样式（固定导航、渐变背景、卡片hover动画、表单）并添加移动端Media Query</li>
+                            <li><i class="fas fa-arrow-right"></i> 步骤3：将项目卡片封装为可复用CSS类，测试自定义颜色阴影</li>
+                        </ul>
+                    </div>
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-flask"></i> 试一试</h4>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> 生成一个语义化博客页面，检查是否使用了&lt;article&gt;、&lt;header&gt;等标签。</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- 任务12.3：使用AI生成网页布局（含侧边栏与导航栏） -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务12.3：生成侧边栏+导航栏布局</h3>
+                        <span class="task-tag">进阶</span>
+                    </div>
+                    <div class="task-description">
+                        <p><strong>任务描述：</strong>聚焦网页核心导航组件，学习通过AI工具快速生成符合现代设计规范的布局结构，掌握响应式适配与交互效果实现的Prompt设计技巧。</p>
+                        <p><strong>任务分析：</strong>侧边栏与导航栏是核心导航系统，常见模式包括固定侧边栏、可折叠侧边栏、移动端抽屉式。AI可快速生成多版方案，解决调试耗时问题。</p>
+                        
+                        <h4>📌 侧边栏与导航栏布局Prompt设计</h4>
+                        <ul>
+                            <li><strong>固定侧边栏：</strong>“生成后台管理页面布局，左侧固定侧边栏(240px)+顶部导航栏，侧边栏包含5个菜单项，顶部有搜索框、通知、用户头像”</li>
+                            <li><strong>可折叠侧边栏：</strong>“生成可折叠侧边栏，默认图标+文字，点击折叠按钮仅显示图标，宽度收缩为60px，平滑过渡”</li>
+                            <li><strong>电商分类：</strong>“电商首页左侧商品分类侧边栏(含二级菜单)，顶部导航栏含logo、搜索、购物车，使用Grid实现响应式”</li>
+                        </ul>
+
+                        <h4>📌 响应式优化技巧</h4>
+                        <ul>
+                            <li><strong>移动端适配：</strong>“屏幕≤768px时，侧边栏转为抽屉式（默认隐藏，点击汉堡菜单显示），顶部仅保留汉堡菜单、logo、购物车”</li>
+                            <li><strong>断点优化：</strong>“调整断点为360px(手机)、768px(平板)、1200px(桌面)”</li>
+                        </ul>
+
+                        <h4>📌 交互效果增强Prompt</h4>
+                        <ul>
+                            <li>侧边栏悬停背景渐变、当前菜单高亮；导航栏滚动变色；二级菜单展开/收起动画</li>
+                        </ul>
+
+                        <h4>🔧 任务实施步骤</h4>
+                        <ul>
+                            <li><i class="fas fa-arrow-right"></i> 步骤1：生成企业官网布局（左侧固定侧边栏+顶部导航栏，深蓝色系）</li>
+                            <li><i class="fas fa-arrow-right"></i> 步骤2：添加响应式适配（移动端抽屉式侧边栏，隐藏登录注册按钮）</li>
+                            <li><i class="fas fa-arrow-right"></i> 步骤3：增强交互（菜单悬停、导航栏滚动变色、当前菜单.active）</li>
+                            <li><i class="fas fa-arrow-right"></i> 步骤4：封装侧边栏/导航栏为CSS组件，提升可复用性</li>
+                        </ul>
+                    </div>
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-flask"></i> 试一试</h4>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> 用AI生成电商网站布局（分类侧边栏+顶部搜索/购物车），并实现移动端抽屉适配。</li>
+                            <li><i class="fas fa-lightbulb"></i> 对比DeepSeek和GitHub Copilot生成的布局代码差异，分析优缺点。</li>
+                            <li><i class="fas fa-lightbulb"></i> 让AI为侧边栏添加“收起/展开”按钮，宽度在260px和80px间切换动画。</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- 任务12.4：效果优化与调试 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务12.4：效果优化与调试</h3>
+                        <span class="task-tag">优化</span>
+                    </div>
+                    <div class="task-description">
+                        <p><strong>任务描述：</strong>学习利用AI工具优化网页效果（动画、性能），并解决常见代码问题（语法错误、布局错位）。例如优化下方冗余CSS：</p>
+                        <div class="code-example">
+                            <div class="code-header"><span class="code-title">冗余CSS示例</span></div>
+                            <div class="code-content"><pre>.box { margin:10px; padding:20px; background:red; }
+.container { margin:10px; padding:20px; background:blue; }
+.widget { margin:10px; padding:20px; background:green; }</pre></div>
+                        </div>
+                        
+                        <h4>📌 知识链接</h4>
+                        <ul>
+                            <li><strong>代码优化技巧：</strong>“简化以下CSS代码，去除冗余规则，合并重复样式”</li>
+                            <li><strong>调试辅助：</strong>“我的导航栏在移动端无法正常折叠，点击汉堡菜单无反应，分析问题并修复”</li>
+                            <li><strong>性能优化：</strong>“分析网页性能瓶颈，给出图片懒加载、CSS按需加载等建议”</li>
+                        </ul>
+
+                        <h4>🔧 任务实施步骤</h4>
+                        <ul>
+                            <li><i class="fas fa-arrow-right"></i> 步骤1：复制冗余CSS，用AI简化，对比前后可读性</li>
+                            <li><i class="fas fa-arrow-right"></i> 步骤2：输入“图片较多，加载慢，请给出优化方案”，按建议添加懒加载</li>
+                        </ul>
+                    </div>
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-flask"></i> 试一试</h4>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> 用ChatGPT生成一个带有hover缩放+颜色渐变的按钮。</li>
+                            <li><i class="fas fa-lightbulb"></i> 让AI分析下方CSS的性能问题并优化：<br>
+                            .container { width:100%; height:500px; background-image:url('bg.jpg'); ... }</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ========= 实训12.1：AI辅助开发创意页面 ========= -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 实训12.1：未来科技产品展示页面</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">实训12.1：AI辅助开发创意页面</h3>
+                    <span class="task-tag">综合实战</span>
+                </div>
+                <div class="task-description">
+                    <p><strong>任务要求：</strong>开发一个“未来科技产品展示页面”，包含以下元素：</p>
+                    <ul>
+                        <li><i class="fas fa-check" style="color:var(--success);"></i> 动态导航栏（滚动时背景变化）</li>
+                        <li><i class="fas fa-check" style="color:var(--success);"></i> 3D效果的产品展示区（使用CSS 3D变换）</li>
+                        <li><i class="fas fa-check" style="color:var(--success);"></i> 交互式数据可视化图表（如雷达图展示产品参数：性能、续航、设计、价格）</li>
+                        <li><i class="fas fa-check" style="color:var(--success);"></i> 响应式布局（适配移动端、平板、桌面端）</li>
+                    </ul>
+
+                    <h4>🔧 实施步骤</h4>
+                    <ul>
+                        <li><i class="fas fa-arrow-right"></i> 步骤1：需求分析与Prompt设计（未来科技风：深色背景、霓虹渐变、科技感动画）</li>
+                        <li><i class="fas fa-arrow-right"></i> 步骤2：用ChatGPT生成各模块代码（动态导航、3D卡片、雷达图等），整合到VS Code</li>
+                        <li><i class="fas fa-arrow-right"></i> 步骤3：优化与调试（调整颜色、修复移动端布局、增强hover交互）</li>
+                        <li><i class="fas fa-arrow-right"></i> 步骤4：测试响应式效果并部署到GitHub Pages</li>
+                    </ul>
+
+                    <!-- 示意代码块 (仿原风格) -->
+                    <div class="code-example">
+                        <div class="code-header">
+                            <span class="code-title">AI生成的核心结构示例 (部分)</span>
+                            <div class="code-actions"><button class="code-btn">复制</button></div>
+                        </div>
+                        <div class="code-content"><pre>&lt;!-- 动态导航栏 (滚动变色) --&gt;
+&lt;header id="navbar" class="科技-nav"&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;!-- 3D产品展示区 --&gt;
+&lt;div class="product-3d"&gt;
+  &lt;div class="card"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 雷达图 (用Chart.js或CSS实现示意) --&gt;
+&lt;canvas id="radarChart"&gt;&lt;/canvas&gt;
+
+&lt;style&gt;
+  /* 深色霓虹渐变, 3D变换 */
+  .product-3d:hover { transform: rotateY(180deg); }
+&lt;/style&gt;</pre></div>
+                    </div>
+                </div>
+                
+                <div class="task-objectives">
+                    <h4><i class="fas fa-rocket"></i> 拓展练习</h4>
+                    <ul>
+                        <li><i class="fas fa-star"></i> 让AI生成一个页面的性能优化报告，并实施优化（如图像压缩、代码分割）。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========= 归纳与总结 ========= -->
+        <section class="content-section summary-section">
+            <h2><i class="fas fa-chalkboard-teacher"></i> 归纳与总结</h2>
+            <p>本项目系统介绍了AI辅助网页开发的核心流程：从工具基础操作到代码生成、优化调试。AI工具能显著提升开发效率，但需注意：</p>
+            <ul style="color:white; margin-left:1.5rem;">
+                <li><strong>Prompt设计是关键：</strong>清晰、具体的Prompt能生成更高质量的代码。</li>
+                <li><strong>人工审核不可少：</strong>对AI生成的代码需进行兼容性、可读性验证。</li>
+                <li><strong>人机协同是趋势：</strong>将AI作为辅助工具，结合自身专业知识打造优质网页。</li>
+            </ul>
+            <p style="margin-top:1rem;">通过本模块的学习，你应具备利用AI工具快速实现网页开发需求的能力，同时保持对代码的深度理解与掌控力。</p>
+        </section>
+
+        <!-- ========= 习题 (完全按照模块12.docx) ========= -->
+        <section class="content-section quiz-section">
+            <h2><i class="fas fa-question-circle"></i> 习题</h2>
+            
+            <!-- 选择题 -->
+            <div class="quiz-category">
+                <h3>一、选择题</h3>
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 以下哪个工具适合实时辅助编码？（ ）</div>
+                    <ul class="quiz-options">
+                        <li>A. ChatGPT</li>
+                        <li>B. GitHub Copilot</li>
+                        <li>C. Figma AI</li>
+                        <li>D. MidJourney</li>
+                    </ul>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 以下哪项不是Prompt设计的核心原则？（ ）</div>
+                    <ul class="quiz-options">
+                        <li>A. 模糊性</li>
+                        <li>B. 清晰性</li>
+                        <li>C. 具体性</li>
+                        <li>D. 上下文</li>
+                    </ul>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">3. AI生成的代码可能存在的问题不包括？（ ）</div>
+                    <ul class="quiz-options">
+                        <li>A. 兼容性问题</li>
+                        <li>B. 冗余代码</li>
+                        <li>C. 语义化不足</li>
+                        <li>D. 完全正确</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 填空题 -->
+            <div class="quiz-category">
+                <h3>二、填空题</h3>
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 代码生成类AI工具的核心功能是 <span class="quiz-fill">实时代码补全</span> 和 <span class="quiz-fill">函数生成</span>。</div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 设计转代码工具可以将 <span class="quiz-fill">设计稿（Figma/Sketch）</span> 转为可复用的HTML/CSS。</div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">3. 对AI生成的代码，需重点检查 <span class="quiz-fill">兼容性</span> 和 <span class="quiz-fill">可读性</span>。</div>
+                </div>
+            </div>
+            
+            <!-- 实操题 -->
+            <div class="quiz-category">
+                <h3>三、实操题</h3>
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 用AI生成一个登录表单，包含用户名、密码输入框和提交按钮，要求：表单验证（非空、密码强度提示）、响应式布局、美观的样式（渐变背景、阴影效果）。</div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 分析以下AI生成的CSS代码，指出问题并优化：<br>
+                        <code>.box { width:100px; height:100px; background-color:red; background-color:blue; margin:10px; margin-top:20px; }</code><br>
+                        优化方向：去除冗余规则，合并重复样式。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========= 学习资源 (稍作调整，保留风格) ========= -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <p>以下资源将帮助你深入掌握AI辅助开发：</p>
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-robot"></i></div>
+                    <h3>AI工具指南</h3>
+                    <p>GitHub Copilot、ChatGPT、DeepSeek 官方文档与最佳实践。</p>
+                    <a href="#" class="btn-resource">查看</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>Prompt工程</h3>
+                    <p>提示词设计案例库，涵盖HTML/CSS/JS生成技巧。</p>
+                    <a href="#" class="btn-resource">学习</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-vial"></i></div>
+                    <h3>实训扩展</h3>
+                    <p>更多AI+创意页面实训项目，附带性能优化报告模板。</p>
+                    <a href="#" class="btn-resource">下载</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 (完全不变) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="../index.html">课程首页</a></li>
+                            <li><a href="../started/课程概况.html">课程概况</a></li>
+                            <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                            <li><a href="课程学习.html">课程学习</a></li>
+                            <li><a href="../resources/教学资源.html">教学资源</a></li>
+                            <li><a href="../综合测试.html">综合测试</a></li>
+                            <li><a href="../eval/课程评价.html">课程评价</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 复制按钮简易脚本 (保留) -->
+    <script>
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => {
+                            button.textContent = '复制';
+                        }, 2000);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

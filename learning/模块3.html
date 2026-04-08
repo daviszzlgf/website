@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块3：CSS3基础知识 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        /* 完全保留原有样式，不做任何修改 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .table-demo {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        
+        .demo-table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .demo-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .demo-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .demo-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .demo-table tr:hover {
+            background: #e9f7fe;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            background: var(--success);
+            color: white;
+        }
+        
+        .status-inactive {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .status-pending {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .form-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-title i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .form-check-input {
+            margin-right: 0.5rem;
+        }
+        
+        .form-check-label {
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background: #c0392b;
+        }
+        
+        .form-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .form-footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .form-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .element-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--info);
+        }
+        
+        .element-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .element-demo {
+            margin-top: 1rem;
+        }
+        
+        .element-demo select,
+        .element-demo textarea,
+        .element-demo input[type="range"] {
+            width: 100%;
+        }
+        
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        
+        .code-title {
+            font-weight: 500;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-content {
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+            
+            .form-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-elements {
+                grid-template-columns: 1fr;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="../learning/课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>模块3：CSS3基础知识</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../learning/课程学习.html">课程学习</a></li>
+                <li>模块3：CSS3基础知识</li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- 模块概述（原项目概述） -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 模块概述</h2>
+            
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 学习目标</h3>
+                    <ul class="objective-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>知识目标：</strong>掌握CSS语法规则和三种引用方式；了解常见的字体、文本、背景和边框属性的含义；理解CSS优先级和继承规则。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>能力目标：</strong>能够理解并应用CSS样式表，熟练使用CSS选择器；能够使用CSS控制字体样式属性、文本外观属性、背景属性和边框属性；能够为“精品课程站点”建立初步的视觉规范。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>素养目标：</strong>树立代码规范意识，理解样式规则在构建用户体验中的关键作用，在实现中坚守工匠精神，避免滥用样式。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="duration-box">
+                    <h3>建议学时</h3>
+                    <div class="hours">16学时</div>
+                    <p>基础模块</p>
+                </div>
+            </div>
+            
+            <p>完成网页结构搭建后，前端开发进入视觉设计阶段。本模块系统讲解CSS样式设计，通过代码实现专业的网页视觉效果。包括CSS语法基础，文本样式的灵活运用，初级选择器的掌握使用，以及背景、边框装饰的精细处理。通过“精品课程站点”的实践案例，详细演示如何将设计理念转化为具体的样式代码，实现从基础内容到精致界面的转变。</p>
+        </section>
+
+        <!-- 任务列表：4个任务对应模块3.1-3.4 -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 任务列表</h2>
+            
+            <ul class="task-list">
+                <!-- 任务3.1：建立课程网站样式基础 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务3.1：建立课程网站样式基础</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p>作为整个网站美化的起点，学习CSS语法规则，掌握样式表的引用方式，为后续课程网站的美化打下基础。通过对课程网站的简单元素添加基础样式，直观感受CSS如何改变网页的视觉呈现。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> CSS简介与语法规则：选择器{属性:值;}</li>
+                            <li><i class="fas fa-check"></i> 三种样式表引用方式：内联样式、内部样式表、外部样式表</li>
+                            <li><i class="fas fa-check"></i> 样式应用：通过行内样式设置字体颜色、内部样式设置背景、外部样式清除默认边距</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 表格演示：CSS属性示例 -->
+                    <h4>CSS语法规则示例</h4>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>选择器</th>
+                                    <th>属性</th>
+                                    <th>属性值</th>
+                                    <th>作用说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>p</td>
+                                    <td>color</td>
+                                    <td>red</td>
+                                    <td>设置段落文字为红色</td>
+                                </tr>
+                                <tr>
+                                    <td>h1</td>
+                                    <td>font-size</td>
+                                    <td>24px</td>
+                                    <td>设置一级标题字号为24像素</td>
+                                </tr>
+                                <tr>
+                                    <td>body</td>
+                                    <td>background-color</td>
+                                    <td>#f9f9f9</td>
+                                    <td>设置页面背景色</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：三种样式引用方式</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!-- 1. 内联样式 --&gt;
+&lt;p style="color:red;font-size:16px;"&gt;红色段落&lt;/p&gt;
+
+&lt;!-- 2. 内部样式表（放在head中） --&gt;
+&lt;style&gt;
+  body { background-color: #f0f0f0; }
+  h1 { color: navy; }
+&lt;/style&gt;
+
+&lt;!-- 3. 外部样式表（link标签） --&gt;
+&lt;link rel="stylesheet" href="css/style.css"&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <p>为deepseek.html页面添加行内样式、内部样式以及外部样式，初始化该页面的CSS样式。</p>
+                    </div>
+                </li>
+                
+                <!-- 任务3.2：设计网站字体排版 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务3.2：设计网站字体排版</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p>为“课程概况”页面建立完整的字体排版规范。学习CSS文本属性，掌握字体类型、字号层级、字重变化与行高设置的原理与方法，打造层次清晰、阅读舒适的专业化界面。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 字体样式属性：font-family, font-size, font-weight, font-style</li>
+                            <li><i class="fas fa-check"></i> 文本样式属性：text-align, text-decoration, line-height, text-shadow</li>
+                            <li><i class="fas fa-check"></i> CSS颜色体系：十六进制、RGB、RGBA、HSL、HSLA</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 表格演示：字体/文本属性 -->
+                    <h4>常用字体/文本属性示例</h4>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>属性</th>
+                                    <th>可选值/示例</th>
+                                    <th>说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>font-family</td>
+                                    <td>"宋体", Arial, sans-serif</td>
+                                    <td>设置字体类型</td>
+                                </tr>
+                                <tr>
+                                    <td>font-size</td>
+                                    <td>16px, 1.2rem, large</td>
+                                    <td>字体大小</td>
+                                </tr>
+                                <tr>
+                                    <td>font-weight</td>
+                                    <td>bold, 700, normal</td>
+                                    <td>字体粗细</td>
+                                </tr>
+                                <tr>
+                                    <td>text-align</td>
+                                    <td>center, left, right</td>
+                                    <td>水平对齐</td>
+                                </tr>
+                                <tr>
+                                    <td>line-height</td>
+                                    <td>1.6, 24px</td>
+                                    <td>行高</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：字体排版设置</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+p {
+    font-size: 1rem;
+    text-decoration: none;
+    color: #2c3e50;
+}
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <p>为deepseek.html的头部和底部设置背景颜色，并调整字体样式。</p>
+                    </div>
+                </li>
+                
+                <!-- 任务3.3：使用选择器精确控制样式 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务3.3：使用选择器精确控制样式</h3>
+                        <span class="task-tag">进阶</span>
+                    </div>
+                    <div class="task-description">
+                        <p>学习CSS选择器的核心知识，掌握如何精准定位并控制页面中的特定元素。通过标签选择器、类选择器、ID选择器等不同类型选择器的实践应用，实现对“课程评价”页面样式的精确控制，避免样式冲突。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 基础选择器：元素选择器、类选择器、ID选择器、通配符选择器</li>
+                            <li><i class="fas fa-check"></i> 选择器命名规范与优先级（权重计算）</li>
+                            <li><i class="fas fa-check"></i> CSS三大特性：继承性、层叠性、优先级</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 表格演示：选择器优先级 -->
+                    <h4>选择器优先级示例</h4>
+                    <div class="table-demo">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>选择器类型</th>
+                                    <th>示例</th>
+                                    <th>权重（优先级）</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>通配符选择器</td>
+                                    <td>*</td>
+                                    <td>0,0,0,0</td>
+                                </tr>
+                                <tr>
+                                    <td>元素选择器</td>
+                                    <td>p, h1, div</td>
+                                    <td>0,0,0,1</td>
+                                </tr>
+                                <tr>
+                                    <td>类选择器</td>
+                                    <td>.container, .topnav</td>
+                                    <td>0,0,1,0</td>
+                                </tr>
+                                <tr>
+                                    <td>ID选择器</td>
+                                    <td>#header, #container</td>
+                                    <td>0,1,0,0</td>
+                                </tr>
+                                <tr>
+                                    <td>行内样式</td>
+                                    <td>style="..."</td>
+                                    <td>1,0,0,0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：选择器应用</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+/* 元素选择器 */
+header { background-color: #2c3e50; }
+
+/* 类选择器 */
+.topnav { color: white; text-decoration: none; }
+
+/* ID选择器 */
+#container { width: 90%; margin: 0 auto; }
+
+/* 通配符选择器 */
+* { margin: 0; padding: 0; }
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <p>在deepseek.html中使用内部样式，选用通配符、ID、类、标签选择器修饰页面样式。</p>
+                    </div>
+                </li>
+                
+                <!-- 任务3.4：页面元素的样式深入设计 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务3.4：页面元素的样式深入设计</h3>
+                        <span class="task-tag">进阶</span>
+                    </div>
+                    <div class="task-description">
+                        <p>学习CSS中背景样式、边框样式与列表样式的综合应用。通过掌握背景图像控制、边框效果设计及列表符号优化等技能，为“课程概况”页面的各类元素添加恰当的视觉装饰，提升页面的美观度与专业感。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 背景样式：background-color, background-image, background-size, background-repeat</li>
+                            <li><i class="fas fa-check"></i> 边框样式：border-width, border-style, border-color, border-radius</li>
+                            <li><i class="fas fa-check"></i> 列表样式：list-style-type, list-style-image</li>
+                            <li><i class="fas fa-check"></i> 圆角与阴影：box-shadow</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>背景与边框示例</h4>
+                    <div class="form-elements">
+                        <div class="element-card" style="background: #ecf0f1; border-left-color: #e74c3c;">
+                            <div class="element-title">背景图像</div>
+                            <div class="element-demo" style="background-image: url('images/渐变背景.png'); background-size: cover; color: white; padding: 1rem; border-radius: 4px;">
+                                背景填充效果
+                            </div>
+                        </div>
+                        <div class="element-card" style="border-left-color: #2ecc71;">
+                            <div class="element-title">边框圆角</div>
+                            <div class="element-demo" style="border: 2px solid #3498db; border-radius: 20px; padding: 1rem; text-align: center;">
+                                border-radius: 20px
+                            </div>
+                        </div>
+                        <div class="element-card" style="border-left-color: #f39c12;">
+                            <div class="element-title">盒子阴影</div>
+                            <div class="element-demo" style="box-shadow: 0 8px 12px rgba(0,0,0,0.2); padding: 1rem; background: white;">
+                                box-shadow阴影
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：背景、边框、圆角</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+.module-header {
+    background-image: url(images/渐变背景.png);
+    background-size: cover;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 10px 10px 0 0;
+}
+.module-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.feature-card {
+    border-left: 4px solid #3498db;
+    background: #ecf0f1;
+    border-radius: 8px;
+}
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <p>为deepseek.html的头部添加背景图片，为卡片设置边框圆角和阴影。</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 实训任务：完成课程概况页面内容（替换原课程评价表单） -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 实训任务</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">实训3.1：完成课程概况页面内容</h3>
+                    <span class="task-tag">综合</span>
+                </div>
+                <div class="task-description">
+                    <p>重用已定义的样式，同时根据“课程概况”页面的最终效果，新添加样式，完成课程概况页面的内容部分（课程介绍、编写理念、教学目标、评估方式）。</p>
+                </div>
+                <div class="task-objectives">
+                    <h4>任务要求：</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 为课程介绍、编写理念、教学目标、评估方式四个部分添加类名".content-section"和".content-section-title"，重用已定义的白色卡片样式。</li>
+                        <li><i class="fas fa-check"></i> 编写理念使用网格布局（.feature-cards）展示至少6个卡片，每个卡片包含标题和描述，左侧边框颜色为#3498db。</li>
+                        <li><i class="fas fa-check"></i> 教学目标使用三张卡片（知识、能力、素养），添加顶部边框颜色分别为#3498db、#2ecc71、#f39c12。</li>
+                        <li><i class="fas fa-check"></i> 评估方式使用四张卡片展示百分比（40%、30%、20%、10%），并添加描述。</li>
+                        <li><i class="fas fa-check"></i> 确保整体结构清晰，样式统一，符合模块3.4的最终效果图。</li>
+                    </ul>
+                </div>
+                
+                <!-- 用原表单卡片展示课程概况示例（替换内容） -->
+                <h4>课程概况页面内容示例（部分）</h4>
+                <div class="form-card" style="background: #f8f9fa;">
+                    <h3 class="form-title"><i class="fas fa-book-open"></i> 编写理念卡片预览</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div style="background: #ecf0f1; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #3498db;">
+                            <h4 style="color: #2c3e50;">立德树人，素养导向</h4>
+                            <p style="font-size: 0.9rem;">将思政元素有机融入技术教学，培养学生严谨、协作、创新的职业素养。</p>
+                        </div>
+                        <div style="background: #ecf0f1; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #3498db;">
+                            <h4 style="color: #2c3e50;">课程网站建设</h4>
+                            <p style="font-size: 0.9rem;">亲手打造课程网站，在构建中掌握HTML/CSS融会贯通的能力。</p>
+                        </div>
+                        <div style="background: #ecf0f1; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #3498db;">
+                            <h4 style="color: #2c3e50;">项目驱动</h4>
+                            <p style="font-size: 0.9rem;">以完整“精品课程网站”项目贯穿全课程，做中学。</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <p style="color: #2c3e50;"><strong>评估方式：</strong> 项目实践40% · 平时作业30% · 课堂参与20% · 期末考试10%</p>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn" style="margin-right: 0.5rem;">参考实现</button>
+                        <button class="btn btn-accent">下载示例代码</button>
+                    </div>
+                </div>
+                
+                <div class="code-example" style="margin-top: 1.5rem;">
+                    <div class="code-header">
+                        <div class="code-title">实训参考：编写理念CSS</div>
+                        <div class="code-actions"><button class="code-btn">复制</button></div>
+                    </div>
+                    <div class="code-content">
+                        <pre>
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+.feature-card {
+    background: #ecf0f1;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 总结与回顾 -->
+        <section class="content-section">
+            <h2><i class="fas fa-clipboard-check"></i> 总结与回顾</h2>
+            <p>本项目讲解了CSS基础语法以及三种引用方式，通过色彩心理学原理构建了专业的网站配色方案，接着建立了科学的字体排版规范，然后掌握了CSS选择器的精准定位技巧，最后深入运用了背景样式、边框样式以及颜色值的使用进行视觉装饰。每个任务都以“精品课程站点”为实践载体，将理论知识转化为可操作的样式代码。本项目的学习不仅让我们掌握了CSS的核心样式属性，更重要的是培养了将设计意图转化为代码实现的系统化思维，为后续复杂页面的样式设计奠定了坚实基础。</p>
+            <ul class="objective-list">
+                <li><i class="fas fa-check"></i> CSS语法规则与三种引用方式</li>
+                <li><i class="fas fa-check"></i> 字体、文本、背景、边框属性的应用</li>
+                <li><i class="fas fa-check"></i> 选择器的使用与优先级规则</li>
+                <li><i class="fas fa-check"></i> 网格布局与卡片样式设计</li>
+            </ul>
+        </section>
+
+        <!-- 学习资源（保留原结构，内容调整为CSS相关） -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <p>以下资源将帮助您更好地完成模块3的学习：</p>
+            
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-book"></i></div>
+                    <h3>教材章节</h3>
+                    <p>模块3完整教材内容，包含CSS基础、选择器、背景边框等详细讲解。</p>
+                    <a href="#" class="btn-resource">查看教材</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-video"></i></div>
+                    <h3>视频教程</h3>
+                    <p>CSS语法、选择器、字体排版、背景边框等核心知识点视频讲解。</p>
+                    <a href="#" class="btn-resource">观看视频</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-code"></i></div>
+                    <h3>示例代码</h3>
+                    <p>模块3所有任务的完整示例代码，包含课程概况页面样式实现。</p>
+                    <a href="#" class="btn-resource">下载代码</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-tasks"></i></div>
+                    <h3>拓展练习</h3>
+                    <p>根据已完成的deepseek.html进度，继续完善样式内容，完成最终页面效果。</p>
+                    <a href="#" class="btn-resource">开始练习</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 新增习题部分（依据模块3.doc，保持风格） -->
+        <section class="content-section">
+            <h2><i class="fas fa-pencil-alt"></i> 习题</h2>
+            <div style="display: grid; gap: 1.5rem;">
+                <div>
+                    <h4>一、选择题</h4>
+                    <ul class="objective-list">
+                        <li><i class="fas fa-check-circle"></i> 1. CSS是（C）的缩写。 A. Colorful Style Sheets B. Computer Style Sheets C. Cascading Style Sheets D. Creative Style Sheets</li>
+                        <li><i class="fas fa-check-circle"></i> 2. 以下不是CSS引用方式的是（D）。 A. 行内样式 B. 内部样式 C. 外部样式 D. 尾部样式</li>
+                        <li><i class="fas fa-check-circle"></i> 3. 引用外部样式表的格式是（B）。 A. &lt;style src="mystyle.css"&gt; B. &lt;link rel="stylesheet" type="text/css" href="mystyle.css"&gt; C. &lt;stylesheet&gt;mystyle.css&lt;/stylesheet&gt; D. &lt;style type="text/css" href="mystyle.css"&gt;</li>
+                        <li><i class="fas fa-check-circle"></i> 4. 引用内部样式表的元素应该放在（C）。 A. HTML文档的开始 B. HTML文档的结束 C. &lt;head&gt;元素中 D. &lt;body&gt;元素中</li>
+                        <li><i class="fas fa-check-circle"></i> 5. 下列关于颜色的表述，不能显示为红色的是（D）。 A. red B. #ff0000 C. rgb(255,0,0) D. hsl(120,100%,50%)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>二、名词解释</h4>
+                    <ul class="objective-list">
+                        <li><i class="fas fa-check-circle"></i> CSS：层叠样式表，用于控制网页元素外观的标记语言。</li>
+                        <li><i class="fas fa-check-circle"></i> 内部样式表：写在HTML文档&lt;head&gt;的&lt;style&gt;标签中的CSS代码。</li>
+                        <li><i class="fas fa-check-circle"></i> 类选择器：以点号（.）开头，通过class属性匹配元素的选择器。</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>三、判断题</h4>
+                    <ul class="objective-list">
+                        <li><i class="fas fa-check-circle"></i> 1. 在CSS中，ID选择器的优先级高于类选择器。 （√）</li>
+                        <li><i class="fas fa-check-circle"></i> 2. CSS选择器不区分大小写，属性和值也不区分大小写。 （√）</li>
+                        <li><i class="fas fa-check-circle"></i> 3. 在外部样式表引用.css文件时，&lt;link&gt;元素当中rel用来定义所链接的外部样式表文件的URL。 （×，rel定义关系）</li>
+                        <li><i class="fas fa-check-circle"></i> 4. background-repeat属性的默认值是no-repeat。 （×，默认repeat）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 代码复制功能（保留原有交互）
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => {
+                            button.textContent = '复制';
+                        }, 2000);
+                    });
+                }
+            });
+        });
+        
+        // 表单提交演示（保留，但本页表单已替换为静态内容，仍保留防止报错）
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('表单提交成功！（演示效果）');
+            });
+        });
+    </script>
+</body>
+</html>

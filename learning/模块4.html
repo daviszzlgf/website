@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块4：CSS3盒子模型 - 网页设计与制作</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 项目概述 */
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 任务列表 */
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        /* 代码示例 */
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        
+        .code-title {
+            font-weight: 500;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-content {
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* 视觉规范展示（现用于盒子模型对比） */
+        .visual-guide {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .visual-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .visual-preview {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .visual-info {
+            padding: 1rem;
+        }
+        
+        .visual-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .visual-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 学习资源 */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="../learning/课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块4：CSS3盒子模型</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../learning/课程学习.html">课程学习</a></li>
+                <li>模块4：CSS3盒子模型</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 模块概述 -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 模块概述</h2>
+            
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 学习目标</h3>
+                    <ul class="objective-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>知识目标：</strong>掌握盒子模型四层结构、标准与怪异盒模型计算规则、padding/border/margin 语法、外边距合并、元素类型转换、背景延伸与溢出处理、Flex/Grid 基础原理。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>能力目标：</strong>能运用盒子模型精确控制尺寸与间距；能解决外边距合并、inline-block 间隙；能使用display转换元素类型；能结合box-sizing统一布局规则；能运用Flex/Grid完成多内容卡片布局。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>素养目标：</strong>建立模块化、标准化的CSS编写习惯；在布局调试中主动分析盒模型计算问题；理解盒子模型作为CSS布局核心，建立系统化知识体系；提升团队协作中代码的一致性与可复用性。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="duration-box">
+                    <h3>建议学时</h3>
+                    <div class="hours">12学时</div>
+                    <p>基础核心模块</p>
+                </div>
+            </div>
+            
+            <p>打开任何一个网页，按下F12键，你会发现那些色彩斑斓的导航栏、卡片、按钮和图片，本质上都是由"方方正正的盒子"构成的。这种"四层包裹"规则——内容(content)、内边距(padding)、边框(border)和外边距(margin)——构成了Web前端开发的第一块基石。本模块将从"一个盒子"出发，逐层解析、逐像素测量，带你完成从基础认知到精确计算的盒子模型进阶之旅。</p>
+        </section>
+
+        <!-- 任务列表（共4个任务） -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 核心任务</h2>
+            
+            <ul class="task-list">
+                <!-- 任务4.1 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务4.1：页面结构划分与盒子模型</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p>从"盒子"视角将空白页面划分为container、header、content、sidebar、footer五个区域，使用语义化类名标识。通过背景色、边框直观呈现层级关系，掌握盒子模型四层结构的基础应用。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 盒子模型四层结构：content / padding / border / margin</li>
+                            <li><i class="fas fa-check"></i> 背景延伸控制：background-clip / background-origin</li>
+                            <li><i class="fas fa-check"></i> 溢出处理：overflow属性（visible/hidden/scroll/auto）</li>
+                            <li><i class="fas fa-check"></i> 尺寸计算规则：标准盒模型(content-box) vs 怪异盒模型(border-box)</li>
+                            <li><i class="fas fa-check"></i> 页面样式重置：* { box-sizing: border-box; margin:0; padding:0; }</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：全局重置与盒子模型</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+/* 统一盒子模型，清除默认边距 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 标准盒模型：width 仅指内容区 */
+.standard {
+    box-sizing: content-box;
+    width: 200px;
+    padding: 20px;
+    border: 5px solid #333;
+    /* 实际宽度 = 200 + 40 + 10 = 250px */
+}
+
+/* 怪异盒模型：width 包含 padding 和 border */
+.weird {
+    box-sizing: border-box;
+    width: 200px;
+    padding: 20px;
+    border: 5px solid #333;
+    /* 实际宽度 = 200px (内容区被压缩为 200-40-10=150px) */
+}
+                            </pre>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- 任务4.2 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务4.2：横向导航栏布局实现</h3>
+                        <span class="task-tag">布局</span>
+                    </div>
+                    <div class="task-description">
+                        <p>运用盒子模型的padding、border、margin属性，结合元素类型转换，将垂直列表转换为水平导航栏。控制链接宽度、悬停效果及间距，实现规范美观的横向导航栏。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 内边距padding（复合写法与方向控制）</li>
+                            <li><i class="fas fa-check"></i> 边框border（宽度、样式、颜色、圆角、阴影）</li>
+                            <li><i class="fas fa-check"></i> 外边距margin（复合写法、负值应用）</li>
+                            <li><i class="fas fa-check"></i> 外边距合并（Collapsing）及解决方案</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 保留视觉指南结构，但内容改为盒子模型对比 -->
+                    <div class="visual-guide">
+                        <div class="visual-item">
+                            <div class="visual-preview" style="background-color: #2c3e50;">
+                                标准盒模型 content-box
+                            </div>
+                            <div class="visual-info">
+                                <h4>content-box</h4>
+                                <p>width = 内容区宽度，padding和border额外增加总宽</p>
+                            </div>
+                        </div>
+                        <div class="visual-item">
+                            <div class="visual-preview" style="background-color: #3498db;">
+                                怪异盒模型 border-box
+                            </div>
+                            <div class="visual-info">
+                                <h4>border-box</h4>
+                                <p>width = 内容区+padding+border，内边距和边框向内挤压</p>
+                            </div>
+                        </div>
+                        <div class="visual-item">
+                            <div class="visual-preview" style="background-color: #e74c3c;">
+                                外边距合并
+                            </div>
+                            <div class="visual-info">
+                                <h4>Margin Collapsing</h4>
+                                <p>垂直相邻块级外边距取较大值，而非相加</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：横向导航栏</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+/* 清除列表默认样式 */
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+li {
+    display: inline-block;  /* 横向排列 */
+}
+a {
+    display: inline-block;
+    padding: 8px 15px;
+    margin-right: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+}
+a:hover {
+    background: #f0f0f0;
+    border-color: #3498db;
+}
+                            </pre>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- 任务4.3 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务4.3：元素类型转换</h3>
+                        <span class="task-tag">类型转换</span>
+                    </div>
+                    <div class="task-description">
+                        <p>通过display属性改变元素默认显示类型，实现卡片横向排列。掌握块级、行内、行内块的特点，解决inline-block间隙问题，完成静态卡片组布局。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 块级元素（block）特征</li>
+                            <li><i class="fas fa-check"></i> 行内元素（inline）特征</li>
+                            <li><i class="fas fa-check"></i> 行内块元素（inline-block）特征</li>
+                            <li><i class="fas fa-check"></i> inline-block间隙产生原因与解决方案（父元素font-size:0）</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：inline-block 间隙消除</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;style&gt;
+    .parent {
+        font-size: 0;  /* 消除空白节点间隙 */
+    }
+    .child {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        font-size: 16px;  /* 恢复字体 */
+        background: #3498db;
+        margin-right: 10px;
+    }
+&lt;/style&gt;
+&lt;div class="parent"&gt;
+    &lt;div class="child"&gt;卡片1&lt;/div&gt;
+    &lt;div class="child"&gt;卡片2&lt;/div&gt;
+    &lt;div class="child"&gt;卡片3&lt;/div&gt;
+&lt;/div&gt;
+                            </pre>
+                        </div>
+                    </div>
+                </li>
+                
+                <!-- 任务4.4 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务4.4：多内容卡片布局与尺寸精确控制</h3>
+                        <span class="task-tag">现代布局</span>
+                    </div>
+                    <div class="task-description">
+                        <p>学习Flex弹性布局与Grid网格布局，解决传统inline-block在复杂卡片布局中的局限。实现一维横向均布与二维行列精确控制，完成信息丰富的企业级卡片布局。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Flex容器属性（display:flex, flex-direction, justify-content, align-items）</li>
+                            <li><i class="fas fa-check"></i> Flex项目属性（flex-grow, flex-shrink, flex-basis）</li>
+                            <li><i class="fas fa-check"></i> Grid容器属性（grid-template-columns/rows, gap, repeat, fr单位）</li>
+                            <li><i class="fas fa-check"></i> Grid项目跨列/跨行（grid-column / grid-row）</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：Grid三列卡片布局</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    transition: transform 0.3s;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+                            </pre>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 实训任务（综合实训） -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 综合实训</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">综合实训：数码商城商品列表页</h3>
+                    <span class="task-tag">实战</span>
+                </div>
+                <div class="task-description">
+                    <p>开发数码商城商品列表页的静态页面，包含顶部导航、筛选栏、商品列表、底部版权。要求精准控制元素间距与尺寸，满足基础响应式适配。</p>
+                </div>
+                <div class="task-objectives">
+                    <h4>任务要求：</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 顶部导航栏：Flex布局实现两端对齐与垂直居中，内边距上下12px、左右20px</li>
+                        <li><i class="fas fa-check"></i> 筛选栏：inline-block布局实现横向排列（宽度不足自动换行），筛选项左右间距8px、底部间距10px，内边距上下5px、左右12px</li>
+                        <li><i class="fas fa-check"></i> 商品列表区：Grid布局，列宽最小280px、最大等分剩余空间，卡片间距20px</li>
+                        <li><i class="fas fa-check"></i> 商品卡片内部：Flex垂直布局，内边距15px，图片宽100%、高200px</li>
+                        <li><i class="fas fa-check"></i> 底部版权区：文字水平居中，内边距上下20px</li>
+                    </ul>
+                </div>
+                
+                <div class="code-example">
+                    <div class="code-header">
+                        <div class="code-title">商品列表Grid参考</div>
+                        <div class="code-actions">
+                            <button class="code-btn">复制</button>
+                            <button class="code-btn">运行</button>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre>
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+.product-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.card-content {
+    padding: 15px;
+    flex: 1;
+}
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 拓展练习提示（可附加在实训后） -->
+            <div style="margin-top: 2rem; padding: 1rem; background: #f0f7ff; border-radius: 8px;">
+                <h4 style="color: var(--primary);"><i class="fas fa-puzzle-piece"></i> 拓展练习</h4>
+                <p>完成数码商城列表页后，尝试增加面包屑导航、分页控件，并利用负margin实现标签外凸效果。也可参照模块4文档中的“拓展练习”图4.21完善页面。</p>
+            </div>
+        </section>
+
+        <!-- 学习资源（保留原有结构，仅微调文字） -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <p>以下资源将帮助您更好地掌握盒子模型及现代布局：</p>
+            
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>模块教材</h3>
+                    <p>模块4完整教材内容，包含四层结构、尺寸计算、Flex/Grid 详细图解。</p>
+                    <a href="#" class="btn-resource">在线阅读</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>视频精讲</h3>
+                    <p>标准/怪异盒模型、外边距合并、inline-block间隙、Grid布局实战。</p>
+                    <a href="#" class="btn-resource">观看视频</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>示例代码包</h3>
+                    <p>任务4.1~4.4完整示例代码，包含导航栏、卡片组、Grid商品列表。</p>
+                    <a href="#" class="btn-resource">下载代码</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>习题与测验</h3>
+                    <p>选择题、填空题、问答题，巩固盒子模型核心概念。</p>
+                    <a href="#" class="btn-resource">在线自测</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="main.html">课程首页</a></li>
+                            <li><a href="../课程概况.html">课程概况</a></li>
+                            <li><a href="../入门攻略.html">入门攻略</a></li>
+                            <li><a href="../课程学习.html">课程学习</a></li>
+                            <li><a href="../教学资源.html">教学资源</a></li>
+                            <li><a href="../综合测试.html">综合测试</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 代码复制功能
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => {
+                            button.textContent = '复制';
+                        }, 2000);
+                    });
+                }
+            });
+        });
+    </script>
+    <!-- 引入Font Awesome图标库 (保留原有图标) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

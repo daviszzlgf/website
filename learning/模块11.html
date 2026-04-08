@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块11：网页设计素养 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 项目概述 */
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 任务列表 */
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        /* 变形效果演示 - 现用于色彩/风格卡片 */
+        .transform-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .transform-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .transform-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .transform-preview {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary);
+            margin: 0 auto 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+        
+        /* 保留原有的悬停变形效果，但内容改为色块/关键词，无妨 */
+        .transform-translate:hover {
+            transform: translate(20px, 20px);
+        }
+        
+        .transform-rotate:hover {
+            transform: rotate(45deg);
+        }
+        
+        .transform-scale:hover {
+            transform: scale(1.5);
+        }
+        
+        .transform-skew:hover {
+            transform: skew(20deg, 10deg);
+        }
+        
+        .transform-origin:hover {
+            transform: rotate(45deg);
+            transform-origin: top left;
+        }
+        
+        .transform-3d:hover {
+            transform: rotate3d(1, 1, 0, 45deg);
+        }
+        
+        /* 过渡效果演示 - 现用于配色/排版示例 */
+        .transition-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .transition-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .transition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .transition-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .transition-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .transition-preview {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary);
+            margin: 0 auto 1rem;
+            border-radius: 8px;
+            transition: all 0.5s ease;
+        }
+        
+        .transition-card:hover .transition-preview {
+            transform: scale(1.2);
+            background: var(--accent);
+        }
+        
+        /* 动画效果演示 - 现用于展示网格/色彩心理学等 */
+        .animation-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .animation-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .animation-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .animation-preview {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary);
+            margin: 0 auto 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* 保留动画，但用于静态说明，不影响 */
+        .animation-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* 创意图片画廊 - 现用于展示需求分析报告卡片 */
+        .gallery-container {
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            aspect-ratio: 1;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            cursor: pointer;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .gallery-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* 加载动画演示 - 保留但可移除内容，我们保留结构但不强调 */
+        .loading-demo {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-dots {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .loading-dot {
+            width: 15px;
+            height: 15px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        .loading-bar {
+            width: 200px;
+            height: 10px;
+            background: #f3f3f3;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .loading-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--secondary);
+            width: 30%;
+            animation: loading 2s infinite ease-in-out;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { 
+                transform: scale(0);
+            } 40% { 
+                transform: scale(1.0);
+            }
+        }
+        
+        @keyframes loading {
+            0% { left: -30%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 代码示例 */
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        
+        .code-title {
+            font-weight: 500;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-content {
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* 学习资源 */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        /* 总结与回顾 */
+        .summary-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .summary-section h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 拓展练习 */
+        .practice-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .practice-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .practice-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .practice-list i {
+            margin-right: 10px;
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+        
+        /* 习题部分 */
+        .quiz-section {
+            margin: 2rem 0;
+        }
+        
+        .quiz-category {
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-category h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .quiz-question {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .quiz-options {
+            list-style: none;
+        }
+        
+        .quiz-options li {
+            padding: 0.3rem 0;
+        }
+        
+        .quiz-fill {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 0 0.3rem;
+            min-width: 100px;
+            display: inline-block;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+            
+            .transition-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .transform-demo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .animation-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .loading-demo {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .transform-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 (保持不变) -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 (修改为模块11) -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块11：网页设计素养</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="课程学习.html">课程学习</a></li>
+                <li>模块11：网页设计素养</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 模块概述 (替换为模块11的学习目标) -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 模块概述</h2>
+            
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 学习目标</h3>
+                    <ul class="objective-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>知识目标：</strong>了解网页设计的基本原则与核心概念；掌握网站需求分析与视觉风格定位的方法；理解色彩搭配的心理学基础与页面排版的基础网格系统。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>能力目标：</strong>能够独立完成网站主题的需求分析与风格定位；能够运用设计原则进行系统的色彩搭配与页面排版；能够将设计稿转化为符合视觉规范的完整静态网站。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>素养目标：</strong>树立"设计为先"的系统思维，理解视觉规划在用户体验中的前瞻性作用；在设计中培养文化自信与审美鉴别力，理解设计选择对用户认知与信息获取的影响，追求功能与美感的统一。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="duration-box">
+                    <h3>模块时长</h3>
+                    <div class="hours">4学时</div>
+                    <p>核心素养模块</p>
+                </div>
+            </div>
+            
+            <p>当浏览一个专业网站时，其协调的色彩、清晰的布局和独特的风格背后，是一套从抽象概念到具体代码的系统化设计流程。本项目将带你完整经历这一创造性过程，从分析需求、定位风格，到运用设计原理选择色彩与字体，最终搭建出符合规范的完整网站。通过"精品课程站点"这一载体，理解设计选择背后的意义与影响。</p>
+        </section>
+
+        <!-- 任务列表 (替换为任务11.1和11.2) -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 任务列表</h2>
+            
+            <ul class="task-list">
+                <!-- 任务11.1：网站主题需求分析与风格定位 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务11.1：网站主题需求分析与风格定位</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p>创建网站之前，明确网站的需求和风格是至关重要的第一步。本任务将系统化地完成网站项目的需求分析与视觉风格定位。从一个初始想法出发，通过定义目标用户、梳理核心功能、分析同类网站，最终确定网站的整体风格基调，并为后续设计产出清晰的指导。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 网页设计的概念与核心原则</li>
+                            <li><i class="fas fa-check"></i> 设计需求与功能需求分析方法</li>
+                            <li><i class="fas fa-check"></i> 情绪板的制作与风格定位</li>
+                            <li><i class="fas fa-check"></i> 用户画像与核心功能梳理</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 风格定位示例卡片 (使用transform-demo改造为情绪板关键词) -->
+                    <h4>风格关键词 & 情绪板示例</h4>
+                    <div class="transform-demo">
+                        <div class="transform-card">
+                            <div class="transform-preview" style="background:#2c3e50;">专业</div>
+                            <h3 class="transform-title">专业可信</h3>
+                            <p>蓝色系 · 严谨稳重</p>
+                        </div>
+                        <div class="transform-card">
+                            <div class="transform-preview" style="background:#3498db;">清晰</div>
+                            <h3 class="transform-title">清晰友好</h3>
+                            <p>明亮通透 · 易读</p>
+                        </div>
+                        <div class="transform-card">
+                            <div class="transform-preview" style="background:#e67e22;">现代</div>
+                            <h3 class="transform-title">现代简约</h3>
+                            <p>留白 · 无衬线字体</p>
+                        </div>
+                        <div class="transform-card">
+                            <div class="transform-preview" style="background:#2ecc71;">激发</div>
+                            <h3 class="transform-title">激发学习</h3>
+                            <p>活力点缀 · 积极</p>
+                        </div>
+                        <div class="transform-card">
+                            <div class="transform-preview" style="background:#9b59b6;">创意</div>
+                            <h3 class="transform-title">独特个性</h3>
+                            <p>紫色调 · 人文气质</p>
+                        </div>
+                        <div class="transform-card">
+                            <div class="transform-preview" style="background:#f1c40f;">温暖</div>
+                            <h3 class="transform-title">友好亲近</h3>
+                            <p>暖色点缀 · 亲和力</p>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例：精品课程站点需求分析概要</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+/* 用户画像 */
+- 在校学生：需要系统学习资源，界面清晰，视频/文本结合。
+- 授课教师：需要展示课程亮点，方便课堂演示。
+
+/* 核心功能 */
+- 课程首页、课程概况、课程学习、教学资源、综合测试、课程评价。
+
+/* 风格定位关键词 */
+专业、清晰、现代、激发学习
+
+/* 情绪板提炼 */
+主色: 冷静蓝色(#2c3e50) + 明亮辅助(#3498db) + 活力强调(#e74c3c)
+字体: 无衬线(Segoe UI)，层级分明
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> 以“校园社团展示”为主题，完成需求分析与风格定位，形成文字说明。</li>
+                            <li><i class="fas fa-lightbulb"></i> 使用Canva或boardmix制作一个情绪板，提炼3-5个关键词。</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <!-- 任务11.2：色彩搭配优化与页面排版 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务11.2：色彩搭配优化与页面排版</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p>以“精品在线课程”网站为对象，分析现有页面的色彩搭配与排版结构。依据色彩心理学和网格系统，对主色、辅助色及版式进行优化设计，保持整体风格一致，并通过前后对比展示优化效果。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>学习要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 色彩基础（色相、色系、色调）</li>
+                            <li><i class="fas fa-check"></i> “主次辅”三色体系与6:3:1比例</li>
+                            <li><i class="fas fa-check"></i> 网格系统（12列栅格）与间距节奏</li>
+                            <li><i class="fas fa-check"></i> 色彩心理与行业适配</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 配色示例卡片 (原transition-demo) -->
+                    <h4>色彩搭配示例</h4>
+                    <div class="transition-demo">
+                        <div class="transition-card">
+                            <div class="transition-icon"><i class="fas fa-palette"></i></div>
+                            <h3 class="transition-title">同类色</h3>
+                            <div class="transition-preview" style="background:#2980b9;"></div>
+                            <div class="transition-preview" style="background:#3498db; margin-top:5px;"></div>
+                            <div class="transition-preview" style="background:#5dade2; margin-top:5px;"></div>
+                            <p>柔和统一 · 背景层次</p>
+                        </div>
+                        <div class="transition-card">
+                            <div class="transition-icon"><i class="fas fa-palette"></i></div>
+                            <h3 class="transition-title">邻近色</h3>
+                            <div class="transition-preview" style="background:#2ecc71;"></div>
+                            <div class="transition-preview" style="background:#3498db; margin-top:5px;"></div>
+                            <div class="transition-preview" style="background:#9b59b6; margin-top:5px;"></div>
+                            <p>蓝绿/紫 · 和谐有层次</p>
+                        </div>
+                        <div class="transition-card">
+                            <div class="transition-icon"><i class="fas fa-palette"></i></div>
+                            <h3 class="transition-title">互补色</h3>
+                            <div class="transition-preview" style="background:#3498db;"></div>
+                            <div class="transition-preview" style="background:#e67e22; margin-top:5px;"></div>
+                            <p>强烈对比 · 强调按钮</p>
+                        </div>
+                        <div class="transition-card">
+                            <div class="transition-icon"><i class="fas fa-palette"></i></div>
+                            <h3 class="transition-title">对比色</h3>
+                            <div class="transition-preview" style="background:#e74c3c;"></div>
+                            <div class="transition-preview" style="background:#f1c40f; margin-top:5px;"></div>
+                            <p>活泼醒目 · 促销标志</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 排版/网格示例 (原animation-demo) -->
+                    <h4>网格系统与排版示意</h4>
+                    <div class="animation-demo">
+                        <div class="animation-card">
+                            <h3 class="animation-title">12列栅格</h3>
+                            <div style="display:flex; gap:2px; flex-wrap:wrap;">
+                                <div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div><div style="background:var(--secondary); width:calc(8.33% - 2px); height:20px;"></div>
+                            </div>
+                            <p>版心1200px · 列宽灵活</p>
+                        </div>
+                        <div class="animation-card">
+                            <h3 class="animation-title">间距基准</h3>
+                            <div style="background:#ddd; height:4px; width:100%; margin:8px 0;"></div>
+                            <div style="background:#ddd; height:4px; width:100%; margin:16px 0;"></div>
+                            <div style="background:#ddd; height:4px; width:100%; margin:24px 0;"></div>
+                            <p>8px倍数 · 节奏和谐</p>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例：主次辅配色方案 (精品课程)</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+:root {
+  --primary: #2c3e50;   /* 主色60% : 头部/底部/背景 */
+  --secondary: #3498db; /* 辅助色30% : 卡片/导航激活 */
+  --accent: #e74c3c;    /* 强调色10% : 按钮/图标/链接悬停 */
+  --light: #ecf0f1;     /* 中性色背景 */
+  --text: #333;         /* 正文灰色 */
+}
+
+/* 网格系统：12列栅格，版心1200px，gutter 24px */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> 参考阿里云/淘宝/站酷，分析其配色心理，并为自己设定的“校园社团”站点搭配主辅色。</li>
+                            <li><i class="fas fa-lightbulb"></i> 用12列栅格绘制首页布局草图，标注版心与间距。</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 实训任务 (原创意图片画廊替换为实训11.1需求分析报告) -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 实训任务</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">实训11.1：完成精品课程站点需求分析报告</h3>
+                    <span class="task-tag">综合</span>
+                </div>
+                <div class="task-description">
+                    <p>根据模块所学，小组合作完成“精品课程站点”需求分析报告，包含项目概述、设计需求、功能需求、视觉规范、技术与非功能需求等。</p>
+                </div>
+                
+                <!-- 用画廊展示报告章节卡片 -->
+                <h4>需求分析报告结构 (卡片式预览)</h4>
+                <div class="gallery-container">
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/2c3e50/ffffff?text=概述" alt="概述" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">1.项目概述</h3>
+                                <p class="gallery-desc">名称·背景·核心目标</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/3498db/ffffff?text=用户" alt="用户画像" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">2.设计需求</h3>
+                                <p class="gallery-desc">用户画像·风格关键词·内容规划</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/e74c3c/ffffff?text=功能" alt="功能" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">3.功能需求</h3>
+                                <p class="gallery-desc">核心功能·信息架构·交互流程</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/9b59b6/ffffff?text=视觉" alt="视觉规范" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">4.视觉规范</h3>
+                                <p class="gallery-desc">配色·网格·字体层级</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/f39c12/ffffff?text=技术" alt="技术" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">5.技术与非功能</h3>
+                                <p class="gallery-desc">响应式·性能·可维护性</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/2ecc71/ffffff?text=总结" alt="总结" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">6.总结展望</h3>
+                                <p class="gallery-desc">核心价值·迭代方向</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="code-example">
+                    <div class="code-header">
+                        <div class="code-title">需求分析报告模板 (简版)</div>
+                        <div class="code-actions">
+                            <button class="code-btn">复制</button>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre>
+# 精品课程站点需求分析报告
+
+## 1. 项目概述
+- 项目名称：精品在线课程学习平台
+- 背景：为网页设计与制作课程提供在线学习支持
+- 核心目标：帮助学生自主学习，辅助教师教学
+
+## 2. 设计需求
+- 用户画像：在校学生(需要系统资源)、授课教师(课堂演示)
+- 风格关键词：专业、清晰、现代、激发学习
+- 内容板块：课程视频/文本/测验/资源下载
+
+## 3. 功能需求
+- 核心功能：课程首页、章节学习、资料下载、综合测试
+- 信息架构：首页→课程学习→具体章节→测验
+- 关键交互：视频播放、导航悬停、测试提交
+
+## 4. 视觉规范
+- 主色：#2c3e50 辅助色：#3498db 强调色：#e74c3c
+- 网格：12列栅格，版心1200px，间距基准8px
+- 字体：Segoe UI / 无衬线，标题加粗
+
+## 5. 技术与非功能
+- 响应式设计、兼容主流浏览器、加载性能优化
+
+## 6. 总结
+提供沉浸式学习体验，未来可增加论坛/笔记功能。
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 总结与回顾 (替换为模块11总结) -->
+        <section class="content-section summary-section">
+            <h2><i class="fas fa-chalkboard-teacher"></i> 总结与回顾</h2>
+            <p>在本模块中，我们通过“精品在线课程”这一项目，结合网络素养的理念，不仅学习了配色、排版等基础技巧，还通过分析、优化现有设计方案，强化了用户体验与信息传达的能力。通过案例分析、任务实践与思维启发，理解了设计背后的社会责任与用户需求，培养了更全面的网络素养，确保我们不仅具备技术能力，更能设计出具有积极影响的网络产品。这一过程既是技术的延伸，也是素养的提升，构建了更加理性与负责任的网络空间。</p>
+        </section>
+
+        <!-- 拓展练习 (替换为模块11拓展练习) -->
+        <section class="content-section">
+            <h2><i class="fas fa-pencil-alt"></i> 拓展练习</h2>
+            <p>以下拓展练习将帮助您巩固本项目所学知识：</p>
+            
+            <ul class="practice-list">
+                <li>
+                    <i class="fas fa-star"></i>
+                    <div>
+                        <strong>按照需求分析报告模板要求，将“校园社团展示”的主题网站的需求分析补充完整并形成书面报告。</strong>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-star"></i>
+                    <div>
+                        <strong>分析三个不同行业网站（如科技、电商、设计社区）的配色与排版，总结其色彩心理与网格特征。</strong>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-star"></i>
+                    <div>
+                        <strong>为自己感兴趣的某个主题设计一套“主次辅”配色方案，并用CSS变量表示。</strong>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 习题 (完全替换为模块11的习题) -->
+        <section class="content-section quiz-section">
+            <h2><i class="fas fa-question-circle"></i> 习题</h2>
+            
+            <div class="quiz-category">
+                <h3>一、选择题</h3>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 网页设计的核心任务不包括（ ）？</div>
+                    <ul class="quiz-options">
+                        <li>A. 有效组织与呈现内容</li>
+                        <li>B. 构建直观的交互路径</li>
+                        <li>C. 追求尽可能多的动画效果</li>
+                        <li>D. 塑造统一的品牌形象</li>
+                    </ul>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 在色彩搭配中，“主次辅”三色体系通常遵循（ ）比例。</div>
+                    <ul class="quiz-options">
+                        <li>A. 5:3:2</li>
+                        <li>B. 6:3:1</li>
+                        <li>C. 7:2:1</li>
+                        <li>D. 4:4:2</li>
+                    </ul>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">3. 情绪板的主要作用是（ ）。</div>
+                    <ul class="quiz-options">
+                        <li>A. 编写网页代码</li>
+                        <li>B. 统一项目成员对风格的认知</li>
+                        <li>C. 测试网站性能</li>
+                        <li>D. 收集用户数据</li>
+                    </ul>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">4. 以下（ ）颜色通常与“信任、专业、科技”相关联。</div>
+                    <ul class="quiz-options">
+                        <li>A. 红色</li>
+                        <li>B. 绿色</li>
+                        <li>C. 蓝色</li>
+                        <li>D. 黄色</li>
+                    </ul>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">5. 网页排版中，“网格系统”的主要作用是（ ）。</div>
+                    <ul class="quiz-options">
+                        <li>A. 增加动画效果</li>
+                        <li>B. 实现对齐与一致性布局</li>
+                        <li>C. 提升网站加载速度</li>
+                        <li>D. 添加背景音乐</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="quiz-category">
+                <h3>二、名词解释</h3>
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 网页设计</div>
+                    <div class="quiz-fill" style="width:80%;">通过规划、设计和构建网站的布局、视觉元素和交互功能，以提供良好用户体验的过程。</div>
+                </div>
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 主色</div>
+                    <div class="quiz-fill" style="width:80%;">页面中占据最大面积的颜色，奠定整体基调，通常占60%。</div>
+                </div>
+            </div>
+            
+            <div class="quiz-category">
+                <h3>三、判断题</h3>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 网页设计只需注重美观，不需要考虑用户体验。 ( <span class="quiz-fill">×</span> )</div>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 在网页配色中，强调色通常占据页面的最大面积。 ( <span class="quiz-fill">×</span> )</div>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">3. 网页排版时，应尽量避免使用留白，以填充更多内容。 ( <span class="quiz-fill">×</span> )</div>
+                </div>
+            </div>
+            
+            <div class="quiz-category">
+                <h3>四、问答题</h3>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">1. 简述“以用户为中心”的设计原则在网页设计中的体现。</div>
+                    <div style="background:#eee; padding:0.8rem;">从用户需求、习惯出发，如导航按常用度排序、链接有明确反馈、文案通俗易懂等。</div>
+                </div>
+                
+                <div class="quiz-item">
+                    <div class="quiz-question">2. 请说明情绪板在网站风格定位中的作用，并简述其制作步骤。</div>
+                    <div style="background:#eee; padding:0.8rem;">作用：统一认知、聚焦方向、激发创意。步骤：提炼关键词→收集素材→拼贴筛选→总结视觉规范。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 学习资源 (稍作调整，内容仍通用) -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <p>以下资源将帮助您更好地完成模块11的学习：</p>
+            
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>教材章节</h3>
+                    <p>模块11完整教材内容，包含需求分析、色彩与排版。</p>
+                    <a href="#" class="btn-resource">查看教材</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>视频教程</h3>
+                    <p>情绪板制作、配色技巧、栅格系统视频讲解。</p>
+                    <a href="#" class="btn-resource">观看视频</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>配色工具</h3>
+                    <p>Adobe Color、Coolors在线生成配色方案。</p>
+                    <a href="#" class="btn-resource">前往体验</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>练习任务</h3>
+                    <p>需求分析报告模板、排版练习题。</p>
+                    <a href="#" class="btn-resource">开始练习</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 (不变) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="../index.html">课程首页</a></li>
+                            <li><a href="../started/课程概况.html">课程概况</a></li>
+                            <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                            <li><a href="课程学习.html">课程学习</a></li>
+                            <li><a href="../resources/教学资源.html">教学资源</a></li>
+                            <li><a href="../综合测试.html">综合测试</a></li>
+                            <li><a href="../eval/课程评价.html">课程评价</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 代码复制功能
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => {
+                            button.textContent = '复制';
+                        }, 2000);
+                    });
+                }
+            });
+        });
+        
+        // 图片画廊交互 (提示报告章节)
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('.gallery-title').textContent;
+                alert(`报告章节: ${title}`);
+            });
+        });
+    </script>
+</body>
+</html>

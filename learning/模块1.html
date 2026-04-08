@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块1：网页设计与制作基础 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 模块概述 */
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 任务列表 */
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        /* 概念卡片 */
+        .concept-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .concept-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--info);
+        }
+        
+        .concept-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .concept-content {
+            margin-top: 1rem;
+        }
+        
+        /* 代码示例 */
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        
+        .code-title {
+            font-weight: 500;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-content {
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* 工具展示 */
+        .tools-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .tool-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .tool-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-tool {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-tool:hover {
+            background: #2980b9;
+        }
+        
+        /* 学习资源 */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+            
+            .concept-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .tools-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 习题样式 */
+        .exercise-section {
+            margin-top: 2rem;
+        }
+        
+        .exercise-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .question {
+            margin-bottom: 1.5rem;
+        }
+        
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .options {
+            margin-left: 1.5rem;
+        }
+        
+        .option {
+            margin-bottom: 0.5rem;
+        }
+        
+        .term-definition {
+            margin-bottom: 1.5rem;
+        }
+        
+        .term-definition h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .true-false {
+            margin-bottom: 1rem;
+        }
+        
+        .true-false p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块1：网页设计与制作基础</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="课程学习.html">课程学习</a></li>
+                <li>模块1：网页设计与制作基础</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 模块概述 -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 模块概述</h2>
+            
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 学习目标</h3>
+                    <ul class="objective-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>知识目标：</strong>理解网页、网站、浏览器及HTTP/HTTPS、URL等基本概念及关系。掌握HTML与CSS在网页构建中的作用及Web标准的基本要求。熟悉VS Code开发环境的基本操作与配置方法。了解网页设计与制作的基本流程。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>能力目标：</strong>能独立完成编码环境的搭建与基础配置。能创建符合规范的初始HTML文件并预览。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>素养目标：</strong>树立用技术传播正向价值的意识，培养对网络信息责任的初步认知。编写代码时，遵循标准性，注重可读性与可维护性。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="duration-box">
+                    <h3>模块时长</h3>
+                    <div class="hours">4学时</div>
+                    <p>基础模块</p>
+                </div>
+            </div>
+            
+            <p>在当今社会，互联网已成为不可或缺的基础设施，全球数十亿用户通过网页获取信息、交流互动、办理事务。网页不仅是信息载体，更是进行购物消费、参与社交互动的重要入口。优秀的网页设计融合了技术实现与视觉艺术，是连接用户与数字世界的桥梁。</p>
+            <p>在我国建设网络强国的进程中，网页设计与制作相关人才的需求日益增长。本课程以“精品课程站点”项目为载体，系统讲解网页设计与制作的基础知识，为从事相关岗位和继续学习打下基础。</p>
+        </section>
+
+        <!-- 任务列表 -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 任务列表</h2>
+            
+            <ul class="task-list">
+                <!-- 任务1.1：初识网页与网站 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务1.1：初识网页与网站</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p>在本任务中，通过实际浏览和分析中国天气网，国家中小学智慧教育平台，故宫博物院官网等典型网站，了解网页的组成结构，探究网页如何通过网络传输并被浏览器解析。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>本任务中通过分析网站中的网页包含文字、图片、导航栏等构成元素，理解网页的构成，超链接的作用，浏览器工作的原理。</p>
+                    </div>
+                    
+                    <h4>知识链接</h4>
+                    <div class="concept-cards">
+                        <div class="concept-card">
+                            <h3 class="concept-title">网页(Web Page)</h3>
+                            <div class="concept-content">
+                                <p>网页是构成网站的基本元素，是一个包含HTML标签的纯文本文件，可以包含文字、图片、声音、视频等内容元素，是承载各种网站应用的平台。</p>
+                                <p><strong>静态网页：</strong>静态网页是标准的HTML文件，它的文件扩展名是.htm、.html等，可以包含文本、图像、声音、动画、客户端脚本等，是网站建设的基础。但是静态网页是没有后台数据库和服务器端程序的网页。</p>
+                                <p><strong>动态网页：</strong>动态网页是结合了HTML以外的高级程序设计语言和数据库技术进行的网页编程技术生成的网页。动态网页一般是以数据库技术为基础，可以与后台数据库进行数据交互与数据传递，能够大大减少维护网站的工作量。常见动态网页文件以.aspx、.asp、.jsp、.php、.perl、.cgi等为后缀。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="concept-card">
+                            <h3 class="concept-title">网站(Website)</h3>
+                            <div class="concept-content">
+                                <p>网站是指在互联网上，根据一定的规则，使用HTML等工具制作的用于展示特定内容相关网页的集合。网站拥有域名或地址并提供一定网络服务的主机，是存储文件的空间，以服务器为载体。人们可通过网页浏览器（Web Browser）等进行访问、查找文件，也可通过远程文件传输方式上传、下载网站文件。</p>
+                                <p>网站采用动态网页还是静态网页主要取决于网站的功能需求和网站内容的多少，如果网站功能比较简单，内容更新量不是很大，采用纯静态网页的方式会更简单，反之一般要采用动态网页技术来实现。动态网站也可以采用静动结合的原则。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="concept-card">
+                            <h3 class="concept-title">其他相关概念</h3>
+                            <div class="concept-content">
+                                <p><strong>浏览器(Browser)：</strong>浏览器是用来检索、显示以及传递Web信息资源的应用程序。常见的浏览器有Microsoft Edge、Chrome、Firefox、Safari等。</p>
+                                <p><strong>URL (Uniform Resource Locator)：</strong>URL是统一资源标识符，描述了一个网页在网络服务器上的特定位置，即网址。URL通常由四个部分组成：协议、服务器名称（或IP地址）、路径和文件名。</p>
+                                <p><strong>HTTP（Hyper Text Transfer Protocol）：</strong>HTTP是超文本传输协议, 是一个简单的请求-响应协议，是通过互联网传输文档的数据传送协议，规定了浏览器和互联网服务器之间的通信规则。</p>
+                                <p><strong>HTTPS（Hyper Text Transfer Protocol Secure）：</strong>HTTPS是以安全为目标的 HTTP 通道，在HTTP的基础上通过传输加密和身份认证保证了传输过程的安全性。</p>
+                                <p><strong>IP地址：</strong>IP地址是互联网协议地址提供的一种统一的地址格式，它为互联网上的每一个网络和每一台主机分配一个逻辑地址，以此来屏蔽物理地址的差异。</p>
+                                <p><strong>域名：</strong>域名是由一串用点分隔的名字组成的互联网上某一台计算机或计算机组的名称，用于在数据传输时对计算机的定位标识。通过域名系统（DNS）将域名和IP地址相互映射。</p>
+                                <p><strong>超链接：</strong>超链接全称超文本链接，是通过非线性方式组织信息，以锚点链接同一文档或不同服务器资源，实现目标内容的自由跳转。超链接分为文本超链接与图像超链接，按路径可分为内部链接、锚点链接和外部链接。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4>任务实施</h4>
+                    <div class="task-description">
+                        <p><strong>步骤1：浏览网站</strong></p>
+                        <p>中国天气网是中国气象局公共气象服务中心主办的国家级公益性气象服务门户网站，发布天气预报、灾害性天气预警、天气资讯、科普视频等内容。国家中小学智慧教育平台是一个由教育部主导的建设，面向全国师生和家长，提供全学段、多场景教育教学资源的平台网站。故宫博物院网站是故宫的官方网站，通过导览、展览、教育、探索、学术、文创等六大版块，满足了观众参观故宫博物院行前、行中、行后及研究文物、消费购物等需求。</p>
+                        
+                        <p><strong>步骤2：分析网页构成</strong></p>
+                        <p>我们通过滑动浏览器侧边的滚动条可以看到完整的网页，还可以通过超链接浏览子网页，通过对这三个网站中网页的浏览，我们可以看到，网页中的内容元素主要有文本、图像、视频、动画、超链接等。</p>
+                        <p>网页的常见的页面布局结构有五个部分：页眉（Header），通常位于页面顶部，包含网站Logo、网站名称；导航栏（Navigation Menu），一组超链接的集合；主内容区（Main Content），网页的核心区域；侧边栏（Sidebar），在主内容区两侧；页脚（Footer）：位于页面最底部，通常包含版权声明、联系方式、备案信息等。</p>
+                        
+                        <p><strong>步骤3：探究网页浏览器的作用</strong></p>
+                        <p>用户在浏览器中输入网址，信息通过互联网传输后，能在浏览器中呈现指定的网页。首先浏览器将网址通过互联网发送到对应的网站服务器，Web服务器处理后返回相应数据。浏览器下载数据后开始解析网页源文件（包含HTML标签的纯文本文件），按照HTML语法规则排版，最终显示页面。同时浏览器在解析过程中会分析超链接并显示。浏览器的作用就是负责解释网页HTML源文件的语法并展示页面内容。在制作网站时，通常先在本地计算机上进行设计和测试，例如在浏览器地址栏输入“127.0.0.1/main.html”可访问本地的精品课程网站首页。</p>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <p>浏览5个感兴趣的网站，分析网页的布局结构，网页中的主要元素。</p>
+                    </div>
+                </li>
+                
+                <!-- 任务1.2：HTML与CSS初体验 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务1.2：HTML与CSS初体验</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p>查看网页源代码，分析网页在未被浏览器解析时的原始结构与代码组成。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>使用浏览器开发者工具查看网页源代码，理解HTML基本文档结构与CSS样式基本规则，编写示例文件并浏览效果。</p>
+                    </div>
+                    
+                    <h4>知识链接</h4>
+                    <div class="concept-cards">
+                        <div class="concept-card">
+                            <h3 class="concept-title">HTML（Hyper Text Markup Language）</h3>
+                            <div class="concept-content">
+                                <p>HTML（超文本标记语言）是一种建立网页文件的语言，通过标记式的指令(Tag)，将文字、图形、动画、声音、表格、链接、影像等内容显示出来。HTML是由万维网发明者蒂姆·伯纳斯·李于1990年创立，2014年W3C发布HTML5。HTML使用标签来规定网页中各元素的属性和位置，标签通常成对出现，如&lt;html&gt;...&lt;/html&gt;。一个标签可以有一个或多个属性，如&lt;html lang="zh-CN"&gt;。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="concept-card">
+                            <h3 class="concept-title">Web标准</h3>
+                            <div class="concept-content">
+                                <p>Web标准是由W3C等组织制定的技术规范集合，旨在统一网页开发与呈现。网页主要由三部分组成：结构（Structure）、表现（Presentation）和行为（Behavior），分别对应结构化标准语言（HTML5等）、表现标准语言（CSS）以及行为标准（ECMAScript、DOM）。这三要素分离，确保代码可维护性。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="concept-card">
+                            <h3 class="concept-title">CSS (Cascading Style Sheets)</h3>
+                            <div class="concept-content">
+                                <p>CSS（层叠样式表）是用于控制网页样式和布局的语言。它不仅能静态地修饰页面，还能动态地控制元素。CSS的核心特点是“层叠性”，允许样式继承和叠加。目前主流版本CSS3将功能划分为多个模块，如选择器、动画、Flexbox和Grid等。CSS样式规则由选择器和声明块组成，例如：header { background: #f0f0f0; text-align: center; }。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4>任务实施</h4>
+                    <div class="task-description">
+                        <p><strong>步骤1：打开“精品课程”网站的首页源文件</strong></p>
+                        <p>采用浏览器Microsoft Edge开发人员工具查看源代码，如图1-6所示（参见教材）。通过查看网页源代码，我们看到第一行&lt;!DOCTYPE html&gt;是HTML5文档类型声明，告诉浏览器当前文档使用HTML5标准。</p>
+                        
+                        <p><strong>步骤2：编写示例文件test.html并浏览效果</strong></p>
+                        <p>利用记事本程序，创建一个文件名为test.html的网页源文件，输入代码（如图1-7所示），保存后用浏览器打开浏览效果（如图1-8所示）。对照源代码和效果可以看出，HTML文档结构由文档类型声明、根标签&lt;html&gt;、头部&lt;head&gt;和主体&lt;body&gt;组成。&lt;style&gt;标签内为CSS样式规则。HTML负责内容和结构，CSS负责样式，两者结合完成网页制作。</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">test.html示例代码</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;我的第一个网页&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        p {
+            color: #34495e;
+            line-height: 1.6;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;欢迎来到我的网页&lt;/h1&gt;
+    &lt;p&gt;这是我的第一个网页，使用了HTML和CSS。&lt;/p&gt;
+    &lt;p&gt;HTML负责网页结构，CSS负责样式表现。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <p>利用记事本打开test.html，修改代码中的汉字部分并保存，再用浏览器打开观察显示效果的变化。</p>
+                    </div>
+                </li>
+                
+                <!-- 任务1.3：编码工具实战 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务1.3：编码工具实战</h3>
+                        <span class="task-tag">实践</span>
+                    </div>
+                    <div class="task-description">
+                        <p>在学习网页基础知识的基础上，了解网站开发流程，规划“精品课程网站”项目，安装配置所需的开发工具。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>根据建立网站的流程，进行“精品课程网站”项目的规划，并选择安装和配置VS Code开发环境，熟悉VS Code界面，创建“精品课程网站”结构。</p>
+                    </div>
+                    
+                    <h4>知识链接</h4>
+                    <div class="concept-cards">
+                        <div class="concept-card">
+                            <h3 class="concept-title">网站开发流程</h3>
+                            <div class="concept-content">
+                                <p>网站开发是一个系统化的过程，行业标准有以下五个核心阶段：</p>
+                                <p><strong>规划与分析</strong>：明确网站目标、用户与功能，制定项目计划、站点地图，完成技术选型。主要参与者：产品经理、客户。</p>
+                                <p><strong>设计与原型</strong>：将规划转化为具体视觉表现，产出视觉稿、交互原型和设计风格指南。主要参与者：UI/UX设计师。</p>
+                                <p><strong>开发与实现</strong>：前端使用HTML/CSS/JavaScript构建用户界面；后端处理服务器与数据库逻辑；前后端联调。主要参与者：前端/后端工程师。</p>
+                                <p><strong>测试与部署</strong>：进行全面测试（功能、兼容性、性能、安全等），部署至线上服务器。主要参与者：测试工程师、运维与开发工程师。</p>
+                                <p><strong>维护与迭代</strong>：包括内容更新、功能优化与迭代开发。主要参与者：运营、运维与开发工程师。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="concept-card">
+                            <h3 class="concept-title">网站代码编辑器与集成开发环境</h3>
+                            <div class="concept-content">
+                                <p>可以选择Visual Studio Code，HBuilderX等。VS Code是现在前端和后端开发领域的首选，免费、开源、轻量，拥有极其丰富的扩展市场，调试功能强大。HBuilderX是由DCloud公司开发的一款轻量级开发工具，专为前端设计。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4>任务实施</h4>
+                    <div class="task-description">
+                        <p><strong>步骤1：“精品课程网站”项目规划</strong></p>
+                        <p>与企业合作开发《网页设计与制作》精品课程静态网站，面向中职学生。规划六个核心页面：main.html(课程首页)、课程概况.html、入门攻略.html、课程学习.html、教学资源.html、综合测试.html。采用HTML5、CSS3和原生JavaScript技术栈，实现响应式设计。</p>
+                        
+                        <p><strong>步骤2：VS Code安装和配置</strong></p>
+                        <p>从VS Code官网下载适配版本安装。安装后点击左侧扩展图标，安装中文插件Chinese (Simplified)以汉化界面。安装Live Server插件获得实时预览功能。安装Prettier插件进行代码格式化。根据需要还可安装HTML CSS Support等插件。安装完成后可在扩展中查看已安装插件(@installed)。</p>
+                        
+                        <p><strong>步骤3：熟悉VS Code界面</strong></p>
+                        <p>VS Code界面主要由左侧活动栏（资源管理器、搜索、源代码管理、运行和调试、扩展等）、顶部菜单区域、中间代码编辑区、底部状态栏组成。状态栏显示行号、列号、文件编码、语言模式等信息。</p>
+                        
+                        <p><strong>步骤4：VS Code中常用的基本操作</strong></p>
+                        <p>文件和文件夹管理：通过“文件”菜单或快捷键Ctrl+N（新建）、Ctrl+O（打开）、Ctrl+S（保存）等。设置外观：“查看” > “外观”。设置首选项：“文件” > “首选项”。</p>
+                        
+                        <p><strong>步骤5：创建“精品课程网站”结构</strong></p>
+                        <p>在本地磁盘（如D盘）创建项目根文件夹“website”，在VS Code中打开该文件夹，创建子文件夹“css”、“images”、“pages”，并创建“main.html”文件，构建网站基本结构。</p>
+                    </div>
+                    
+                    <h4>知识拓展</h4>
+                    <div class="task-description">
+                        <p>Lingma（灵码）是由阿里巴巴推出的一款AI编程工具，支持多种编程语言和主流IDE，可以与VS Code深度整合，辅助完成网页前端开发代码生成、框架搭建及技术难题解决。通过扩展图标安装Lingma插件。</p>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <p>安装VS Code，并按示例建立精品课程网站根文件夹“website”，在VS Code中打开该文件夹，创建子文件夹“css”、“images”、“pages”和“main.html”文件（内容暂时为空）。</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 实训任务 -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 实训任务</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">实训1.1：创建个人站点规划</h3>
+                    <span class="task-tag">综合</span>
+                </div>
+                <div class="task-description">
+                    <p>综合运用本模块所学知识，完成个人站点规划，包括创建项目文件夹、设置文件结构。</p>
+                </div>
+                <div class="task-objectives">
+                    <h4>任务要求：</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 建立“mywebsite”根文件夹和子文件夹“css”、“images”、“pages”和“index.html”文件（内容为空）。</li>
+                    </ul>
+                </div>
+                
+                <h4>任务实施</h4>
+                <div class="task-description">
+                    <p><strong>步骤1：</strong>安装并配置VS Code；</p>
+                    <p><strong>步骤2：</strong>在本地磁盘（如D盘）创建项目根文件夹“mywebsite”，在VS Code中打开该文件夹，创建子文件夹“css”、“images”、“pages”，并创建“index.html”文件。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 拓展练习 -->
+        <section class="content-section">
+            <h2><i class="fas fa-puzzle-piece"></i> 拓展练习</h2>
+            <p>设计规划一个班级网站，画出站点结构图（可包含首页、班级简介、成员风采、活动通知等）。</p>
+        </section>
+
+        <!-- 习题 -->
+        <section class="content-section">
+            <h2><i class="fas fa-question-circle"></i> 习题</h2>
+            
+            <div class="exercise-section">
+                <h3>一、选择题</h3>
+                <div class="question">
+                    <p>1. 以下哪个选项是网页的根标签（ ）</p>
+                    <div class="options">
+                        <div class="option">A. &lt;head&gt;</div>
+                        <div class="option">B. &lt;body&gt;</div>
+                        <div class="option">C. &lt;html&gt;</div>
+                        <div class="option">D. &lt;DOCTYPE&gt;</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>2. 以下哪项最准确地描述了CSS的“层叠性”这一核心特点（ ）</p>
+                    <div class="options">
+                        <div class="option">A. 允许样式继承和叠加，使得多个样式规则可以共同作用于同一元素</div>
+                        <div class="option">B. 能够完全取代HTML的样式功能，实现网页结构与表现的彻底分离</div>
+                        <div class="option">C. 只能静态地修饰页面，无法对元素进行动态样式控制</div>
+                        <div class="option">D. 由W3C组织标准化，确保所有浏览器对样式的解析完全一致</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>3. CSS样式应该写在哪个标签内（ ）</p>
+                    <div class="options">
+                        <div class="option">A. &lt;script&gt;</div>
+                        <div class="option">B. &lt;style&gt;</div>
+                        <div class="option">C. &lt;css&gt;</div>
+                        <div class="option">D. &lt;link&gt;</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>4. 以下哪个VS Code插件可以提供实时预览功能（ ）</p>
+                    <div class="options">
+                        <div class="option">A. Prettier</div>
+                        <div class="option">B. Live Server</div>
+                        <div class="option">C. Auto Rename Tag</div>
+                        <div class="option">D. HTML Hint</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>5. URL的中文全称的正确解释是（ ）</p>
+                    <div class="options">
+                        <div class="option">A. 全球文件定位器</div>
+                        <div class="option">B. 统一资源定位符</div>
+                        <div class="option">C. 用户请求链接</div>
+                        <div class="option">D. 超文本传输地址</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exercise-section">
+                <h3>二、名词解释</h3>
+                <div class="term-definition">
+                    <h4>1. 网页</h4>
+                    <p>网页是构成网站的基本元素，是一个包含HTML标签的纯文本文件，可以包含文字、图片、声音、视频等内容元素，是承载各种网站应用的平台。</p>
+                </div>
+                <div class="term-definition">
+                    <h4>2. 网站</h4>
+                    <p>网站是指在互联网上，根据一定的规则，使用HTML等工具制作的用于展示特定内容相关网页的集合。网站拥有域名或地址并提供一定网络服务的主机，是存储文件的空间。</p>
+                </div>
+                <div class="term-definition">
+                    <h4>3. HTTP协议</h4>
+                    <p>HTTP是超文本传输协议，是一个简单的请求-响应协议，是通过互联网传输文档的数据传送协议，规定了浏览器和互联网服务器之间的通信规则。</p>
+                </div>
+                <div class="term-definition">
+                    <h4>4. URL</h4>
+                    <p>URL是统一资源标识符，描述了一个网页在网络服务器上的特定位置，即网址。通常由协议、服务器名称（或IP地址）、路径和文件名组成。</p>
+                </div>
+                <div class="term-definition">
+                    <h4>5. HTML</h4>
+                    <p>HTML（Hyper Text Markup Language）是超文本标记语言，是一种建立网页文件的语言，通过标记式的指令(Tag)将文字、图形、动画等内容显示出来。</p>
+                </div>
+                <div class="term-definition">
+                    <h4>6. CSS</h4>
+                    <p>CSS（层叠样式表）是用于控制网页样式和布局的语言。它不仅能静态地修饰页面，还能动态地控制元素，实现精确排版和视觉效果。</p>
+                </div>
+            </div>
+            
+            <div class="exercise-section">
+                <h3>三、判断题</h3>
+                <div class="true-false">
+                    <p>1. HTML标签有一个或多个属性值。（ √ ）</p>
+                </div>
+                <div class="true-false">
+                    <p>2. 有动态效果的网页就是动态网页。（ × ）</p>
+                </div>
+                <div class="true-false">
+                    <p>3. 域名是由一串用点分隔的名字组成的互联网上某一台计算机或计算机组的名称，用于在数据传输时对计算机的定位标识。（ √ ）</p>
+                </div>
+                <div class="true-false">
+                    <p>4. HTML 是用于定义网页样式的语言。（ × ）</p>
+                </div>
+                <div class="true-false">
+                    <p>5. URL只能定位除本地计算机外的资源。（ × ）</p>
+                </div>
+                <div class="true-false">
+                    <p>6. CSS不仅可以静态地修饰网页，还可以配合各种脚本语言动态地对网页各元素进行格式化。（ √ ）</p>
+                </div>
+            </div>
+            
+            <div class="exercise-section">
+                <h3>四、问答题</h3>
+                <div class="question">
+                    <p>1. 简述浏览器的作用。</p>
+                </div>
+                <div class="question">
+                    <p>2. 简述一下网站的开发流程。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 总结与回顾 -->
+        <section class="content-section">
+            <h2><i class="fas fa-clipboard-check"></i> 总结与回顾</h2>
+            <p>本项目讲解了网页、网站、网页浏览器等概念定义及关系；比较了静态网页和动态网页，说明了各自特点；讲解了 URL、HTTP/HTTPS 等协议的作用；分析了网页通过网络传输并被浏览器解析的过程；在讲解网页设计与制作的基本流程基础上，完成了《网页设计与制作》精品课程静态网站的规划，利用VS Code构建的站点基本结构。</p>
+        </section>
+
+        <!-- 学习资源 -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <p>以下资源将帮助您更好地完成模块1的学习：</p>
+            
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>教材章节</h3>
+                    <p>模块1完整教材内容，包含网页开发基础概念和开发环境配置的详细讲解。</p>
+                    <a href="#" class="btn-resource">查看教材</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>视频教程</h3>
+                    <p>网页开发基础、VSCode使用、HTML与CSS入门等核心知识点视频讲解。</p>
+                    <a href="#" class="btn-resource">观看视频</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>示例代码</h3>
+                    <p>模块1所有任务的完整示例代码，包含基础网页结构和样式实现。</p>
+                    <a href="#" class="btn-resource">下载代码</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>练习任务</h3>
+                    <p>巩固网页开发基础知识的练习题，提升开发环境配置能力。</p>
+                    <a href="#" class="btn-resource">开始练习</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="../课程概况.html">课程概况</a></li>
+                            <li><a href="../入门攻略.html">入门攻略</a></li>
+                            <li><a href="../课程学习.html">课程学习</a></li>
+                            <li><a href="../教学资源.html">教学资源</a></li>
+                            <li><a href="../综合测试.html">综合测试</a></li>
+                            <li><a href="../课程评价.html">课程评价</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 代码复制功能
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => {
+                            button.textContent = '复制';
+                        }, 2000);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

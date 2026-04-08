@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据处理 - 个人信息注册</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .header h1 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            color: #666;
+        }
+        
+        .status-box {
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .status-box.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-box.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .data-preview {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .data-preview h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .data-table th {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        .data-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: var(--success);
+        }
+        
+        .btn-success:hover {
+            background: #219653;
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background: #c0392b;
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .instructions h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .file-input {
+            margin: 1.5rem 0;
+        }
+        
+        .file-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .file-input input[type="file"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .loading i {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+    <!-- 引入SheetJS库 -->
+    <script src="../css/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-database"></i> 数据处理中心</h1>
+            <p>处理个人信息注册表单数据并保存到Excel文件</p>
+        </div>
+        
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> 使用说明</h3>
+            <p>1. 选择现有的Excel文件（个人信息表.xlsx）</p>
+            <p>2. 系统会读取并显示现有数据</p>
+            <p>3. 从URL参数获取表单数据并添加到Excel</p>
+            <p>4. 下载更新后的Excel文件</p>
+        </div>
+        
+        <div class="file-input">
+            <label for="excelFile"><i class="fas fa-file-excel"></i> 选择Excel文件</label>
+            <input type="file" id="excelFile" accept=".xlsx, .xls">
+        </div>
+        
+        <div id="loading" class="loading hidden">
+            <i class="fas fa-spinner"></i>
+            <p>正在处理数据...</p>
+        </div>
+        
+        <div id="statusBox" class="status-box hidden"></div>
+        
+        <div id="dataPreview" class="data-preview hidden">
+            <h3><i class="fas fa-table"></i> 数据预览</h3>
+            <div id="tableContainer"></div>
+        </div>
+        
+        <div class="controls">
+            <button id="processBtn" class="btn btn-success" onclick="processFormData()">
+                <i class="fas fa-cogs"></i> 处理表单数据
+            </button>
+            <button id="downloadBtn" class="btn btn-accent" onclick="downloadExcel()" disabled>
+                <i class="fas fa-download"></i> 下载更新后的Excel
+            </button>
+            <a href="个人信息注册.html" class="btn">
+                <i class="fas fa-arrow-left"></i> 返回注册页面
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let workbook = null;
+        let originalData = {};
+        let updatedData = {};
+        let formData = {};
+        
+        // 从URL参数获取表单数据
+        function getFormDataFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            formData = {
+                学号: urlParams.get('学号') || '',
+                姓名: urlParams.get('姓名') || '',
+                性别: urlParams.get('性别') || '',
+                专业: urlParams.get('专业') || '',
+                班级: urlParams.get('班级') || '',
+                联系电话: urlParams.get('联系电话') || '',
+                邮箱: urlParams.get('邮箱') || '',
+                入学年份: urlParams.get('入学年份') || ''
+            };
+            
+            // 如果没有URL参数，使用示例数据
+            if (!formData.姓名) {
+                formData = {
+                    学号: "410128001001001" + Math.floor(Math.random() * 100),
+                    姓名: "张三",
+                    性别: "男",
+                    专业: "计算机应用",
+                    班级: "2502",
+                    联系电话: "1385678" + Math.floor(Math.random() * 1000),
+                    邮箱: "example@school.com",
+                    入学年份: "2024"
+                };
+                console.log("使用示例数据，因为没有URL参数");
+            }
+            
+            return formData;
+        }
+        
+        // 加载Excel文件
+        document.getElementById('excelFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            showLoading(true);
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    workbook = XLSX.read(data, { type: 'array' });
+                    originalData = {};
+                    
+                    // 读取所有工作表
+                    workbook.SheetNames.forEach(sheetName => {
+                        const worksheet = workbook.Sheets[sheetName];
+                        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                        originalData[sheetName] = jsonData;
+                    });
+                    
+                    // 显示数据预览
+                    renderDataPreview();
+                    showLoading(false);
+                    showStatus("Excel文件加载成功！", "success");
+                    
+                } catch (error) {
+                    showLoading(false);
+                    showStatus("读取Excel文件失败：" + error.message, "error");
+                }
+            };
+            
+            reader.readAsArrayBuffer(file);
+        });
+        
+        // 处理表单数据
+        function processFormData() {
+            if (!workbook) {
+                showStatus("请先选择Excel文件", "error");
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                // 获取表单数据
+                const newFormData = getFormDataFromURL();
+                
+                // 检查"个人信息表"是否存在
+                if (!workbook.SheetNames.includes("个人信息表")) {
+                    throw new Error("Excel文件中没有找到'个人信息表'工作表");
+                }
+                
+                // 获取个人信息表
+                const worksheet = workbook.Sheets["个人信息表"];
+                let jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                
+                // 检查表头
+                const headers = jsonData[0];
+                const expectedHeaders = ["学号", "姓名", "性别", "专业", "班级", "联系电话", "邮箱", "入学年份"];
+                
+                // 验证表头
+                for (let i = 0; i < expectedHeaders.length; i++) {
+                    if (headers[i] !== expectedHeaders[i]) {
+                        throw new Error(`表头不匹配: 期望"${expectedHeaders[i]}"，实际"${headers[i]}"`);
+                    }
+                }
+                
+                // 创建新行数据
+                const newRow = [
+                    newFormData.学号,
+                    newFormData.姓名,
+                    newFormData.性别,
+                    newFormData.专业,
+                    newFormData.班级,
+                    newFormData.联系电话,
+                    newFormData.邮箱,
+                    newFormData.入学年份
+                ];
+                
+                // 添加新行
+                jsonData.push(newRow);
+                
+                // 更新工作表
+                const newWorksheet = XLSX.utils.aoa_to_sheet(jsonData);
+                workbook.Sheets["个人信息表"] = newWorksheet;
+                
+                // 保存更新后的数据
+                updatedData = JSON.parse(JSON.stringify(originalData));
+                updatedData["个人信息表"] = jsonData;
+                
+                showLoading(false);
+                showStatus("数据处理成功！新数据已添加到Excel文件", "success");
+                
+                // 启用下载按钮
+                document.getElementById('downloadBtn').disabled = false;
+                
+                // 更新预览
+                renderDataPreview();
+                
+            } catch (error) {
+                showLoading(false);
+                showStatus("处理数据失败：" + error.message, "error");
+            }
+        }
+        
+        // 下载Excel文件
+        function downloadExcel() {
+            if (!workbook) {
+                showStatus("没有可下载的数据", "error");
+                return;
+            }
+            
+            try {
+                // 生成Excel文件
+                const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+                
+                // 创建Blob并下载
+                const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                
+                // 获取当前日期和时间
+                const now = new Date();
+                const timestamp = now.toISOString().slice(0, 10).replace(/-/g, '') + '_' + 
+                                  now.getHours().toString().padStart(2, '0') + 
+                                  now.getMinutes().toString().padStart(2, '0');
+                
+                a.href = url;
+                a.download = `个人信息表_更新_${timestamp}.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+                showStatus("Excel文件下载成功！", "success");
+                
+            } catch (error) {
+                showStatus("下载失败：" + error.message, "error");
+            }
+        }
+        
+        // 渲染数据预览
+        function renderDataPreview() {
+            const container = document.getElementById('tableContainer');
+            const dataPreview = document.getElementById('dataPreview');
+            
+            if (!originalData["个人信息表"] || originalData["个人信息表"].length === 0) {
+                container.innerHTML = "<p>暂无数据</p>";
+                dataPreview.classList.remove('hidden');
+                return;
+            }
+            
+            const data = originalData["个人信息表"];
+            let html = `<p>共 ${data.length - 1} 条记录</p>`;
+            html += '<table class="data-table">';
+            html += '<thead><tr>';
+            
+            // 表头
+            data[0].forEach(header => {
+                html += `<th>${header}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+            
+            // 数据行
+            for (let i = 1; i < Math.min(data.length, 10); i++) { // 只显示前10行
+                html += '<tr>';
+                data[i].forEach(cell => {
+                    html += `<td>${cell || ''}</td>`;
+                });
+                html += '</tr>';
+            }
+            
+            if (data.length > 10) {
+                html += `<tr><td colspan="${data[0].length}" style="text-align: center; font-style: italic;">... 还有 ${data.length - 10} 条记录 ...</td></tr>`;
+            }
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+            dataPreview.classList.remove('hidden');
+        }
+        
+        // 显示状态信息
+        function showStatus(message, type) {
+            const statusBox = document.getElementById('statusBox');
+            statusBox.textContent = message;
+            statusBox.className = `status-box ${type}`;
+            statusBox.classList.remove('hidden');
+        }
+        
+        // 显示/隐藏加载动画
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            if (show) {
+                loading.classList.remove('hidden');
+            } else {
+                loading.classList.add('hidden');
+            }
+        }
+        
+        // 页面加载时检查URL参数
+        document.addEventListener('DOMContentLoaded', function() {
+            const formData = getFormDataFromURL();
+            console.log("从URL获取的表单数据:", formData);
+            
+            // 如果URL中有表单数据，显示提示
+            if (formData.姓名) {
+                showStatus("检测到表单数据，请先选择Excel文件，然后点击'处理表单数据'按钮", "success");
+            }
+        });
+        
+        // 修改个人信息注册.html的提交函数
+        // 需要在个人信息注册.html中添加以下JavaScript代码：
+        /*
+        function submitForm() {
+            const formData = {
+                学号: document.getElementById('studentId').value,
+                姓名: document.getElementById('name').value,
+                性别: document.getElementById('gender').value,
+                专业: document.getElementById('major').value,
+                班级: document.getElementById('class').value,
+                联系电话: document.getElementById('phone').value,
+                邮箱: document.getElementById('email').value,
+                入学年份: document.getElementById('enrollmentYear').value
+            };
+            
+            // 构建查询字符串
+            const queryString = new URLSearchParams(formData).toString();
+            
+            // 跳转到处理页面
+            window.location.href = 'process_data.html?' + queryString;
+            
+            return false; // 阻止表单默认提交
+        }
+        */
+    </script>
+</body>
+</html>

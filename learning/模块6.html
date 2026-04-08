@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块6：表格与表单 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        /* ===== 完全保留原有风格，未修改任何样式 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 项目概述 */
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 任务列表 */
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        /* 布局演示区域 (保留原有类名，内部内容替换为模块6演示) */
+        .layout-demo {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .demo-title {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .float-demo {
+            border: 2px solid #ddd;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .float-box {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .float-left {
+            float: left;
+        }
+        
+        .float-right {
+            float: right;
+        }
+        
+        .clear-demo {
+            clear: both;
+            background: var(--accent);
+            color: white;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .position-demo {
+            position: relative;
+            height: 300px;
+            border: 2px solid #ddd;
+            margin-bottom: 1rem;
+            background: #f0f0f0;
+        }
+        
+        .position-box {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .static {
+            background: #3498db;
+            position: static;
+        }
+        
+        .relative {
+            background: #2ecc71;
+            position: relative;
+            top: 20px;
+            left: 50px;
+        }
+        
+        .absolute {
+            background: #e74c3c;
+            position: absolute;
+            top: 50px;
+            right: 50px;
+        }
+        
+        .fixed {
+            background: #9b59b6;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .sticky {
+            background: #f39c12;
+            position: sticky;
+            top: 20px;
+            left: 150px;
+        }
+        
+        .flex-demo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .flex-item {
+            flex: 1 1 200px;
+            background: var(--info);
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .grid-item {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        /* 浏览器兼容性展示 */
+        .browser-compatibility {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .browser-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .browser-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .browser-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .compatibility-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .compatible {
+            background: var(--success);
+            color: white;
+        }
+        
+        .partial {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .incompatible {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* 代码示例 */
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        
+        .code-title {
+            font-weight: 500;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-content {
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* 网站布局展示 (保留结构，内部改为模块6示例) */
+        .website-layout {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+        
+        .layout-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .layout-nav {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem;
+        }
+        
+        .layout-nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: space-around;
+        }
+        
+        .layout-main {
+            display: flex;
+            min-height: 300px;
+        }
+        
+        .layout-sidebar {
+            flex: 0 0 250px;
+            background: var(--light);
+            padding: 1.5rem;
+        }
+        
+        .layout-content {
+            flex: 1;
+            padding: 1.5rem;
+            background: white;
+        }
+        
+        .layout-footer {
+            background: var(--dark);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        /* 学习资源 */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+            
+            .layout-main {
+                flex-direction: column;
+            }
+            
+            .layout-sidebar {
+                flex: 1;
+            }
+            
+            .browser-compatibility {
+                grid-template-columns: 1fr;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 (完全保留) -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 (改为模块6) -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块6：表格与表单</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="课程学习.html">课程学习</a></li>
+                <li>模块6：表格与表单</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 项目概述 (模块6学习目标) -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 模块概述</h2>
+            
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 学习目标</h3>
+                    <ul class="objective-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>知识目标：</strong>掌握CSS3中超链接4种核心状态的样式设置规则；掌握CSS3列表样式核心属性的使用方法；掌握HTML表格的创建与美化；掌握表单核心控件及布局。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>能力目标：</strong>能够运用CSS3设置超链接不同状态；使用列表样式规整信息；独立创建数据表格并美化；制作完整表单并优化样式。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>素养目标：</strong>树立数据安全隐私意识，遵守用户信息保护准则，遵循个人信息保护法及安全规范。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="duration-box">
+                    <h3>建议学时</h3>
+                    <div class="hours">12学时</div>
+                    <p>理论+实践</p>
+                </div>
+            </div>
+            
+            <p>网页设计中，表格是结构化数据呈现的核心载体，可清晰展示各类规整数据；表单是实现用户与网页交互的关键工具，用于收集各类用户信息。本模块围绕超链接多状态样式、列表自定义样式、表格创建与美化、表单设计与常用控件应用，助你系统掌握相关核心技术，树立数据安全与隐私保护意识，独立完成超链接、列表、表格及表单的相关开发。</p>
+        </section>
+
+        <!-- 任务列表 (共5个任务，依据模块6.doc) -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 任务列表</h2>
+            
+            <ul class="task-list">
+                <!-- 任务6.1 导航栏超链接不同状态 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务6.1：设置导航栏超链接不同状态</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p>为学习资讯页面制作导航栏，为导航栏中的超链接设置不同交互状态的样式，包括未访问（默认）、已访问、悬停、点击瞬间四种状态，使导航栏在用户进行不同操作时呈现清晰的视觉反馈，并高亮显示当前页。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>知识要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 超链接伪类 :link :visited :hover :active</li>
+                            <li><i class="fas fa-check"></i> LVHA 书写顺序</li>
+                            <li><i class="fas fa-check"></i> 当前页高亮样式 (.active)</li>
+                            <li><i class="fas fa-check"></i> 行内元素转块级扩大点击区域</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 演示区：简单导航示例 (保留float-demo结构) -->
+                    <div class="layout-demo">
+                        <h4 class="demo-title">导航栏状态演示</h4>
+                        <div class="float-demo" style="background: #2f658d; padding: 0;">
+                            <style>
+                                /* 仅用于演示的内联样式，不改变全局 */
+                                .demo-nav { list-style: none; margin: 0; padding: 0; overflow: hidden; background: #2f658d; }
+                                .demo-nav li { float: left; margin: 0 10px; }
+                                .demo-nav a { display: block; color: white; text-decoration: none; padding: 15px; font-weight: bold; }
+                                .demo-nav a:hover { background: white; color: #2f658d; border-radius: 4px; }
+                                .demo-nav a:active { background: #194060; color: #f8fcff; }
+                                .demo-nav a.active { background: #4a90e2; border-radius: 4px; }
+                            </style>
+                            <ul class="demo-nav">
+                                <li><a href="../started/课程概况.html">课程概况</a></li>
+                                <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                                <li><a href="课程学习.html" class="active">学习资讯</a></li>
+                                <li><a href="../resources/教学资源.html">教学资源</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：超链接伪类</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+/* LVHA 顺序 */
+nav a:link { color: #FFFFFF; text-decoration: none; }
+nav a:visited { color: #d1e7ff; }
+nav a:hover { background-color: #ffffff; color: #2f658d; border-radius: 4px; }
+nav a:active { background-color: #194060; color: #f8fcff; }
+nav a.active { background-color: #4a90e2; color: #ffffff; border-radius: 4px; }
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>任务实施：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 步骤1：搭建包含nav和ul的HTML结构</li>
+                            <li><i class="fas fa-check"></i> 步骤2：设置导航基本样式（浮动横向）</li>
+                            <li><i class="fas fa-check"></i> 步骤3：定义:link、:visited、:hover、:active</li>
+                            <li><i class="fas fa-check"></i> 步骤4：为当前页添加active类高亮</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <!-- 任务6.2 列表样式 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务6.2：设置"学习资讯"页面列表样式</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p>制作学习网站中"学习资讯"页面，使用列表标签与CSS3列表样式属性规整展示"最新资讯分类""课程通知""学习干货"等模块，让信息结构清晰、视觉层次分明。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>知识要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> list-style-type (disc, decimal, square等)</li>
+                            <li><i class="fas fa-check"></i> list-style-position (inside/outside)</li>
+                            <li><i class="fas fa-check"></i> list-style-image 自定义符号</li>
+                            <li><i class="fas fa-check"></i> 复合属性 list-style</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 演示区：简单列表示例 -->
+                    <div class="layout-demo">
+                        <h4 class="demo-title">列表样式演示</h4>
+                        <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                            <ul style="list-style-type: square; background: #ecf0f1; padding: 1rem 2rem; border-radius: 8px;">
+                                <li>课程通知（12条）</li>
+                                <li>学习干货（8条）</li>
+                                <li>考试安排（3条）</li>
+                            </ul>
+                            <ol style="list-style-type: upper-roman; background: #ecf0f1; padding: 1rem 2rem; border-radius: 8px;">
+                                <li>CSS作业提交提醒</li>
+                                <li>线上直播调整</li>
+                                <li>案例源码已发布</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：列表属性</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+.tag-ul { list-style-image: url(images/ico1.gif); }
+.notice-ol { list-style-type: decimal; list-style-position: inside; }
+.dry-ul { list-style-type: disc; list-style-position: outside; }
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>任务实施：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 步骤1：构建三个列表模块（ul/ol）</li>
+                            <li><i class="fas fa-check"></i> 步骤2：为不同模块设置差异化项目符号</li>
+                            <li><i class="fas fa-check"></i> 步骤3：调整间距、字体、悬浮效果</li>
+                            <li><i class="fas fa-check"></i> 步骤4：添加"查看更多"、"新"标签等（试一试）</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <!-- 任务6.3 表格展示学员数据 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务6.3：使用表格展示学员数据</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p>基于学员数据，学习HTML创建规范表格，通过CSS3样式优化视觉呈现，最终完成"学员数据表"，掌握表格在结构化数据展示中的实际应用及CSS3美化技巧。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>知识要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 表格标签：table, caption, thead, tbody, tr, th, td</li>
+                            <li><i class="fas fa-check"></i> 合并单元格：colspan, rowspan</li>
+                            <li><i class="fas fa-check"></i> CSS表格属性：border-collapse, padding, text-align</li>
+                            <li><i class="fas fa-check"></i> 隔行变色、悬停高亮</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 演示区：简单表格示例 -->
+                    <div class="layout-demo">
+                        <h4 class="demo-title">学员表格演示</h4>
+                        <table style="width:100%; border-collapse: collapse; background: white; border: 1px solid #ddd;">
+                            <thead style="background: #2c3e50; color: white;">
+                                <tr><th>学号</th><th>姓名</th><th>专业</th><th>进度</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>20251001</td><td>张三</td><td>计算机</td><td>65%</td></tr>
+                                <tr><td>20251002</td><td>李四</td><td>计算机</td><td>42%</td></tr>
+                                <tr><td>20251003</td><td>王五</td><td>前端</td><td>78%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：表格美化</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: center;
+}
+thead { background-color: #2c3e50; color: white; }
+tbody tr:hover { background-color: #b0daff; }
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>任务实施：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 步骤1：创建table>caption+thead+tbody结构</li>
+                            <li><i class="fas fa-check"></i> 步骤2：使用colspan/rowspan合并单元格</li>
+                            <li><i class="fas fa-check"></i> 步骤3：通过CSS设置边框、内边距、对齐</li>
+                            <li><i class="fas fa-check"></i> 步骤4：添加表头背景、悬停效果</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <!-- 任务6.4 设计用户注册表单 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务6.4：设计用户注册表单</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p>使用HTML表单功能，设计一套用户注册表单。包含核心功能字段（用户名、邮箱、密码），实现"注册表单"功能，并通过CSS美化表单样式。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>知识要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 表单域 form (action, method)</li>
+                            <li><i class="fas fa-check"></i> input类型：text, password, email, radio, checkbox</li>
+                            <li><i class="fas fa-check"></i> label, placeholder, required</li>
+                            <li><i class="fas fa-check"></i> 按钮 button vs input submit</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 演示区：简单注册表单 -->
+                    <div class="layout-demo">
+                        <h4 class="demo-title">注册表单演示</h4>
+                        <div style="max-width: 300px; margin: 0 auto;">
+                            <label>用户名：</label><input type="text" placeholder="用户名" style="width:100%; margin-bottom:10px; padding:5px;"><br>
+                            <label>密码：</label><input type="password" placeholder="密码" style="width:100%; margin-bottom:10px; padding:5px;"><br>
+                            <label>性别：</label>
+                            <input type="radio" name="gender">男 <input type="radio" name="gender">女<br>
+                            <button style="margin-top:10px; background:#3498db; color:white; border:none; padding:8px 16px;">注册</button>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：注册表单结构</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;form method="post"&gt;
+  &lt;label for="username"&gt;用户名：&lt;/label&gt;
+  &lt;input type="text" id="username" required placeholder="用户名"&gt;
+  
+  &lt;label for="email"&gt;邮箱：&lt;/label&gt;
+  &lt;input type="email" id="email" required&gt;
+  
+  &lt;label for="password"&gt;密码：&lt;/label&gt;
+  &lt;input type="password" id="password" minlength="6" required&gt;
+  
+  &lt;button type="submit"&gt;注册&lt;/button&gt;
+&lt;/form&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>任务实施：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 步骤1：创建form容器，设置method="post"</li>
+                            <li><i class="fas fa-check"></i> 步骤2：添加文本、密码、邮箱输入框及单选按钮</li>
+                            <li><i class="fas fa-check"></i> 步骤3：使用label绑定控件，增加placeholder</li>
+                            <li><i class="fas fa-check"></i> 步骤4：CSS美化（圆角、内边距、悬浮效果）</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <!-- 任务6.5 注册表单个性化选项 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务6.5：实现注册表单个性化选项</h3>
+                        <span class="task-tag">进阶</span>
+                    </div>
+                    <div class="task-description">
+                        <p>在注册页面基础上，添加个性化选项：兴趣爱好（复选框）、所在地区（下拉列表）、个人简介（文本域），并对新增元素进行美化，同时遵循数据安全规范，仅收集必要信息。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>知识要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 复选框 (checkbox) 多选</li>
+                            <li><i class="fas fa-check"></i> 下拉列表 select + option + optgroup</li>
+                            <li><i class="fas fa-check"></i> 文本域 textarea (rows/cols)</li>
+                            <li><i class="fas fa-check"></i> 个人信息保护法：最小必要原则</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 演示区：个性化选项示例 -->
+                    <div class="layout-demo">
+                        <h4 class="demo-title">个性化选项演示</h4>
+                        <div>
+                            <label>兴趣爱好：</label>
+                            <input type="checkbox"> 阅读 <input type="checkbox"> 运动 <input type="checkbox"> 音乐<br>
+                            <label style="margin-top:10px; display:block;">所在城市：</label>
+                            <select style="width:200px; padding:5px;">
+                                <optgroup label="热门城市">
+                                    <option>郑州</option><option>洛阳</option>
+                                </optgroup>
+                                <optgroup label="其他">
+                                    <option>南阳</option><option>信阳</option>
+                                </optgroup>
+                            </select><br>
+                            <label style="margin-top:10px; display:block;">个人简介：</label>
+                            <textarea rows="3" cols="30" placeholder="简单介绍一下自己" style="width:100%;"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：个性化控件</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!-- 复选框 --&gt;
+&lt;input type="checkbox" name="hobby" value="reading"&gt; 阅读
+
+&lt;!-- 下拉分组 --&gt;
+&lt;select name="city"&gt;
+  &lt;optgroup label="热门城市"&gt;
+    &lt;option value="zhengzhou"&gt;郑州&lt;/option&gt;
+  &lt;/optgroup&gt;
+&lt;/select&gt;
+
+&lt;!-- 文本域 --&gt;
+&lt;textarea name="intro" rows="3" cols="40" placeholder="个人简介"&gt;&lt;/textarea&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>任务实施：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 步骤1：添加复选框组，name相同为数组</li>
+                            <li><i class="fas fa-check"></i> 步骤2：添加select下拉列表，使用optgroup分组</li>
+                            <li><i class="fas fa-check"></i> 步骤3：添加textarea用于多行文本</li>
+                            <li><i class="fas fa-check"></i> 步骤4：统一CSS美化，保持风格一致</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 实训任务：课程评价反馈表单 (替换原有实训) -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 实训6.1：实现课程评价反馈表单</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">课程评价反馈表单</h3>
+                    <span class="task-tag">综合</span>
+                </div>
+                <div class="task-description">
+                    <p>综合运用多种表单控件，创建一个功能完善的课程评价反馈表单，收集学习者对课程的详细评价和建议。包含课程基础信息、课程评分、学习情况调查、意见建议四个模块。</p>
+                </div>
+                <div class="task-objectives">
+                    <h4>任务要求：</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 使用至少5种表单元素：text, radio, checkbox, textarea, select等</li>
+                        <li><i class="fas fa-check"></i> 对必填信息添加required属性</li>
+                        <li><i class="fas fa-check"></i> 结构清晰，实用性强，样式美观</li>
+                        <li><i class="fas fa-check"></i> 遵循数据安全规范，仅收集必要信息</li>
+                    </ul>
+                </div>
+                
+                <!-- 布局展示改为课程评价表单示例 (保留原有website-layout结构) -->
+                <h4>表单布局示例</h4>
+                <div class="website-layout">
+                    <header class="layout-header">
+                        <h2>📋 课程评价反馈</h2>
+                    </header>
+                    <nav class="layout-nav">
+                        <ul>
+                            <li>课程信息</li>
+                            <li>课程评分</li>
+                            <li>学习调查</li>
+                            <li>意见建议</li>
+                        </ul>
+                    </nav>
+                    <div class="layout-main">
+                        <aside class="layout-sidebar">
+                            <h3>提示</h3>
+                            <p>您的反馈对我们至关重要，所有信息仅用于课程改进。</p>
+                        </aside>
+                        <main class="layout-content">
+                            <form>
+                                <label>课程名称：</label><input type="text" required><br>
+                                <label>授课教师：</label><input type="text" required><br>
+                                <label>教学内容实用性：</label> 1<input type="radio" name="score"> 2<input type="radio"> 3<input type="radio"> 4<input type="radio"> 5<input type="radio"><br>
+                                <label>按时完成作业？</label> 总是<input type="radio"> 经常<input type="radio"> 偶尔<input type="radio"><br>
+                                <label>有价值的方面：</label> <input type="checkbox">理论知识 <input type="checkbox">实践技能 <br>
+                                <label>建议：</label><textarea rows="3" style="width:100%"></textarea><br>
+                                <button type="submit">提交评价</button>
+                            </form>
+                        </main>
+                    </div>
+                    <footer class="layout-footer">
+                        <p>感谢您的参与！</p>
+                    </footer>
+                </div>
+                
+                <div class="code-example">
+                    <div class="code-header">
+                        <div class="code-title">参考代码片段</div>
+                        <div class="code-actions">
+                            <button class="code-btn">复制</button>
+                            <button class="code-btn">运行</button>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre>
+&lt;h2&gt;课程评分&lt;/h2&gt;
+&lt;div&gt;教学内容的实用性：
+  &lt;input type="radio" name="content" value="1"&gt;1分
+  &lt;input type="radio" name="content" value="2"&gt;2分
+  &lt;input type="radio" name="content" value="3"&gt;3分
+  &lt;input type="radio" name="content" value="4"&gt;4分
+  &lt;input type="radio" name="content" value="5"&gt;5分
+&lt;/div&gt;
+
+&lt;h2&gt;意见与建议&lt;/h2&gt;
+&lt;textarea rows="4" cols="50" placeholder="请填写您的建议"&gt;&lt;/textarea&gt;
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 归纳与总结 (模块6总结) -->
+        <section class="content-section">
+            <h2><i class="fas fa-clipboard-check"></i> 归纳与总结</h2>
+            <p>通过本模块学习，我们掌握了：超链接四种状态的伪类设置（LVHA顺序）；列表样式的核心属性（list-style-type, position, image）；表格的创建（table, thead, tbody, colspan/rowspan）及CSS美化（边框合并、内边距、悬停）；表单的结构（form, label, input, select, textarea）以及常用控件类型。同时，我们了解了数据安全规范（个人信息保护法、最小必要原则），为后续开发功能完善的交互网页打下基础。</p>
+        </section>
+
+        <!-- 学习资源 (更新为模块6相关) -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <p>以下资源将帮助您更好地完成模块6的学习：</p>
+            
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>教材章节</h3>
+                    <p>模块6完整教材内容，包含表格与表单的详细讲解和实战案例。</p>
+                    <a href="#" class="btn-resource">查看教材</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>视频教程</h3>
+                    <p>超链接伪类、列表样式、表格美化、表单控件等核心知识点视频讲解。</p>
+                    <a href="#" class="btn-resource">观看视频</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>示例代码</h3>
+                    <p>模块6所有任务的完整示例代码，包含导航、列表、表格、注册表单等。</p>
+                    <a href="#" class="btn-resource">下载代码</a>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>练习任务</h3>
+                    <p>巩固表格和表单知识的练习题，提升实战能力。</p>
+                    <a href="#" class="btn-resource">开始练习</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 (完全保留) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 代码复制功能 (保留)
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => {
+                            button.textContent = '复制';
+                        }, 2000);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

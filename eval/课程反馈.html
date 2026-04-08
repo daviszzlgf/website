@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程评价反馈表单</title>
+    <style>
+        /* 从main.html复制的样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 表单样式 */
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        input[type="text"],
+        input[type="month"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        input[type="text"]:focus,
+        input[type="month"]:focus,
+        textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .required {
+            color: var(--accent);
+        }
+        
+        .rating-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .rating-option {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+        
+        .rating-option input {
+            margin-right: 0.5rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+        
+        .checkbox-option input {
+            margin-right: 0.5rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn.secondary {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .rating-group, .checkbox-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/课程概况.html">课程概况</a></li>
+                    <li><a href="/入门攻略.html">入门攻略</a></li>
+                    <li><a href="/课程学习.html">课程学习</a></li>
+                    <li><a href="/教学资源.html">教学资源</a></li>
+                    <li><a href="/综合测试.html">综合测试</a></li>
+                    <li><a href="/课程评价.html" class="active">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>课程评价反馈表单</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../课程评价.html">课程评价</a></li>
+                <li>课程反馈</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 表单内容 -->
+    <div class="container">
+        <div class="form-container">
+            <p style="margin-bottom: 2rem; text-align: center; font-size: 1.1rem;">
+                请花费几分钟时间，对本课程进行评价，您的反馈对我们很重要！
+            </p>
+            
+            <form action="#" method="post">
+                <!-- 第一部分：课程基本信息 -->
+                <div class="form-section">
+                    <h2>一、课程信息</h2>
+                    
+                    <div class="form-group">
+                        <label for="courseName">课程名称：<span class="required">*</span></label>
+                        <input type="text" id="courseName" name="courseName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="teacherName">授课教师：<span class="required">*</span></label>
+                        <input type="text" id="teacherName" name="teacherName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="courseDate">学习时间：<span class="required">*</span></label>
+                        <input type="month" id="courseDate" name="courseDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="studentClass">你的班级：<span class="required">*</span></label>
+                        <input type="text" id="studentClass" name="studentClass" required>
+                    </div>
+                </div>
+                
+                <!-- 第二部分：课程评分 -->
+                <div class="form-section">
+                    <h2>二、课程评分（请选择1-5分，1分最低，5分最高）</h2>
+                    
+                    <div class="form-group">
+                        <label>1. 教学内容的实用性：<span class="required">*</span></label>
+                        <div class="rating-group">
+                            <div class="rating-option">
+                                <input type="radio" id="content1" name="content" value="1" required>
+                                <label for="content1">1分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="content2" name="content" value="2">
+                                <label for="content2">2分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="content3" name="content" value="3">
+                                <label for="content3">3分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="content4" name="content" value="4">
+                                <label for="content4">4分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="content5" name="content" value="5">
+                                <label for="content5">5分</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>2. 教师的教学方法：<span class="required">*</span></label>
+                        <div class="rating-group">
+                            <div class="rating-option">
+                                <input type="radio" id="approach1" name="approach" value="1" required>
+                                <label for="approach1">1分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="approach2" name="approach" value="2">
+                                <label for="approach2">2分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="approach3" name="approach" value="3">
+                                <label for="approach3">3分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="approach4" name="approach" value="4">
+                                <label for="approach4">4分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="approach5" name="approach" value="5">
+                                <label for="approach5">5分</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>3. 教师的责任心与态度：<span class="required">*</span></label>
+                        <div class="rating-group">
+                            <div class="rating-option">
+                                <input type="radio" id="attitude1" name="attitude" value="1" required>
+                                <label for="attitude1">1分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="attitude2" name="attitude" value="2">
+                                <label for="attitude2">2分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="attitude3" name="attitude" value="3">
+                                <label for="attitude3">3分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="attitude4" name="attitude" value="4">
+                                <label for="attitude4">4分</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="attitude5" name="attitude" value="5">
+                                <label for="attitude5">5分</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第三部分：选择题 -->
+                <div class="form-section">
+                    <h2>三、课程调查</h2>
+                    
+                    <div class="form-group">
+                        <label>1. 你是否按时完成了本课程的作业？<span class="required">*</span></label>
+                        <div class="rating-group">
+                            <div class="rating-option">
+                                <input type="radio" id="homework1" name="homework" value="总是" required>
+                                <label for="homework1">总是</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="homework2" name="homework" value="经常">
+                                <label for="homework2">经常</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="homework3" name="homework" value="偶尔">
+                                <label for="homework3">偶尔</label>
+                            </div>
+                            <div class="rating-option">
+                                <input type="radio" id="homework4" name="homework" value="很少">
+                                <label for="homework4">很少</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>2. 你认为本课程中最有价值的内容是（可多选）：</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="val1" name="valuable" value="理论知识">
+                                <label for="val1">理论知识</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="val2" name="valuable" value="实践技能">
+                                <label for="val2">实践技能</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="val3" name="valuable" value="案例分析">
+                                <label for="val3">案例分析</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="val4" name="valuable" value="课堂互动">
+                                <label for="val4">课堂互动</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第四部分：意见建议 -->
+                <div class="form-section">
+                    <h2>四、意见与建议</h2>
+                    
+                    <div class="form-group">
+                        <label for="strengths">本课程的主要优点：</label>
+                        <textarea id="strengths" name="strengths" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="improvements">需要改进的方面：</label>
+                        <textarea id="improvements" name="improvements" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="suggestions">其他建议：</label>
+                        <textarea id="suggestions" name="suggestions" rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <!-- 提交按钮 -->
+                <div class="form-actions">
+                    <button type="submit" class="btn">提交评价</button>
+                    <button type="reset" class="btn secondary">重置表单</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于课程</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，将思政元素有机融入技术教学，培养学生严谨、协作、创新的职业素养。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 0371-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="main.html">课程首页</a></li>
+                            <li><a href="课程概况.html">课程概况</a></li>
+                            <li><a href="入门攻略.html">入门攻略</a></li>
+                            <li><a href="课程学习.html">课程学习</a></li>
+                            <li><a href="教学资源.html">教学资源</a></li>
+                            <li><a href="综合测试.html">综合测试</a></li>
+                            <li><a href="任务8.5.html">课程评价</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // 在课程反馈.html的<script>标签中添加以下代码
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // 阻止表单默认提交
+        
+        // 收集表单数据
+        const formData = new FormData(form);
+        
+        // 获取单选按钮的值
+        const content = document.querySelector('input[name="content"]:checked');
+        const approach = document.querySelector('input[name="approach"]:checked');
+        const attitude = document.querySelector('input[name="attitude"]:checked');
+        const homework = document.querySelector('input[name="homework"]:checked');
+        
+        // 获取多选框的值
+        const valuableCheckboxes = document.querySelectorAll('input[name="valuable"]:checked');
+        const valuableValues = Array.from(valuableCheckboxes).map(cb => cb.value);
+        
+        // 构建URL参数
+        const params = new URLSearchParams();
+        
+        // 添加表单数据
+        params.append('学号', generateStudentId());
+        params.append('courseName', formData.get('courseName') || '网页设计与制作');
+        params.append('teacherName', formData.get('teacherName') || '');
+        params.append('courseDate', formData.get('courseDate') || '');
+        params.append('studentClass', formData.get('studentClass') || '');
+        
+        // 添加评分数据
+        if (content) params.append('content', content.value);
+        if (approach) params.append('approach', approach.value);
+        if (attitude) params.append('attitude', attitude.value);
+        
+        // 添加其他数据
+        if (homework) params.append('homework', homework.value);
+        if (valuableValues.length > 0) params.append('valuable', valuableValues.join(','));
+        
+        // 添加文本区域数据
+        params.append('strengths', formData.get('strengths') || '');
+        params.append('improvements', formData.get('improvements') || '');
+        params.append('suggestions', formData.get('suggestions') || '');
+        
+        // 跳转到处理页面
+        window.location.href = 'process_data1.html?' + params.toString();
+        
+        return false;
+    });
+    
+    // 生成学号的辅助函数
+    function generateStudentId() {
+        const baseId = "410128001001001";
+        const randomPart = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+        return baseId + randomPart;
+    }
+});
+    </script>
+</body>
+</html>

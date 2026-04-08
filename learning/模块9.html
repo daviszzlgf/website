@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块9：CSS3的高级技巧 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        /* 完全保留原有风格，仅微调新增卡片 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-description h4, .task-objectives h4 {
+            margin: 1rem 0 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        /* 选择器分类卡片 (复用format-comparison) */
+        .format-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .format-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--info);
+        }
+        
+        .format-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .format-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: var(--info);
+        }
+        
+        .format-title {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .format-features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        
+        .format-features li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        
+        .format-features i {
+            margin-right: 10px;
+            color: var(--success);
+        }
+        
+        /* 渐变演示盒子 */
+        .gradient-box {
+            width: 100%;
+            height: 100px;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        /* 产品卡片展示区 */
+        .product-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #e74c3c, #f39c12);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+        .product-img {
+            width: 100%;
+            height: 180px;
+            background: #ddd;
+            background-image: linear-gradient(45deg, #bdc3c7, #ecf0f1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+            font-size: 3rem;
+        }
+        .product-info {
+            padding: 1.2rem;
+        }
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .product-desc {
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+        .product-price {
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        /* 代码示例框保留 */
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        .code-title {
+            font-weight: 500;
+        }
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .code-content pre {
+            margin: 0;
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+        
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            position: relative;
+        }
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav li {
+                margin: 0.5rem;
+            }
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 (完全不变) -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 (模块9) -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块9：CSS3的高级技巧</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="课程学习.html">课程学习</a></li>
+                <li>模块9：CSS3的高级技巧</li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- 项目概述 (替换为模块9学习目标) -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 模块概述</h2>
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 学习目标</h3>
+                    <ul class="objective-list">
+                        <li><i class="fas fa-check-circle"></i><div><strong>知识目标：</strong>掌握CSS3高级选择器的类型及使用方法；了解CSS3新属性的用法；掌握线性渐变与径向渐变的属性与应用。</div></li>
+                        <li><i class="fas fa-check-circle"></i><div><strong>能力目标：</strong>能综合运用高级选择器精准选择页面元素；能利用渐变等CSS3新属性制作质感UI组件，创建丰富的背景效果。</div></li>
+                        <li><i class="fas fa-check-circle"></i><div><strong>素养目标：</strong>践行工匠精神，提升职业素养水平，注重代码的可维护性与设计细节。</div></li>
+                    </ul>
+                </div>
+                <div class="duration-box">
+                    <h3>建议学时</h3>
+                    <div class="hours">4学时</div>
+                    <p>核心模块</p>
+                </div>
+            </div>
+            <p>在网页设计中，细节决定成败。要打造真正具有吸引力与专业感的用户界面，离不开对CSS高级特性的娴熟运用。本项目将展示如何通过高级选择器实现精准的样式控制，并借助强大的渐变工具营造丰富的视觉层次，以简洁高效的代码优化整体用户体验。</p>
+        </section>
+
+        <!-- 任务列表 (四个任务) -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 任务列表</h2>
+            <ul class="task-list">
+                <!-- 任务9.1 认识高级选择器 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务9.1：认识CSS的高级选择器</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <h4>任务描述：</h4>
+                        <p>在掌握了基础选择器后，我们需要应对更复杂的结构和交互。本任务将系统学习属性选择器、伪类、伪元素及组合选择器，通过分析典型代码，理解它们的作用与场景，为精准控制样式奠定基础。</p>
+                        <h4>知识链接：</h4>
+                        <h5>9.1.1 属性选择器</h5>
+                        <ul>
+                            <li><i class="fas fa-code"></i> <code>[attr]</code>：选择包含指定属性的元素</li>
+                            <li><i class="fas fa-code"></i> <code>[attr=value]</code>：属性值完全匹配</li>
+                            <li><i class="fas fa-code"></i> <code>[attr~=value]</code>：属性值包含词汇（空格分隔）</li>
+                            <li><i class="fas fa-code"></i> <code>[attr^=value]</code>：属性值以指定值开头</li>
+                            <li><i class="fas fa-code"></i> <code>[attr$=value]</code>：属性值以指定值结尾</li>
+                            <li><i class="fas fa-code"></i> <code>[attr*=value]</code>：属性值包含指定子串</li>
+                        </ul>
+                        <h5>9.1.2 状态伪类 & 结构伪类</h5>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <code>:hover, :focus, :active, :checked</code> 等交互状态</li>
+                            <li><i class="fas fa-check"></i> <code>:first-child, :last-child, :nth-child(n)</code> 结构位置</li>
+                            <li><i class="fas fa-check"></i> <code>:not(selector)</code> 否定伪类</li>
+                        </ul>
+                        <h5>9.1.3 伪元素</h5>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <code>::before / ::after</code> 插入生成内容</li>
+                            <li><i class="fas fa-check"></i> <code>::first-letter, ::first-line, ::selection</code> 文本装饰</li>
+                        </ul>
+                        <h5>9.1.4 组合选择器</h5>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 后代 (空格) 、子元素 (>) 、相邻兄弟 (+) 、通用兄弟 (~)</li>
+                        </ul>
+                    </div>
+                    <!-- 选择器卡片展示 -->
+                    <h4>常用选择器分类</h4>
+                    <div class="format-comparison">
+                        <div class="format-card">
+                            <div class="format-header"><div class="format-icon"><i class="fas fa-tags"></i></div><div class="format-title">属性选择器</div></div>
+                            <ul class="format-features"><li><i class="fas fa-check"></i> [disabled]</li><li><i class="fas fa-check"></i> [type="submit"]</li><li><i class="fas fa-check"></i> [class^="btn-"]</li></ul>
+                        </div>
+                        <div class="format-card">
+                            <div class="format-header"><div class="format-icon"><i class="fas fa-mouse-pointer"></i></div><div class="format-title">状态伪类</div></div>
+                            <ul class="format-features"><li><i class="fas fa-check"></i> :hover</li><li><i class="fas fa-check"></i> :focus</li><li><i class="fas fa-check"></i> :checked</li></ul>
+                        </div>
+                        <div class="format-card">
+                            <div class="format-header"><div class="format-icon"><i class="fas fa-layer-group"></i></div><div class="format-title">结构伪类</div></div>
+                            <ul class="format-features"><li><i class="fas fa-check"></i> :first-child</li><li><i class="fas fa-check"></i> :nth-child(odd)</li><li><i class="fas fa-check"></i> :not(:last-child)</li></ul>
+                        </div>
+                        <div class="format-card">
+                            <div class="format-header"><div class="format-icon"><i class="fas fa-gem"></i></div><div class="format-title">伪元素</div></div>
+                            <ul class="format-features"><li><i class="fas fa-check"></i> ::before</li><li><i class="fas fa-check"></i> ::after</li><li><i class="fas fa-check"></i> ::first-line</li></ul>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-header"><span class="code-title">高级选择器示例</span><div class="code-actions"><button class="code-btn">复制</button></div></div>
+                        <div class="code-content"><pre>/* 属性选择器 */
+a[target="_blank"] { color: red; }
+[class^="icon-"] { font-size: 1.2rem; }
+
+/* 伪类 */
+li:first-child { font-weight: bold; }
+tr:nth-child(even) { background: #f2f2f2; }
+input:focus { border-color: #3498db; }
+
+/* 伪元素 */
+blockquote::before { content: "“"; font-size: 2rem; }
+p::first-letter { font-size: 2rem; float: left; }
+
+/* 组合 */
+nav > ul > li { display: inline-block; }
+h2 + p { margin-top: 0; }</pre></div>
+                    </div>
+                </li>
+
+                <!-- 任务9.2 优先级 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务9.2：理解与应用CSS选择器优先级</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <h4>任务描述：</h4>
+                        <p>样式冲突是日常开发中的常见问题。本任务将深入剖析选择器优先级（特异性）的计算规则，学会诊断样式覆盖问题，编写更健壮的CSS。</p>
+                        <h4>优先级计算规则 (a,b,c,d)：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 千位(a)：内联样式，有则为1</li>
+                            <li><i class="fas fa-check"></i> 百位(b)：ID选择器数量</li>
+                            <li><i class="fas fa-check"></i> 十位(c)：类、属性、伪类数量</li>
+                            <li><i class="fas fa-check"></i> 个位(d)：元素、伪元素数量</li>
+                        </ul>
+                        <p>从左到右逐级比较，数值大的优先级高。相同则后定义的生效。</p>
+                        <h4>!important 与继承</h4>
+                        <p><code>!important</code> 声明具有最高优先级，但应谨慎使用。继承的样式优先级最低。</p>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-header"><span class="code-title">优先级计算示例</span><div class="code-actions"><button class="code-btn">复制</button></div></div>
+                        <div class="code-content"><pre>/* 1. #header .nav-item  → (0,1,1,0) */
+/* 2. ul.menu > li:first-child → (0,0,2,2) */
+/* 3. div p → (0,0,0,2) */
+/* 4. .btn.primary:hover → (0,0,3,0) */
+
+// 内联 style="color:red" 优先级最高 (1,0,0,0)</pre></div>
+                    </div>
+                </li>
+
+                <!-- 任务9.3 精准控制样式 (导航高亮、面包屑、标题装饰) 直接复用页面现有元素说明 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务9.3：使用高级选择器和CSS3新属性精准控制样式</h3>
+                        <span class="task-tag">应用</span>
+                    </div>
+                    <div class="task-description">
+                        <h4>任务描述：</h4>
+                        <p>以课程网站为例，实现当前页面高亮、导航悬停反馈、面包屑分隔符、标题装饰下划线。这些效果完全依靠高级选择器完成，无需增加额外类名。</p>
+                        <h4>实现要点：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 导航高亮：<code>nav a.active</code> 与 <code>:hover</code></li>
+                            <li><i class="fas fa-check"></i> 面包屑分隔符：<code>.breadcrumb li:not(:last-child)::after { content: "›"; }</code></li>
+                            <li><i class="fas fa-check"></i> 标题下划线：<code>.page-header h1::after</code> 生成装饰线</li>
+                            <li><i class="fas fa-check"></i> 组合选择器隔离样式：<code>nav > ul > li</code></li>
+                        </ul>
+                        <p>当前页面头部、面包屑已经应用了这些样式，可查看源码学习。</p>
+                    </div>
+                </li>
+
+                <!-- 任务9.4 渐变背景 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务9.4：使用渐变属性打造质感背景</h3>
+                        <span class="task-tag">设计</span>
+                    </div>
+                    <div class="task-description">
+                        <h4>任务描述：</h4>
+                        <p>渐变可以替代单一背景色，使页面更生动。本任务学习线性渐变、径向渐变、重复渐变，并应用于导航、卡片、按钮等。</p>
+                        <h4>常用渐变函数：</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <code>linear-gradient(direction, color1, color2...)</code></li>
+                            <li><i class="fas fa-check"></i> <code>radial-gradient(shape at position, color1, color2...)</code></li>
+                            <li><i class="fas fa-check"></i> <code>repeating-linear-gradient</code> / <code>repeating-radial-gradient</code></li>
+                        </ul>
+                        <h4>应用示例：</h4>
+                        <div style="display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0;">
+                            <div style="width:150px; height:80px; background:linear-gradient(to right, #3498db, #9b59b6); border-radius:8px;"></div>
+                            <div style="width:150px; height:80px; background:radial-gradient(circle at top left, #e74c3c, #f39c12); border-radius:8px;"></div>
+                            <div style="width:150px; height:80px; background:repeating-linear-gradient(45deg, #1abc9c 0px, #1abc9c 10px, #16a085 10px, #16a085 20px); border-radius:8px;"></div>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-header"><span class="code-title">渐变核心代码</span><div class="code-actions"><button class="code-btn">复制</button></div></div>
+                        <div class="code-content"><pre>/* 线性渐变 */
+background: linear-gradient(135deg, #2c3e50, #3498db);
+
+/* 径向渐变 */
+background: radial-gradient(circle at 30% 30%, #fff, #3498db);
+
+/* 重复渐变 (条纹) */
+background: repeating-linear-gradient(45deg, 
+  #3498db 0px, #3498db 10px, 
+  #2980b9 10px, #2980b9 20px);</pre></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 实训任务：产品展示卡片 (替换原旅行分享) -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 实训9.1：产品展示卡片（综合运用高级选择器与渐变）</h2>
+            <div class="task-item" style="border-left-color: var(--success);">
+                <div class="task-header">
+                    <h3 class="task-title">综合任务：设计一组质感产品卡片</h3>
+                    <span class="task-tag">综合</span>
+                </div>
+                <p><strong>要求：</strong>使用高级选择器为卡片各部分设置样式；利用渐变背景增强卡片头部、按钮或徽章；使用伪元素添加装饰（如“热卖”标签）；实现悬停上浮效果。</p>
+                
+                <div class="product-showcase">
+                    <!-- 卡片1 -->
+                    <div class="product-card">
+                        <span class="product-badge">热卖</span>
+                        <div class="product-img"><i class="fas fa-headphones"></i></div>
+                        <div class="product-info">
+                            <div class="product-title">无线耳机</div>
+                            <div class="product-desc">主动降噪，续航30小时</div>
+                            <div class="product-price">¥499</div>
+                        </div>
+                    </div>
+                    <!-- 卡片2 -->
+                    <div class="product-card">
+                        <div class="product-img"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="product-info">
+                            <div class="product-title">智能手表</div>
+                            <div class="product-desc">全天心率监测，AMOLED屏</div>
+                            <div class="product-price">¥1299</div>
+                        </div>
+                    </div>
+                    <!-- 卡片3 -->
+                    <div class="product-card">
+                        <span class="product-badge" style="background: linear-gradient(135deg, #9b59b6, #3498db);">新品</span>
+                        <div class="product-img"><i class="fas fa-laptop"></i></div>
+                        <div class="product-info">
+                            <div class="product-title">超薄笔记本</div>
+                            <div class="product-desc">16GB内存，512GB SSD</div>
+                            <div class="product-price">¥5999</div>
+                        </div>
+                    </div>
+                    <!-- 卡片4 -->
+                    <div class="product-card">
+                        <div class="product-img"><i class="fas fa-camera"></i></div>
+                        <div class="product-info">
+                            <div class="product-title">运动相机</div>
+                            <div class="product-desc">4K防抖，裸机防水</div>
+                            <div class="product-price">¥2199</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-header"><span class="code-title">卡片核心CSS (部分)</span><div class="code-actions"><button class="code-btn">复制</button></div></div>
+                    <div class="code-content"><pre>.product-card {
+  position: relative; border-radius: 12px; overflow: hidden;
+  box-shadow: var(--shadow); transition: var(--transition);
+}
+.product-card:hover { transform: translateY(-5px); }
+.product-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%;
+  height: 4px; background: linear-gradient(to right, var(--primary), var(--secondary));
+}
+.product-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  color: white; padding: 0.3rem 0.8rem; border-radius: 20px;
+  font-size: 0.8rem; z-index: 2;
+}</pre></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 总结回顾 -->
+        <section class="content-section">
+            <h2><i class="fas fa-clipboard-check"></i> 总结与回顾</h2>
+            <p>通过本项目我们系统掌握了CSS高级选择器与渐变属性，实现了样式的精准控制与质感提升。学会了运用选择器精准定位元素，简化了HTML结构。同时，通过灵活使用线性与径向渐变，我们创造出丰富的背景视觉效果，显著提升了界面的专业性与用户体验，锤炼了精细化设计与代码维护的工匠精神，为开发现代化网页奠定了坚实基础。</p>
+        </section>
+
+        <!-- 拓展练习 -->
+        <section class="content-section">
+            <h2><i class="fas fa-puzzle-piece"></i> 拓展练习</h2>
+            <div class="task-item">
+                <ul>
+                    <li><i class="fas fa-check" style="color:var(--success);"></i> 使用伪元素为块引用添加引号（参考入门攻略页面的时间线）。</li>
+                    <li><i class="fas fa-check" style="color:var(--success);"></i> 尝试用圆锥渐变（conic-gradient）设计一个简单的色盘。</li>
+                    <li><i class="fas fa-check" style="color:var(--success);"></i> 为卡片设计更复杂的悬停效果（缩放+阴影+渐变变化）。</li>
+                    <li><i class="fas fa-check" style="color:var(--success);"></i> 创建一个使用高级选择器和渐变实现的导航菜单。</li>
+                    <li><i class="fas fa-check" style="color:var(--success);"></i> 设计一个重复渐变图案的背景，并应用于页面局部。</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 习题 (完全替换为模块9习题) -->
+        <section class="content-section">
+            <h2><i class="fas fa-question-circle"></i> 习题</h2>
+            <div class="task-item">
+                <h4>一、选择题</h4>
+                <ol style="margin-left:1.2rem;">
+                    <li>以下哪个选择器可以选择所有带有target属性的链接？ A. a[target] B. a.target C. a>target D. a:target</li>
+                    <li>以下哪个伪类用于选择被访问后的链接？ A. :hover B. :active C. :visited D. :link</li>
+                    <li>创建一个从左到右的线性渐变，应该使用？ A. to top B. to bottom C. to left D. to right</li>
+                    <li>以下哪个伪元素用于在元素内容之后插入内容？ A. ::before B. ::after C. ::first-line D. ::first-letter</li>
+                    <li>在CSS中，哪个函数用于创建径向渐变？ A. linear-gradient B. radial-gradient C. conic-gradient D. gradient-radial</li>
+                    <li>以下哪个选择器会选择所有直接子元素？ A. div p B. div > p C. div + p D. div ~ p</li>
+                    <li>哪个选择器优先级最高？ A. .container .btn B. #header .btn C. btn D. div#header.btn</li>
+                    <li>CSS变量的定义语法是？ A. $变量名:值 B. --变量名:值 C. var(变量名):值 D. @变量名:值</li>
+                </ol>
+                <h4>二、填空题</h4>
+                <ol style="margin-left:1.2rem;">
+                    <li>使用伪元素选择器在元素内容之前插入内容，需要使用_______。</li>
+                    <li>创建从红色到蓝色的线性渐变，方向为从上到下，应该使用_______。</li>
+                    <li>在径向渐变中，_______参数用于设置渐变的形状（circle或ellipse）。</li>
+                    <li>用于选择作为其父元素的第一个子元素的选择器是_______。</li>
+                    <li>CSS变量的作用域分为全局和_______。</li>
+                </ol>
+                <h4>三、判断题</h4>
+                <ol style="margin-left:1.2rem;">
+                    <li>属性选择器[class^="btn"]会选择所有class属性以"btn"开头的元素。（ ）</li>
+                    <li>线性渐变只能从上到下或从左到右。（ ）</li>
+                    <li>:nth-child(2n)选择器会选择所有偶数位置的子元素。（ ）</li>
+                    <li>径向渐变的默认形状是圆形。（ ）</li>
+                    <li>伪元素::first-letter只能应用于块级元素。（ ）</li>
+                </ol>
+                <h4>四、优先级计算</h4>
+                <ul>
+                    <li>1. div.container { color: blue; }  → (0,0,1,1)</li>
+                    <li>2. #nav ul.menu li.active → (0,1,2,2)</li>
+                    <li>3. input[type="text"][required] → (0,0,2,1)</li>
+                </ul>
+                <h4>五、实操题</h4>
+                <p>使用径向渐变为一个圆形元素创建从中心向四周扩散的渐变；设计一个产品卡片，使用伪元素添加“新品”标签并应用渐变背景。</p>
+            </div>
+        </section>
+
+        <!-- 学习资源 -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <div class="resource-cards">
+                <div class="resource-card"><div class="resource-icon"><i class="fas fa-book"></i></div><h3>教材章节</h3><p>模块9完整内容，含选择器详解与渐变案例。</p><a href="#" class="btn-resource">查看教材</a></div>
+                <div class="resource-card"><div class="resource-icon"><i class="fas fa-video"></i></div><h3>视频教程</h3><p>高级选择器与渐变的实战讲解。</p><a href="#" class="btn-resource">观看视频</a></div>
+                <div class="resource-card"><div class="resource-icon"><i class="fas fa-code"></i></div><h3>示例代码</h3><p>所有任务完整源码下载。</p><a href="#" class="btn-resource">下载代码</a></div>
+                <div class="resource-card"><div class="resource-icon"><i class="fas fa-tasks"></i></div><h3>练习任务</h3><p>巩固高级技巧的在线练习。</p><a href="#" class="btn-resource">开始练习</a></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 (不变) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section"><h3>关于我们</h3><p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术。</p></div>
+                <div class="footer-section"><h3>联系方式</h3><div class="footer-contact"><span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span><span><i class="fas fa-phone"></i> 010-12345678</span><span><i class="fas fa-envelope"></i> contact@webcourse.com</span></div></div>
+                <div class="footer-section"><h3>关注我们</h3><p>社交媒体获取最新更新。</p><div class="footer-social"><a href="#"><i class="fab fa-weixin"></i></a><a href="#"><i class="fab fa-weibo"></i></a><a href="#"><i class="fab fa-qq"></i></a><a href="#"><i class="fab fa-github"></i></a></div></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2023 网页设计与制作课程 | 版权所有</p></div>
+        </div>
+    </footer>
+
+    <script>
+        // 仅保留复制功能，移除所有音视频相关JS
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => { button.textContent = '复制'; }, 2000);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

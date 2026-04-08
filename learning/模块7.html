@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块7：多媒体嵌入 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        /* 样式完全保持不变，详见原文件 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 项目概述 */
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 任务列表 */
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        /* 性能指标展示（现用于格式卡片） */
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 优化技巧展示（现用于属性卡片） */
+        .optimization-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .tip-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--success);
+        }
+        
+        .tip-card.warning {
+            border-left-color: var(--warning);
+        }
+        
+        .tip-card.danger {
+            border-left-color: var(--accent);
+        }
+        
+        .tip-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .tip-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--success);
+        }
+        
+        .tip-card.warning .tip-icon {
+            color: var(--warning);
+        }
+        
+        .tip-card.danger .tip-icon {
+            color: var(--accent);
+        }
+        
+        .tip-title {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* 浏览器测试展示（现用于兼容性展示） */
+        .browser-testing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .browser-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .browser-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .browser-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .browser-icon {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        
+        .browser-name {
+            font-weight: 600;
+        }
+        
+        .browser-content {
+            padding: 1.5rem;
+        }
+        
+        .browser-version {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .test-result {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .passed {
+            background: var(--success);
+            color: white;
+        }
+        
+        .warning {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .failed {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* 部署流程展示（现用于嵌入步骤） */
+        .deployment-process {
+            display: flex;
+            flex-direction: column;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .process-step {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .step-icon {
+            flex: 0 0 60px;
+            height: 60px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+            z-index: 2;
+        }
+        
+        .step-content {
+            flex: 1;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .step-title {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .step-description {
+            color: #666;
+        }
+        
+        .process-connector {
+            position: absolute;
+            top: 60px;
+            left: 30px;
+            bottom: 0;
+            width: 2px;
+            background: var(--secondary);
+            z-index: 1;
+        }
+        
+        /* 检查清单（现用于多媒体检查项） */
+        .checklist {
+            margin: 2rem 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+        
+        .checklist-checkbox {
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+        }
+        
+        .checklist-content {
+            flex: 1;
+        }
+        
+        .checklist-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .checklist-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 代码示例 */
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        
+        .code-title {
+            font-weight: 500;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-content {
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* 学习资源 */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+            
+            .performance-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .optimization-tips {
+                grid-template-columns: 1fr;
+            }
+            
+            .browser-testing {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-step {
+                flex-direction: column;
+            }
+            
+            .step-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .process-connector {
+                display: none;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部（保持不变） -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题（改为模块7） -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块7：多媒体嵌入</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="课程学习.html">课程学习</a></li>
+                <li>模块7：多媒体嵌入</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容（完全替换为模块7内容） -->
+    <div class="container">
+        <!-- 模块概述（替换学习目标） -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 模块概述</h2>
+            
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 学习目标</h3>
+                    <ul class="objective-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>知识目标：</strong>了解网页中常用的音视频格式及其兼容性；掌握HTML5 &lt;audio&gt;、&lt;video&gt; 标签及常用属性的用法；掌握CSS美化音频、视频控件的方法。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>能力目标：</strong>能够使用audio标签和video标签在网页中插入音频、视频文件，并根据需求配置基础属性；能使用CSS样式简单美化音视频播放器，实现与页面设计风格的统一；能独立制作包含音视频的简单网页。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>素养目标：</strong>树立用技术传播正向价值的意识，培养对网络空间责任的初步认知；树立多媒体资源的版权保护意识，规范使用正版或开源授权的音视频素材。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="duration-box">
+                    <h3>建议学时</h3>
+                    <div class="hours">4学时</div>
+                    <p>理论+实践</p>
+                </div>
+            </div>
+            
+            <p>在互联网从“文字时代”迈向“视听时代”的进程中，多媒体已成为现代网页的核心组成部分。它打破了纯文本的单调局限，通过图像、音频、视频、动画等元素，让网页从信息载体升级为沉浸式交互空间。本章将深入解析网页多媒体的应用逻辑，助你掌握用多媒体赋能网页、打造高吸引力交互场景的实用技能。</p>
+        </section>
+
+        <!-- 任务列表（仅保留两个任务） -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 任务列表</h2>
+            
+            <ul class="task-list">
+                <!-- 任务7.1：嵌入视频与音频 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务7.1：在网页中嵌入视频与音频</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p>本任务将通过实战操作，掌握 HTML5 嵌入多媒体的核心方法。首先需准备合法的音频文件（如MP3格式）和视频文件（如MP4格式），然后分别使用&lt;audio&gt;标签和 &lt;video&gt; 标签完成音视频的嵌入，并配置基础播放功能（如显示控件、设置视频封面等），最终实现音视频在浏览器中的正常加载与播放。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>不同浏览器对音视频格式的支持存在差异（如Firefox对WebM支持更好，IE对MP4支持有限），需理解格式选择的优先级。同时需注意音频自动播放策略、视频封面设置等细节。</p>
+                    </div>
+                    
+                    <!-- 常用音视频格式卡片（原性能指标） -->
+                    <h4>常用音视频格式及兼容性</h4>
+                    <div class="performance-metrics">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <div class="metric-value">MP3</div>
+                            <div class="metric-label">有损压缩 · 兼容100% · 网页首选</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-file-audio"></i>
+                            </div>
+                            <div class="metric-value">WAV</div>
+                            <div class="metric-label">无损格式 · 体积大 · 适合短音效</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-file-video"></i>
+                            </div>
+                            <div class="metric-value">MP4</div>
+                            <div class="metric-label">通用视频 · 兼容100% · H.264编码</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-file-video"></i>
+                            </div>
+                            <div class="metric-value">WebM</div>
+                            <div class="metric-label">开源 · 体积小 · IE/Safari不支持</div>
+                        </div>
+                    </div>
+                    
+                    <!-- &lt;audio&gt; 属性卡片（原HTML优化） -->
+                    <h4>&lt;audio&gt; 核心属性</h4>
+                    <div class="optimization-tips">
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-sliders-h"></i></div>
+                                <div class="tip-title">controls</div>
+                            </div>
+                            <p>显示浏览器默认的音频控件（播放/暂停、音量调节、进度条）。</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-redo-alt"></i></div>
+                                <div class="tip-title">loop</div>
+                            </div>
+                            <p>设置循环播放。</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-download"></i></div>
+                                <div class="tip-title">preload</div>
+                            </div>
+                            <p>预加载方式：auto(全部)、metadata(元数据)、none(不预加载)。</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-play-circle"></i></div>
+                                <div class="tip-title">autoplay</div>
+                            </div>
+                            <p>自动播放（通常需配合muted使用）。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- &lt;video&gt; 属性卡片（原CSS优化） -->
+                    <h4>&lt;video&gt; 核心属性</h4>
+                    <div class="optimization-tips">
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-image"></i></div>
+                                <div class="tip-title">poster</div>
+                            </div>
+                            <p>指定视频播放前显示的封面图路径。</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-volume-mute"></i></div>
+                                <div class="tip-title">muted</div>
+                            </div>
+                            <p>默认静音播放，常与autoplay搭配。</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-arrows-alt-h"></i></div>
+                                <div class="tip-title">width/height</div>
+                            </div>
+                            <p>设置播放器尺寸，建议只设一个避免拉伸。</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-code-branch"></i></div>
+                                <div class="tip-title">&lt;source&gt;</div>
+                            </div>
+                            <p>提供多种格式文件，提升兼容性。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 代码示例：音视频嵌入 -->
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：嵌入音频与视频</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!-- 音频：单一格式 --&gt;
+&lt;audio src="audio/music.mp3" controls loop&gt;
+    您的浏览器不支持音频播放，请升级浏览器！
+&lt;/audio&gt;
+
+&lt;!-- 音频：多格式兼容 --&gt;
+&lt;audio controls&gt;
+    &lt;source src="audio/music.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audio/music.ogg" type="audio/ogg"&gt;
+    您的浏览器不支持音频播放，请升级浏览器！
+&lt;/audio&gt;
+
+&lt;!-- 视频：带封面、自动静音播放 --&gt;
+&lt;video controls width="600" poster="images/cover.jpg" autoplay muted&gt;
+    &lt;source src="video/movie.mp4" type="video/mp4"&gt;
+    &lt;source src="video/movie.webm" type="video/webm"&gt;
+    您的浏览器不支持视频播放，请升级浏览器！
+&lt;/video&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <p><em>试一试：尝试制作自己的博客主页，并为其添加背景音乐。</em></p>
+                </li>
+                
+                <!-- 任务7.2：使用CSS定制多媒体播放器样式 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务7.2：使用CSS定制多媒体播放器样式</h3>
+                        <span class="task-tag">美化</span>
+                    </div>
+                    <div class="task-description">
+                        <p>浏览器默认的音视频控件样式往往无法匹配页面设计风格。本任务需通过CSS修改播放器的核心视觉元素，包括音频进度条颜色、视频播放按钮样式、控制栏背景色等，实现“自定义风格与页面统一”的多媒体播放器。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>不同的网页有不同的设计风格，播放器的样式也应该与之匹配。我们可以修改播放器的颜色、大小等外观。音频主要调整播放按钮；视频可修改控制栏背景色、播放/暂停按钮、封面图显示效果。注意不同浏览器对伪元素的支持差异，必要时隐藏原生控件自定义。</p>
+                    </div>
+                    
+                    <!-- 伪元素卡片 -->
+                    <h4>常用CSS伪元素（WebKit内核）</h4>
+                    <div class="optimization-tips">
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fab fa-chrome"></i></div>
+                                <div class="tip-title">::-webkit-media-controls</div>
+                            </div>
+                            <p>整个控件容器，可修改背景色、内边距、圆角。</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-play"></i></div>
+                                <div class="tip-title">::-webkit-media-controls-play-button</div>
+                            </div>
+                            <p>控制播放/暂停按钮样式（背景、圆角、大小）。</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-volume-up"></i></div>
+                                <div class="tip-title">::-webkit-media-controls-volume-slider</div>
+                            </div>
+                            <p>音量调节滑块样式。</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-header">
+                                <div class="tip-icon"><i class="fas fa-expand"></i></div>
+                                <div class="tip-title">::-webkit-media-controls-fullscreen-button</div>
+                            </div>
+                            <p>全屏按钮样式（仅视频）。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 兼容性提示卡片（原浏览器测试区） -->
+                    <h4>浏览器兼容性提示</h4>
+                    <div class="browser-testing">
+                        <div class="browser-card">
+                            <div class="browser-header">
+                                <div class="browser-icon"><i class="fab fa-chrome"></i></div>
+                                <div class="browser-name">Chrome/Edge</div>
+                            </div>
+                            <div class="browser-content">
+                                <div class="test-result passed">良好支持</div>
+                                <p>-webkit- 伪元素可用，支持广泛。</p>
+                            </div>
+                        </div>
+                        <div class="browser-card">
+                            <div class="browser-header">
+                                <div class="browser-icon"><i class="fab fa-firefox"></i></div>
+                                <div class="browser-name">Firefox</div>
+                            </div>
+                            <div class="browser-content">
+                                <div class="test-result warning">部分支持</div>
+                                <p>部分伪元素可能失效，建议使用自定义控件方案。</p>
+                            </div>
+                        </div>
+                        <div class="browser-card">
+                            <div class="browser-header">
+                                <div class="browser-icon"><i class="fab fa-safari"></i></div>
+                                <div class="browser-name">Safari</div>
+                            </div>
+                            <div class="browser-content">
+                                <div class="test-result passed">支持-webkit-</div>
+                                <p>与Chrome类似，但部分细节有差异。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 代码示例：CSS美化 -->
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">示例代码：CSS美化音视频控件</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+/* 音频播放器宽度 */
+.my-audio {
+    width: 500px;
+    height: 40px;
+}
+
+/* 播放按钮改为蓝色圆形 */
+.my-audio::-webkit-media-controls-play-button {
+    background-color: #2196F3;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+/* 视频控制栏半透明背景 */
+video::-webkit-media-controls {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+/* 播放按钮橙色，悬浮加深 */
+video::-webkit-media-controls-play-button {
+    background-color: #ff6600;
+    border-radius: 50%;
+    padding: 10px;
+}
+video::-webkit-media-controls-play-button:hover {
+    background-color: #cc5200;
+}
+
+/* 进度条已播放部分 */
+video::-webkit-media-controls-played-progress {
+    background-color: #ff6600;
+}
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <p><em>试一试：拍摄一段视频，写一篇心情日记，添加到自己的博客，并用自定义样式美化。</em></p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 实训任务（替换为太行山四日游多媒体页面） -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 实训任务</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">实训7.1：太行山四日游多媒体页面制作</h3>
+                    <span class="task-tag">综合</span>
+                </div>
+                <div class="task-description">
+                    <p>综合运用模块7所学，制作一个介绍太行山四日游的多媒体页面，包含音频背景、视频日志、图文展示等。</p>
+                </div>
+                <div class="task-objectives">
+                    <h4>任务要求：</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 页面包含精彩瞬间、每日行程、旅行小贴士、推荐景点四个版块。</li>
+                        <li><i class="fas fa-check"></i> 在页面开篇嵌入背景音乐（MP3），第2日行程嵌入太行山视频（MP4/WebM兼容）。</li>
+                        <li><i class="fas fa-check"></i> 精彩瞬间使用flex布局展示至少3张图片。</li>
+                        <li><i class="fas fa-check"></i> 每日行程使用flex实现图片与文字左右排列（图片45%，文字50%）。</li>
+                        <li><i class="fas fa-check"></i> 旅行小贴士用列表展示5条实用信息（温差、装备、讲解、餐饮、季节）。</li>
+                        <li><i class="fas fa-check"></i> 推荐景点以卡片形式展示3个景点（图片+标题+推荐语）。</li>
+                        <li><i class="fas fa-check"></i> 使用CSS对音频/视频播放器进行简单美化（如按钮颜色、控制栏背景）。</li>
+                    </ul>
+                    <p>详细实现可参考教材示例代码，完成后在Chrome和Firefox中测试兼容性。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 归纳与总结（替换为模块7总结） -->
+        <section class="content-section">
+            <h2><i class="fas fa-clipboard-check"></i> 归纳与总结</h2>
+            <p>本章聚焦网页多媒体应用，系统学习了音频、视频在网页中的嵌入与美化。我们先了解 MP3、MP4 等常用音视频格式及浏览器兼容性差异，明确格式选择优先级；随后掌握&lt;audio&gt;和&lt;video&gt;标签用法，能灵活配置src、controls、loop、poster等核心属性，实现音频、视频播放控制、视频封面显示等基础功能。通过“多媒体网页”项目实战，完成了素材准备、基础HTML结构创建、音视频嵌入与多浏览器兼容性测试，还学会用CSS伪元素定制播放器样式，修改进度条、控制栏、按钮等视觉元素以匹配页面风格，同时树立了技术正向传播意识与多媒体版权保护意识，为后续开发更丰富的多媒体网页筑牢基础。</p>
+        </section>
+
+        <!-- 拓展练习（包含修复故障与习题） -->
+        <section class="content-section">
+            <h2><i class="fas fa-rocket"></i> 拓展练习</h2>
+            <p><strong>修复“产品介绍页”多媒体故障：</strong></p>
+            <p>某开发者制作的“智能手环产品介绍页”存在3处问题：1. 视频在Firefox中无法播放；2. 音频设置了autoplay但未自动播放；3. 视频封面图未显示且控制栏样式与科技蓝主题不匹配。请根据需求修复，并提供兼容多种格式、自动播放策略及CSS美化方案。</p>
+            <p>原代码片段：</p>
+            <div class="code-example">
+                <div class="code-header"><span class="code-title">待修复代码</span></div>
+                <div class="code-content"><pre>&lt;!-- 视频区域 --&gt;
+&lt;div class="product-video"&gt;
+    &lt;video src="video/bracelet-intro.mp4" controls width="800"&gt;
+        您的浏览器不支持视频播放！
+    &lt;/video&gt;
+&lt;/div&gt;
+&lt;!-- 音频区域 --&gt;
+&lt;div class="product-audio"&gt;
+    &lt;audio src="audio/product-intro.mp3" autoplay&gt;
+        您的浏览器不支持音频播放！
+    &lt;/audio&gt;
+&lt;/div&gt;</pre></div>
+            </div>
+            <p><strong>修复要求：</strong>解决Firefox视频播放（添加WebM格式）；音频自动播放（考虑 muted 或用户交互）；添加视频封面图，控制栏背景改为 rgba(22, 93, 255, 0.8)，进度条已播放部分改为 #165DFF。</p>
+            
+            <p><strong>本章习题（选择题/填空题）</strong></p>
+            <ul style="margin-left:2rem; list-style:decimal">
+                <li>以下哪种视频格式是网页中的“通用格式”，支持所有现代浏览器？ A. WebM B. MP4 C. OGV D. FLV （答案：B）</li>
+                <li>在HTML5的&lt;audio&gt;标签中，用于显示浏览器默认播放控件的属性是？ A. show-controls B. controls C. display-controls D. play-controls （答案：B）</li>
+                <li>若需让视频在播放前显示一张封面图，应使用&lt;video&gt;标签的哪个属性？ A. cover B. img C. poster D. thumbnail （答案：C）</li>
+                <li>关于OGG音频格式，正确的是？ A. 兼容100% B. 开源有损，IE/Safari不支持 C. 无损格式 D. 网页首选 （答案：B）</li>
+                <li>设置了&lt;video autoplay&gt;但未自动播放，最可能的原因是？ A. 未添加controls B. 未配合muted C. 路径错误 D. 浏览器不支持 （答案：B）</li>
+            </ul>
+            <p>填空题：1. &lt;audio&gt;的preload属性可选值有auto、metadata和<u>none</u>。2. 网页视频格式中兼容性差、逐渐被WebM替代的是<u>OGV</u>；音频格式兼容100%的是<u>MP3</u>。3. 避免视频拉伸，建议只设置<u>width</u>或<u>height</u>中的一个。4. 浏览器不支持音视频时，可在标签内添加<u>备用文本/降级提示</u>。</p>
+        </section>
+
+        <!-- 学习资源（微调为多媒体资源） -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <p>以下资源将帮助您更好地完成模块7的学习：</p>
+            
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-book"></i></div>
+                    <h3>教材章节</h3>
+                    <p>模块7完整教材内容，包含多媒体嵌入详细讲解和案例。</p>
+                    <a href="#" class="btn-resource">查看教材</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-video"></i></div>
+                    <h3>视频教程</h3>
+                    <p>音频/视频标签用法、CSS美化技巧视频讲解。</p>
+                    <a href="#" class="btn-resource">观看视频</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-code"></i></div>
+                    <h3>示例代码</h3>
+                    <p>太行山四日游完整代码及多媒体故障修复示例。</p>
+                    <a href="#" class="btn-resource">下载代码</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-tasks"></i></div>
+                    <h3>练习任务</h3>
+                    <p>更多多媒体嵌入练习题，巩固技能。</p>
+                    <a href="#" class="btn-resource">开始练习</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚（保持不变） -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="../index.html">课程首页</a></li>
+                            <li><a href="../started/课程概况.html">课程概况</a></li>
+                            <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                            <li><a href="课程学习.html">课程学习</a></li>
+                            <li><a href="../resources/教学资源.html">教学资源</a></li>
+                            <li><a href="../test/综合测试.html">综合测试</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 代码复制功能（保持不变）
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => {
+                            button.textContent = '复制';
+                        }, 2000);
+                    });
+                }
+            });
+        });
+        
+        // 检查清单交互（原用于部署检查，现在可以保留但隐藏或修改，我们未使用，无影响）
+        // 为避免干扰，注释掉原检查清单交互，或者保留也不影响
+        // 但原页面底部有对.checklist的监听，而我们现在没有使用checklist（任务7.3已移除），所以脚本不会报错。
+        // 为安全，可保留原脚本但无元素，也可不改。
+        // 原脚本引用了.checklist-checkbox input，但当前页面没有该类，所以无影响。
+    </script>
+</body>
+</html>

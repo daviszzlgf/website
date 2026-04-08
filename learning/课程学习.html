@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程学习 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 模块选项卡 */
+        .module-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--dark);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .tab-btn:hover {
+            color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* 学习模块卡片 */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border: 1px solid #eee;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .module-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .module-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .module-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .module-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .module-duration {
+            opacity: 0.9;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .module-duration i {
+            margin-right: 5px;
+        }
+        
+        .module-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-description {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .module-objectives {
+            margin-bottom: 1.5rem;
+        }
+        
+        .objective-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        
+        .objective-item i {
+            margin-right: 10px;
+            color: var(--success);
+        }
+        
+        .module-projects {
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            color: var(--info);
+        }
+        
+        .project-item i {
+            margin-right: 10px;
+        }
+        
+        .module-progress {
+            background: var(--light);
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-module {
+            display: block;
+            text-align: center;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+        
+        .btn-module:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+        
+        /* 特色项目展示 */
+        .project-showcase {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+            border-radius: 10px;
+            padding: 2rem;
+            color: white;
+            margin: 2rem 0;
+        }
+        
+        .project-showcase h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .project-showcase p {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .project-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .project-feature {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .project-feature:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .project-feature i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        /* 学习路径 */
+        .learning-path {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .path-item {
+            display: flex;
+            width: 100%;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .path-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        
+        .path-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .path-content {
+            flex: 2;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .path-icon {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--secondary);
+        }
+        
+        .path-connector {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 2;
+        }
+        
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .module-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .path-item {
+                flex-direction: column !important;
+                margin-bottom: 3rem;
+            }
+            
+            .path-icon {
+                order: -1;
+                margin-bottom: 1rem;
+            }
+            
+            .path-connector {
+                top: auto;
+                bottom: -30px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="../learning/课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../test/综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>课程学习中心</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li>课程学习</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 模块选项卡 -->
+        <section class="content-section">
+            <h2><i class="fas fa-graduation-cap"></i> 课程模块</h2>
+            <p>本课程由12个教学模块构成，全面覆盖网页设计与制作的核心知识和技能：</p>
+            
+            <div class="module-tabs">
+                <button class="tab-btn active" data-tab="basic">必修模块 (96学时)</button>
+                <button class="tab-btn" data-tab="advanced">选修模块 (32学时)</button>
+            </div>
+            
+            <!-- 必修模块 -->
+            <div class="tab-content active" id="basic">
+                <div class="modules-grid">
+                    <!-- 模块1：网页设计与制作基础 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块1</span>
+                            <div class="module-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h3 class="module-title">网页设计与制作基础</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 4学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>掌握网页的核心构成要素及基本设计流程，理解网页相关专业术语及Web标准规范。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握网页的核心构成要素及基本设计流程</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>理解URL、HTTP/HTTPS协议、静态/动态网页等专业术语</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>会使用编码工具创建基础HTML文件并运行预览</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>完成编码环境的搭建与基本配置，创建符合规范的初始HTML文件</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 25%"></div>
+                            </div>
+                            <div class="progress-text">已完成 1/4 课时</div>
+                            <a href="./模块1.html" class="btn-module">继续学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块2：HTML网页元素 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块2</span>
+                            <div class="module-icon">
+                                <i class="fab fa-html5"></i>
+                            </div>
+                            <h3 class="module-title">HTML网页元素</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 18学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>熟悉网站设计流程和网页设计的基本知识，掌握HTML5语言的基本结构和语法。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>熟悉网站设计流程和网页设计的基本知识</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握HTML5语言的基本结构和语法</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握网页文本、列表、超链接、结构等网页元素的HTML标签的使用</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>确定网页主题，完成内容规划与结构草图设计，运用HTML5构建网页</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 40%"></div>
+                            </div>
+                            <div class="progress-text">已完成 7/18 课时</div>
+                            <a href="./模块2.html" class="btn-module">继续学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块3：CSS3基础知识 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块3</span>
+                            <div class="module-icon">
+                                <i class="fab fa-css3-alt"></i>
+                            </div>
+                            <h3 class="module-title">CSS3基础知识</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 16学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>理解CSS3的基本语法规则，掌握CSS3初级选择器和文本样式控制，理解CSS3优先级。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>理解CSS3的基本语法规则</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握CSS3初级选择器</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握CSS3控制文本样式</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>理解CSS3优先级</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>创建CSS文件并正确链接至HTML网页，使用CSS3基础选择器选择和操作网页元素</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块3.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块4：CSS3盒子模型 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块4</span>
+                            <div class="module-icon">
+                                <i class="fas fa-th"></i>
+                            </div>
+                            <h3 class="module-title">CSS3盒子模型</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 12学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>了解盒子模型的概念，掌握盒子模型的相关属性，掌握网页元素类型，理解网页元素类型的转换。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>了解盒子模型的概念</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握盒子模型的相关属性</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握网页元素类型，理解网页元素类型的转换</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>熟练运用盒子属性控制网页元素的布局和尺寸</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>运用盒子模型属性设置展示内容区域尺寸，使用内边距、外边距调整元素间距与布局</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块4.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块5：网页布局 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块5</span>
+                            <div class="module-icon">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <h3 class="module-title">网页布局</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 18学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>掌握网页常见的几种布局方式，掌握网页元素的浮动、定位方法，掌握布局类型。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握网页常见的几种布局方式</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握网页元素的浮动、定位方法</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握布局类型</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>运用浮动技术实现展示列表页的基础布局，使用定位方法完成页面元素的精确布置</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块5.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块6：表格与表单 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块6</span>
+                            <div class="module-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h3 class="module-title">表格与表单</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 12学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>掌握超链接、列表样式的设置方法，掌握创建和美化表格、表单的方法。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握超链接、列表样式的设置方法</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握创建和美化表格的方法</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握创建和美化表单的方法</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>运用CSS3设置超链接不同状态及列表样式，创建数据表格并进行样式美化</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块6.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块7：多媒体嵌入 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块7</span>
+                            <div class="module-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <h3 class="module-title">多媒体嵌入</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 4学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>了解视音频技术，了解网页中嵌入的视音频常用格式，掌握网页中嵌入视音频的方法。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>了解视音频技术</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>了解网页中嵌入的视音频常用格式</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握网页中嵌入视音频的方法，并能用CSS3设置呈现效果</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>在网页中正确嵌入音频与视频文件，使用CSS3控制多媒体元素的尺寸与位置</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块7.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块8：综合项目实训 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块8</span>
+                            <div class="module-icon">
+                                <i class="fas fa-project-diagram"></i>
+                            </div>
+                            <h3 class="module-title">综合项目实训</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 12学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>掌握网站开发全流程规划方法，能熟练运用HTML5+CSS3进行页面实现，具备项目文档撰写与展示能力。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握网站开发全流程规划方法</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>能熟练运用HTML5+CSS3进行页面实现</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>具备项目文档撰写与展示能力</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>完成网站主题规划与结构设计，实现网站各页面编码与样式开发</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块8.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 选修模块 -->
+            <div class="tab-content" id="advanced">
+                <div class="modules-grid">
+                    <!-- 模块9：CSS3的高级技巧 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块9</span>
+                            <div class="module-icon">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <h3 class="module-title">CSS3的高级技巧</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 12学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>掌握CSS3高级选择器的类型及使用方法，了解CSS3新属性的使用方法。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握CSS3高级选择器的类型及使用方法</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>了解CSS3新属性的使用方法</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>运用高级选择器精准控制页面元素样式，使用CSS3新属性优化界面视觉效果</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块9.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块10：过渡、变形和动画 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块10</span>
+                            <div class="module-icon">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <h3 class="module-title">过渡、变形和动画</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 12学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>理解动画原理，学会使用过渡技术实现动画，掌握2D和3D变形效果的实现方法，了解自定义动画的实现方法。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>理解动画原理</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>学会使用过渡技术实现动画</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握2D和3D变形效果的实现方法</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>了解自定义动画的实现方法</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>为注册表单元素添加过渡交互效果，使用2D变形技术实现按钮缩放动画</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块10.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块11：网页设计素养 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块11</span>
+                            <div class="module-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <h3 class="module-title">网页设计素养</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 4学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>了解网页设计的概念及遵循的原则，掌握网页色彩选择与页面排版的方法。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>了解网页设计的概念及遵循的原则</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握网页色彩选择与页面排版的方法</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>完成网站主题的需求分析与风格定位，运用设计原则进行色彩搭配与页面排版</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块11.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块12：AI辅助网页开发 -->
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-badge">模块12</span>
+                            <div class="module-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3 class="module-title">AI辅助网页开发</h3>
+                            <div class="module-duration">
+                                <i class="fas fa-clock"></i> 4学时
+                            </div>
+                        </div>
+                        <div class="module-content">
+                            <div class="module-description">
+                                <p>了解AI工具在网页开发中的应用场景与基本操作，掌握AI辅助网页布局、样式生成与效果优化的方法。</p>
+                            </div>
+                            <div class="module-objectives">
+                                <h4>学习目标：</h4>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>了解AI工具在网页开发中的应用场景与基本操作</span>
+                                </div>
+                                <div class="objective-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>掌握AI辅助网页布局、样式生成与效果优化的方法</span>
+                                </div>
+                            </div>
+                            <div class="module-projects">
+                                <h4>任务描述：</h4>
+                                <div class="project-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>使用AI工具生成网页结构与样式代码，运用AI辅助完成页面布局与效果优化</span>
+                                </div>
+                            </div>
+                            <div class="module-progress">
+                                <div class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text">尚未开始学习</div>
+                            <a href="./模块12.html" class="btn-module">开始学习</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 项目展示 -->
+        <section class="content-section">
+            <h2><i class="fas fa-project-diagram"></i> 项目驱动学习</h2>
+            <p>本课程采用项目驱动教学模式，以"精品课程网站"项目贯穿全课程，将知识点分解到具体任务中：</p>
+            
+            <div class="project-showcase">
+                <h3>精品课程网站项目</h3>
+                <p>通过完成一个功能完备、体验优秀的课程网站，掌握网页设计与制作的核心技能</p>
+                
+                <div class="project-features">
+                    <div class="project-feature">
+                        <i class="fas fa-paint-brush"></i>
+                        <h4>框架设计</h4>
+                        <p>创建项目文件结构和基础HTML结构</p>
+                    </div>
+                    <div class="project-feature">
+                        <i class="fas fa-paint-brush"></i>
+                        <h4>视觉设计</h4>
+                        <p>建立统一的视觉设计规范</p>
+                    </div>
+                    <div class="project-feature">
+                        <i class="fas fa-th"></i>
+                        <h4>组件开发</h4>
+                        <p>开发多种风格的课程卡片组件</p>
+                    </div>
+                    <div class="project-feature">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>页面布局</h4>
+                        <p>实现网站多布局方案</p>
+                    </div>
+                    <div class="project-feature">
+                        <i class="fas fa-rocket"></i>
+                        <h4>优化发布</h4>
+                        <p>网站整体优化与上线发布</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                
+                
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 选项卡切换功能
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // 添加active类到当前按钮和对应内容
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 简单的进度保存功能
+        const progressBars = document.querySelectorAll('.progress-bar');
+        progressBars.forEach(bar => {
+            const randomProgress = Math.floor(Math.random() * 100);
+            if (bar.style.width === '0%') {
+                bar.style.width = `${randomProgress}%`;
+                bar.previousElementSibling.querySelector('.progress-text').textContent = 
+                    `已完成 ${Math.floor(randomProgress / 25)}/4 课时`;
+            }
+        });
+    </script>
+</body>
+</html>

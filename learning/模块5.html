@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块5：网页布局 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        /* ===== 原有样式完全保留 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 项目概述 */
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 任务列表 */
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        /* 代码示例 */
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        
+        .code-title {
+            font-weight: 500;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-content {
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* 学习资源卡片 */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 (不变) -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 (更新为模块5) -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块五：网页布局</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="课程学习.html">课程学习</a></li>
+                <li>模块五：网页布局</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 项目概述 (学习目标替换为doc内容) -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 模块概述</h2>
+            
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 学习目标</h3>
+                    <ul class="objective-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>知识目标：</strong>
+                                <ol>
+                                    <li>掌握浮动（float）和定位（position）属性的工作原理与应用场景；</li>
+                                    <li>理解清除浮动的方法及z-index属性的作用。</li>
+                                </ol>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>能力目标：</strong>
+                                <ol>
+                                    <li>能够使用浮动实现多栏布局；</li>
+                                    <li>能够使用定位实现元素的精确定位与叠加效果；</li>
+                                    <li>能够分析并解决常见的布局兼容性问题。</li>
+                                </ol>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>素养目标：</strong>
+                                <ol>
+                                    <li>培养严谨、细致的代码调试习惯，树立规范编码与团队协作意识。</li>
+                                </ol>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="duration-box">
+                    <h3>建议学时</h3>
+                    <div class="hours">18学时</div>
+                    <p>浮动+定位+综合布局</p>
+                </div>
+            </div>
+            
+            <p>在前面的项目中，我们已经成功地为“精品课程网站”搭建了清晰的结构骨架，并为其披上了得体的“外衣”。然而，一个精美的网页并非这些“盒子”的简单堆砌，如何将它们有机地、精准地排列在浏览器这个“舞台”上，构建出既符合设计美学又便于用户浏览的版面，是网页从“零件”走向“成品”的关键一步。</p>
+            <p>本模块中，我们将深入CSS布局的核心战场，掌握指挥这些“盒子”排兵布阵的两大经典“兵法”：浮动（Float）与定位（Position）。我们将学习如何让多个内容区块并肩而立，形成灵活的多栏布局；如何将重要的导航元素“钉”在屏幕的特定位置；以及如何处理布局中常见的“高度塌陷”等意外状况。最终综合运用这些布局技术，为我们的网站搭建起坚实、灵活且专业的页面骨架。</p>
+        </section>
+
+        <!-- 任务列表 (共6个任务，依据doc) -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 任务列表</h2>
+            
+            <ul class="task-list">
+                <!-- 任务5.1：初步了解浮动特性 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务5.1：初步了解浮动特性</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p>在网页设计中，单纯的文字段落可能显得单调乏味。为了使内容更生动、布局更紧凑，常常需要实现图片与文字的结合，例如让一段文字自然地环绕在图片周围。本任务通过对图片添加一行简单的CSS样式，观察页面布局发生的奇妙变化——文字会自动环绕图片排列，直观地认识CSS中“浮动”属性的基本作用和初步特性。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>默认布局中块级元素独占一行。浮动的作用：对图片应用float属性后，它会向左或向右移动，后方未设置浮动的文本内容会自动向上移动填补空缺，形成“环绕”。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>知识链接：浮动（float）属性</h4>
+                        <p>float属性最初用于实现文本环绕图片的效果，后被广泛应用于页面布局。常用值：left（向左浮动）、right（向右浮动）、none（默认不浮动）。浮动元素会脱离正常文档流，沿指定方向浮动，直至碰到父级边框或另一个浮动框的边缘。</p>
+                        <p>正常文档流：块级元素独占一行从上到下排列，行内元素从左到右排列。脱离文档流后，元素不再遵循默认排列规则，其原位置不再保留。</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">案例5.1：图文混排（图片向左浮动）</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;图文混排初体验&lt;/title&gt;
+    &lt;style&gt;
+        .container {
+            width: 400px;
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+        img {
+            border: 3px solid blue;
+            margin-right: 20px;
+            float: left;   /* 关键：向左浮动 */
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;img src="./image/img5-1.jpg" alt="示例图片" width="150"&gt;
+        &lt;p&gt;通过本课程的学习，学生将能够独立设计并开发具有专业水准的静态网站，理解企业级开发流程和规范，为后续学习高级前端框架和全栈开发打下坚实基础。&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-lightbulb"></i> 试一试</h4>
+                        <p>修改img的float值为right，观察文字环绕方向变化。再尝试将多个块级元素同时设置浮动（左浮动或右浮动），观察它们是如何并排显示的。</p>
+                    </div>
+                </li>
+
+                <!-- 任务5.2：了解浮动的负面影响及清除浮动方法 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务5.2：浮动的负面影响与清除浮动</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p>当父容器内的所有子元素都浮动脱离文档流后，未被撑开的父容器会高度塌陷至零，导致背景、边框等失效。此外，浮动元素也可能与其后的非浮动元素发生覆盖重叠。本任务通过实践观察这些“副作用”，并掌握三种清除浮动的核心方法。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>关键点是通过实践观察浮动带来的负面作用，然后学习并应用三种清除浮动的方法：额外标签法（clear:both）、父元素overflow法（overflow:hidden）、伪元素清除法（推荐）。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>知识链接：</h4>
+                        <p><strong>父元素高度塌陷：</strong>父元素未设置高度时，内部如果全是浮动元素，父元素高度会变为0。<br>
+                        <strong>布局错乱：</strong>非浮动元素会上移与浮动元素重叠。<br>
+                        <strong>清除浮动的方法：</strong></p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 额外标签法：在浮动元素末尾加空div并设置clear:both。</li>
+                            <li><i class="fas fa-check"></i> 父元素overflow:hidden：触发BFC，自动计算高度。</li>
+                            <li><i class="fas fa-check"></i> 伪元素法：.clearfix::after { content: ""; display: block; clear: both; }（全局复用，最常用）</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">案例5.7：伪元素清除浮动（推荐）</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+        .card {
+            float: left;
+            width: 30%;
+            margin-right: 5%;
+            background: #3498db;
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            background: #ecf0f1;
+            padding: 10px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container clearfix"&gt;
+        &lt;div class="card"&gt;卡片1&lt;/div&gt;
+        &lt;div class="card"&gt;卡片2&lt;/div&gt;
+        &lt;div class="card" style="margin-right:0;"&gt;卡片3&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-lightbulb"></i> 试一试</h4>
+                        <p>分别用额外标签法和overflow:hidden解决父元素高度塌陷问题，观察三种方法的异同。</p>
+                    </div>
+                </li>
+
+                <!-- 任务5.3：使用浮动实现左右两栏布局 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务5.3：使用浮动实现左右两栏布局</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p>将浮动布局技术应用到实际的页面结构中：构建一个占据页面25%宽度的左侧边栏和一个占据75%宽度的右侧主体内容区。要求使用float属性实现两个区块的水平并排，并运用清除浮动方法确保父容器不发生“高度塌陷”。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>规划两个区块：左侧边栏(.sidebar)左浮动，宽度25%；右侧主体(.main-content)左浮动，宽度75%。为父容器添加clearfix类清除浮动。</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">案例5.7变体：两栏浮动布局</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        .clearfix::after { content: ""; display: block; clear: both; }
+        .sidebar {
+            float: left;
+            width: 25%;
+            background: #e67e22;
+            height: 200px;
+            color: white;
+        }
+        .main-content {
+            float: left;
+            width: 75%;
+            background: #2ecc71;
+            height: 200px;
+            color: white;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container clearfix"&gt;
+        &lt;div class="sidebar"&gt;侧边栏&lt;/div&gt;
+        &lt;div class="main-content"&gt;主体内容&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-lightbulb"></i> 试一试</h4>
+                        <p>尝试修改宽度比例为30%和70%，并利用浮动实现三栏布局（左、中、右）。可参考素材“案例5.8：实现三栏布局.html”。</p>
+                    </div>
+                </li>
+
+                <!-- 任务5.4：了解定位的基本知识 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务5.4：了解定位的基本知识</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p>学习CSS的position定位属性，通过实践掌握relative（相对定位）、absolute（绝对定位）和fixed（固定定位）的核心原理与应用场景。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>理解三种定位模式的差异：相对定位相对于自身原始位置偏移，不脱离文档流；绝对定位相对于最近已定位祖先元素，脱离文档流；固定定位相对于浏览器视口，不随滚动移动。熟练运用top/left/right/bottom及z-index管理层叠。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>知识链接：</h4>
+                        <p><strong>position属性值：</strong> static(默认)、relative、absolute、fixed、sticky。<br>
+                        <strong>z-index：</strong>控制定位元素沿Z轴的层叠顺序，数值越大越靠上。仅对定位元素有效。</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">案例5.9：定位基础属性演示</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        .box { width: 200px; height: 100px; color: white; padding: 10px; }
+        .box1 { background: #3498db; position: relative; top: 20px; left: 20px; }
+        .box2 { background: #e74c3c; position: absolute; top: 50px; left: 50px; }
+        .box3 { background: #2ecc71; position: fixed; top: 100px; right: 100px; }
+        .container { position: relative; height: 200px; background: #ecf0f1; margin-top: 30px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="box box1"&gt;相对定位&lt;/div&gt;
+        &lt;div class="box box2"&gt;绝对定位(相对container)&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="box box3"&gt;固定定位&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-lightbulb"></i> 试一试</h4>
+                        <p>修改定位类型为sticky（粘性定位），设置top:0，观察滚动时元素的变化。调整z-index值，观察层叠顺序。</p>
+                    </div>
+                </li>
+
+                <!-- 任务5.5：通过定位实现固定导航栏效果 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务5.5：通过定位实现固定导航栏</h3>
+                        <span class="task-tag">应用</span>
+                    </div>
+                    <div class="task-description">
+                        <p>将一个普通的导航栏改造成始终可见的固定导航栏（不随页面滚动而移动），并确保不同浏览器下的视觉效果和兼容性。同时对比固定定位和粘性定位的差异。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>任务分析：</h4>
+                        <p>使用position:fixed或position:sticky实现固定效果。固定定位需要为下方内容预留空间（padding-top），否则会被遮挡；粘性定位在触发前占据文档流，无需预留。</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">案例5.10：固定导航栏 (fixed)</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        body { margin: 0; }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+            z-index: 1000;
+        }
+        main {
+            margin-top: 80px; /* 避免被导航栏遮挡 */
+            padding: 20px;
+            height: 1500px;
+            background: #ecf0f1;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;固定导航栏&lt;/header&gt;
+    &lt;main&gt;页面主体内容，向下滚动查看导航是否固定&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-lightbulb"></i> 试一试</h4>
+                        <p>将position:fixed改为position:sticky，观察是否需要margin-top。并使用固定定位在页面右下角实现一个“返回顶部”按钮。</p>
+                    </div>
+                </li>
+
+                <!-- 任务5.6：网页常见布局方式分析与实现 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务5.6：常见网页布局方式</h3>
+                        <span class="task-tag">综合</span>
+                    </div>
+                    <div class="task-description">
+                        <p>理解并掌握常见的国字型、T字型、三字型布局的理论结构、视觉特点与适用场景。分析每种布局在“精品课程站点”不同页面的适用可能性，并实现简易布局。</p>
+                    </div>
+                    <div class="task-objectives">
+                        <h4>知识链接：</h4>
+                        <p><strong>国字型：</strong>顶部通栏页眉，底部通栏页脚，中间左侧/右侧边栏+主内容，形似“国”。<br>
+                        <strong>T字型：</strong>顶部通栏，下方左侧边栏+右侧主内容，无底部通栏，形似“T”。<br>
+                        <strong>三字型：</strong>从上到下多个通栏堆叠，无侧边栏，形似“三”。</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">案例5.11：国字型布局（Flex实现）</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { min-height:100vh; display:flex; flex-direction:column; }
+        .header { height:80px; background:#ff6b6b; color:white; text-align:center; line-height:80px; }
+        .main-container { display:flex; flex:1; }
+        .sidebar { width:200px; background:#4ecdc4; color:white; text-align:center; padding-top:20px; }
+        .content { flex:1; background:#45b7d1; color:white; text-align:center; padding-top:20px; }
+        .right-sidebar { width:200px; background:#96ceb4; color:white; text-align:center; padding-top:20px; }
+        .footer { height:80px; background:#feca57; text-align:center; line-height:80px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="header"&gt;页眉&lt;/div&gt;
+    &lt;div class="main-container"&gt;
+        &lt;div class="sidebar"&gt;左侧边栏&lt;/div&gt;
+        &lt;div class="content"&gt;主体内容&lt;/div&gt;
+        &lt;div class="right-sidebar"&gt;右侧边栏&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="footer"&gt;页脚&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4><i class="fas fa-lightbulb"></i> 试一试</h4>
+                        <p>修改代码，实现T字型布局（去掉右侧边栏和底部通栏，页脚信息放在主体内），并使用Grid布局重新实现国字型。</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 归纳与总结 (doc内容) -->
+        <section class="content-section">
+            <h2><i class="fas fa-sync-alt"></i> 归纳与总结</h2>
+            
+            <div class="task-item">
+                <div class="task-description">
+                    <p>本项目深入探讨了实现网页布局的两大核心技术：浮动布局与定位布局。浮动布局通过 float 属性实现元素排列，常用于多栏结构，但需注意清除浮动以避免布局错乱。定位布局则通过 position 属性进行精确控制，分为相对定位、绝对定位和固定定位，分别适用于微调、脱离文档流的精准定位以及固定于视口的元素。</p>
+                    <p>掌握这两种技术的核心在于明确其应用场景与特性：浮动适用于流式内容环绕，而定位适用于叠加与精准控制。务必理解绝对定位的基准点选择以及 z-index 的生效条件，这是构建稳定、符合预期页面结构的关键，也为学习更现代的布局方式奠定了坚实基础。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 综合实训 (案例5.13) -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 综合实训</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">案例5.13：模块5综合实训</h3>
+                    <span class="task-tag">综合</span>
+                </div>
+                <div class="task-description">
+                    <p>打开素材“案例5.13：模块5综合实训.html”，并在相应提示处补全代码，以实现下方功能：</p>
+                    <ol>
+                        <li>使用浮动将三个课程介绍卡片水平排列，并使用伪元素法清除浮动；</li>
+                        <li>使用粘性定位，实现固定导航栏；</li>
+                        <li>使用固定定位，在页面右下角实现“返回顶部”按钮位置固定；</li>
+                        <li>使用相对定位，在三个课程信息卡片标题处实现鼠标悬停提示。</li>
+                    </ol>
+                </div>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; text-align: center; margin: 1rem 0;">
+                    <p><strong>实训示意图区域</strong> (请参考教材素材图片)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 拓展练习 (案例5.14) -->
+        <section class="content-section">
+            <h2><i class="fas fa-expand-alt"></i> 拓展练习</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">案例5.14：拓展练习</h3>
+                    <span class="task-tag">进阶</span>
+                </div>
+                <div class="task-description">
+                    <p>打开素材“案例5.14：拓展练习.html”，补全代码，实现下方功能，效果如教材图5-24所示：</p>
+                    <ol>
+                        <li>使用浮动将课程模块水平排列，并使用父元素overflow清除浮动；</li>
+                        <li>使用固定定位，实现固定导航栏设置。</li>
+                    </ol>
+                </div>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; text-align: center; margin: 1rem 0;">
+                    <p><strong>拓展练习示意图区域</strong> (参考图5-24)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 习题 (完全替换为doc习题) -->
+        <section class="content-section">
+            <h2><i class="fas fa-question-circle"></i> 习题</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">一、单项选择题（10题）</h3>
+                </div>
+                <div class="task-description">
+                    <ol>
+                        <li>在CSS中，设置float: left; 属性后，该元素会（ ）<br>A. 向左移动 B. 脱离标准文档流，并向左浮动 C. 无变化 D. 脱离标准文档流，并向右浮动</li>
+                        <li>当一个元素设置了position: absolute; 后，其定位的参考基准是（ ）<br>A. 浏览器窗口的左上角 B. 其自身在文档流中的原始位置 C. 离它最近的、设置了定位（position值非static）的祖先元素 D. 页面的&lt;body&gt;元素的左上角</li>
+                        <li>希望某个元素始终固定在浏览器窗口的顶部，不随页面滚动而移动，应使用（ ）<br>A. position: static; B. position: relative; C. position: absolute; D. position: fixed;</li>
+                        <li>使用 clear: both; 属性的主要作用是（ ）<br>A. 清除元素的内外边距 B. 清除左右两侧浮动元素对当前元素的影响 C. 使元素变为块级元素 D. 隐藏元素</li>
+                        <li>如果一个父元素的所有子元素都设置了浮动，则该父元素可能会出现（ ）问题。<br>A. 外边距合并 B. 高度塌陷 C. 宽度自适应失效 D. 边框样式丢失</li>
+                        <li>设置 position: relative; 的元素，其特点是（ ）<br>A. 脱离文档流，不保留原始空间 B. 不脱离文档流，相对于浏览器窗口定位 C. 脱离文档流，相对于父元素定位 D. 不脱离文档流，相对于其自身原始位置进行偏移</li>
+                        <li>在CSS中，用于控制定位元素层叠顺序的属性是（ ）<br>A. display B. overflow C. z-index D. vertical-align</li>
+                        <li>为元素设置 position: absolute; top: 50%; left: 50%; 会使该元素（ ）<br>A. 水平垂直居中于其定位的参考元素 B. 左上角顶点定位在参考元素的中心点 C. 中心点定位在参考元素的左上角顶点 D. 右下角顶点定位在参考元素的中心点</li>
+                        <li>下列清除浮动的方法中，推荐使用的是（ ）<br>A. 为父元素设置一个固定的高度 B. 在浮动元素后添加一个空&lt;div&gt;并设置clear:both; C. 为父元素设置overflow:hidden; D. 为父元素添加::after伪元素并设置clear:both;</li>
+                        <li>关于 z-index 属性，下列说法正确的是（ ）<br>A. 任何元素都可以通过设置 z-index 来调整层叠顺序 B. z-index 的值可以是负数 C. z-index 值越大，元素在页面的位置越靠前 D. z-index 属性对 position: static; 的元素同样有效</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">二、填空题</h3>
+                </div>
+                <div class="task-description">
+                    <ol>
+                        <li>CSS中，使元素脱离文档流的两种常用方法是__________和定位（absolute/fixed）。</li>
+                        <li>浮动属性的三个常用值分别是 left、right 和 __________。</li>
+                        <li>如果希望一个绝对定位的子元素相对于其父元素进行定位，应该为父元素设置 position: __________。</li>
+                        <li>清除浮动的 clear 属性，除了 both 外，还有 left 和 __________ 两个值。</li>
+                        <li>固定定位的元素是相对于 __________ 进行定位的。</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">三、判断题</h3>
+                </div>
+                <div class="task-description">
+                    <ol>
+                        <li>（ ）浮动元素会完全脱离文档流，不再占据任何空间。</li>
+                        <li>（ ）position: relative; 的元素可以通过 top, left 等属性移动，但其原始位置会被保留。</li>
+                        <li>（ ）z-index 的属性值越大，元素在层叠顺序中就越靠下。</li>
+                        <li>（ ）使用 float 可以实现多栏布局，例如一个两栏布局。</li>
+                        <li>（ ）绝对定位（absolute）和固定定位（fixed）都会使元素脱离标准文档流。</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">四、问答题</h3>
+                </div>
+                <div class="task-description">
+                    <ol>
+                        <li>请简述浮动（Float）布局可能带来的两个主要问题，并针对每个问题提出至少一种解决方案。</li>
+                        <li>请详细说明相对定位（relative）、绝对定位（absolute）和固定定位（fixed）三种定位方式在定位基准和是否脱离文档流方面的区别。</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- 学习资源 (保留原风格，微调文字) -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <p>以下资源将帮助您更好地完成模块五的学习：</p>
+            
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-book"></i></div>
+                    <h3>教材章节</h3>
+                    <p>模块五完整教材内容，包含浮动与定位的详细讲解和布局示例。</p>
+                    <a href="#" class="btn-resource">查看教材</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-video"></i></div>
+                    <h3>视频教程</h3>
+                    <p>浮动原理、清除浮动、定位详解、固定导航栏等核心知识点视频。</p>
+                    <a href="#" class="btn-resource">观看视频</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-code"></i></div>
+                    <h3>示例代码</h3>
+                    <p>模块五所有任务的完整示例代码，包含多种布局方案和组件实现。</p>
+                    <a href="#" class="btn-resource">下载代码</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-tasks"></i></div>
+                    <h3>练习任务</h3>
+                    <p>巩固浮动与定位的练习题，提升布局实战能力。</p>
+                    <a href="#" class="btn-resource">开始练习</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 (不变) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span>
+                        <span><i class="fas fa-phone"></i> 010-12345678</span>
+                        <span><i class="fas fa-envelope"></i> contact@webcourse.com</span>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <div class="footer-links">
+                        <ul>
+                            <li><a href="../index.html">课程首页</a></li>
+                            <li><a href="../started/课程概况.html">课程概况</a></li>
+                            <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                            <li><a href="课程学习.html">课程学习</a></li>
+                            <li><a href="../resources/教学资源.html">教学资源</a></li>
+                            <li><a href="../综合测试.html">综合测试</a></li>
+                            <li><a href="../eval/课程评价.html">课程评价</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 网页设计与制作课程 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 代码复制功能 (保留)
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => {
+                            button.textContent = '复制';
+                        }, 2000);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

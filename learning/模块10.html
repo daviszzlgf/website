@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块10：过渡、变形与动画 - 网页设计与制作</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #9b59b6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-section h2 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        /* 项目概述 */
+        .project-overview {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .overview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .overview-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .overview-card h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .objective-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .objective-list i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        .duration-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .duration-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .duration-box .hours {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 任务列表 */
+        .task-list {
+            list-style: none;
+        }
+        
+        .task-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .task-tag {
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .task-description {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives {
+            margin-bottom: 1rem;
+        }
+        
+        .task-objectives h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .task-objectives ul {
+            list-style: none;
+        }
+        
+        .task-objectives li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .task-objectives i {
+            margin-right: 10px;
+            color: var(--success);
+            margin-top: 4px;
+        }
+        
+        /* 变形效果演示 */
+        .transform-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .transform-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .transform-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .transform-preview {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary);
+            margin: 0 auto 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+        
+        .transform-translate:hover {
+            transform: translate(20px, 20px);
+        }
+        
+        .transform-rotate:hover {
+            transform: rotate(45deg);
+        }
+        
+        .transform-scale:hover {
+            transform: scale(1.5);
+        }
+        
+        .transform-skew:hover {
+            transform: skew(20deg, 10deg);
+        }
+        
+        .transform-origin:hover {
+            transform: rotate(45deg);
+            transform-origin: top left;
+        }
+        
+        .transform-3d:hover {
+            transform: rotate3d(1, 1, 0, 45deg);
+        }
+        
+        /* 过渡效果演示 */
+        .transition-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .transition-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .transition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .transition-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .transition-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .transition-preview {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary);
+            margin: 0 auto 1rem;
+            border-radius: 8px;
+            transition: all 0.5s ease;
+        }
+        
+        .transition-card:hover .transition-preview {
+            transform: scale(1.2);
+            background: var(--accent);
+        }
+        
+        .transition-duration {
+            background: var(--info);
+            transition: all 0.5s ease;
+        }
+        
+        .transition-card:hover .transition-duration {
+            width: 150px;
+            background: var(--warning);
+        }
+        
+        .transition-delay {
+            background: var(--success);
+            transition: all 0.5s ease 0.5s;
+        }
+        
+        .transition-card:hover .transition-delay {
+            transform: rotate(45deg);
+            background: var(--accent);
+        }
+        
+        .transition-timing {
+            background: var(--warning);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        .transition-card:hover .transition-timing {
+            transform: translateX(20px) scale(1.1);
+            background: var(--info);
+        }
+        
+        /* 动画效果演示 */
+        .animation-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .animation-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .animation-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .animation-preview {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary);
+            margin: 0 auto 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .animation-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .animation-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .animation-rotate {
+            animation: rotate 3s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .animation-slide {
+            animation: slide 3s ease-in-out infinite;
+        }
+        
+        @keyframes slide {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(50px); }
+        }
+        
+        .animation-fade {
+            animation: fade 3s ease-in-out infinite;
+        }
+        
+        @keyframes fade {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .animation-color {
+            animation: colorChange 4s linear infinite;
+        }
+        
+        @keyframes colorChange {
+            0% { background: var(--secondary); }
+            25% { background: var(--success); }
+            50% { background: var(--warning); }
+            75% { background: var(--accent); }
+            100% { background: var(--secondary); }
+        }
+        
+        /* 创意图片画廊 */
+        .gallery-container {
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            aspect-ratio: 1;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .gallery-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* 加载动画演示 */
+        .loading-demo {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-dots {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .loading-dot {
+            width: 15px;
+            height: 15px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        .loading-bar {
+            width: 200px;
+            height: 10px;
+            background: #f3f3f3;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .loading-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--secondary);
+            width: 30%;
+            animation: loading 2s infinite ease-in-out;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { 
+                transform: scale(0);
+            } 40% { 
+                transform: scale(1.0);
+            }
+        }
+        
+        @keyframes loading {
+            0% { left: -30%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 代码示例 */
+        .code-example {
+            background: #2c3e50;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        
+        .code-header {
+            background: #1a2530;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+        }
+        
+        .code-title {
+            font-weight: 500;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .code-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ecf0f1;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .code-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-content {
+            padding: 1.5rem;
+            color: #ecf0f1;
+            overflow-x: auto;
+        }
+        
+        .code-content pre {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* 学习资源 */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .btn-resource {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-resource:hover {
+            background: #2980b9;
+        }
+        
+        /* 总结与回顾 */
+        .summary-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .summary-section h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 拓展练习 */
+        .practice-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .practice-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .practice-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .practice-list i {
+            margin-right: 10px;
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+        
+        /* 习题部分 */
+        .quiz-section {
+            margin: 2rem 0;
+        }
+        
+        .quiz-category {
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-category h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .quiz-question {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .quiz-options {
+            list-style: none;
+        }
+        
+        .quiz-options li {
+            padding: 0.3rem 0;
+        }
+        
+        .quiz-fill {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 0 0.3rem;
+            min-width: 100px;
+            display: inline-block;
+            background: #fff3e0;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-contact span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .footer-social a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.5rem;
+            }
+            
+            .project-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-tag {
+                margin-top: 0.5rem;
+            }
+            
+            .transition-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .transform-demo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .animation-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .loading-demo {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .transform-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>网页设计与制作</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../started/课程概况.html">课程概况</a></li>
+                    <li><a href="../started/入门攻略.html">入门攻略</a></li>
+                    <li><a href="课程学习.html" class="active">课程学习</a></li>
+                    <li><a href="../resources/教学资源.html">教学资源</a></li>
+                    <li><a href="../综合测试.html">综合测试</a></li>
+                    <li><a href="../eval/课程评价.html">课程评价</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1>模块10：过渡、变形与动画</h1>
+            <ul class="breadcrumb">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="课程学习.html">课程学习</a></li>
+                <li>模块10：过渡、变形与动画</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 项目概述 -->
+        <section class="content-section">
+            <h2><i class="fas fa-info-circle"></i> 模块概述</h2>
+            
+            <div class="project-overview">
+                <div class="overview-card">
+                    <h3><i class="fas fa-bullseye"></i> 学习目标</h3>
+                    <ul class="objective-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>知识目标：</strong>掌握CSS变形（Transform）的常用函数；理解CSS过渡（Transition）的原理；掌握CSS动画（Animation）的关键帧技术。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>能力目标：</strong>能使用过渡实现属性变化的平滑动画；能对元素进行移动、旋转、缩放和倾斜；能创建复杂的自定义动画序列。
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>素养目标：</strong>通过动画效果改善用户体验，激发探索复杂交互效果的学习内驱力。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="duration-box">
+                    <h3>模块时长</h3>
+                    <div class="hours">6学时</div>
+                    <p>核心模块</p>
+                </div>
+            </div>
+            
+            <p>在网页设计中，动画效果是提升用户体验和界面吸引力的重要手段。通过使用CSS过渡、变形和动画，我们可以创建流畅的交互效果和生动的视觉体验。本项目将系统讲解CSS动画的核心技术，使你能够设计出更具吸引力和专业感的交互界面。</p>
+        </section>
+
+        <!-- 任务列表 -->
+        <section class="content-section">
+            <h2><i class="fas fa-tasks"></i> 任务列表</h2>
+            
+            <ul class="task-list">
+                <!-- 任务10.1：使用CSS变形改变元素状态 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务10.1：使用CSS变形改变元素状态</h3>
+                        <span class="task-tag">基础</span>
+                    </div>
+                    <div class="task-description">
+                        <p><strong>【任务描述】</strong> 打开配套资源中的素材任务10.1.html。素材文件提供了一个基础的HTML结构，包含了一些示例卡片，但没有添加具体的变形效果。请通过应用CSS变形，实现元素的平移、旋转、缩放、倾斜等2D变形以及3D变形效果，增强网页的交互性和视觉吸引力。</p>
+                    </div>
+                    
+                    <!-- 知识链接（依据模块10.doc补充） -->
+                    <div class="task-objectives">
+                        <h4>📘 知识链接：CSS变形核心</h4>
+                        <ul>
+                            <li><i class="fas fa-book"></i> <strong>transform属性</strong>：设置2D/3D变换，可叠加多个函数，顺序影响效果。默认值none。</li>
+                            <li><i class="fas fa-book"></i> <strong>transform-origin</strong>：定义变形基准点（默认中心）。支持left,center,right,top,bottom,百分比,像素。</li>
+                            <li><i class="fas fa-book"></i> <strong>transform-style</strong>：flat（2D）或preserve-3d（3D），用于创建3D空间。</li>
+                            <li><i class="fas fa-book"></i> <strong>backface-visibility</strong>：设置背面是否可见（visible/hidden），用于3D翻转。</li>
+                            <li><i class="fas fa-book"></i> <strong>perspective</strong>：透视距离，值越小透视越强。</li>
+                            <li><i class="fas fa-book"></i> 常用变形函数：translate()、rotate()、scale()、skew()、perspective()以及对应的3D函数（translate3d, rotate3d, scale3d等）。</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 变形效果演示 -->
+                    <h4>CSS变形效果示例</h4>
+                    <div class="transform-demo">
+                        <div class="transform-card">
+                            <h3 class="transform-title">平移</h3>
+                            <div class="transform-preview transform-translate">平移</div>
+                            <p>transform: translate(20px, 20px)</p>
+                        </div>
+                        
+                        <div class="transform-card">
+                            <h3 class="transform-title">旋转</h3>
+                            <div class="transform-preview transform-rotate">旋转</div>
+                            <p>transform: rotate(45deg)</p>
+                        </div>
+                        
+                        <div class="transform-card">
+                            <h3 class="transform-title">缩放</h3>
+                            <div class="transform-preview transform-scale">缩放</div>
+                            <p>transform: scale(1.5)</p>
+                        </div>
+                        
+                        <div class="transform-card">
+                            <h3 class="transform-title">倾斜</h3>
+                            <div class="transform-preview transform-skew">倾斜</div>
+                            <p>transform: skew(20deg, 10deg)</p>
+                        </div>
+                        
+                        <div class="transform-card">
+                            <h3 class="transform-title">变形原点</h3>
+                            <div class="transform-preview transform-origin">原点</div>
+                            <p>transform-origin: top left</p>
+                        </div>
+                        
+                        <div class="transform-card">
+                            <h3 class="transform-title">3D变形</h3>
+                            <div class="transform-preview transform-3d">3D</div>
+                            <p>transform: rotate3d(1,1,0,45deg)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">任务10.1 实施代码 (transform悬停效果)</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+/* 1.平移效果 */
+#translateBox:hover {
+    transform: translate(50px, 20px);
+}
+
+/* 2.旋转效果 */
+#rotateBox:hover {
+    transform: rotate(45deg);
+}
+
+/* 3.缩放效果 */
+#scaleBox:hover {
+    transform: scale(1.5);
+}
+
+/* 4.倾斜效果 */
+#skewBox:hover {
+    transform: skew(20deg, 10deg);
+}
+
+/* 5.多重变形效果 */
+#multiTransformBox:hover {
+    transform: translate(30px, 10px) rotate(30deg) scale(1.2);
+}
+
+/* 6.旋转缩放效果 */
+#originBox:hover {
+    transform: rotate(45deg) scale(1.3);
+}
+
+/* 7.3D翻转卡片 */
+#rotate3dBox:hover {
+    transform: rotateY(180deg) rotateX(15deg);
+}
+.flip-card-inner {
+    transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> 创建一个3D立方体，你需要创建6个&lt;div&gt;元素作为立方体的面，并使用rotateY和translateZ来定位。</li>
+                            <li><i class="fas fa-lightbulb"></i> 设计一个图片画廊，当鼠标悬停时图片轻微旋转并放大。</li>
+                            <li><i class="fas fa-lightbulb"></i> 制作一个菜单按钮，点击时变成关闭图标（使用旋转和变形效果）。</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <!-- 任务10.2：使用过渡效果实现平滑交互 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务10.2：使用过渡效果实现平滑交互</h3>
+                        <span class="task-tag">核心</span>
+                    </div>
+                    <div class="task-description">
+                        <p><strong>【任务描述】</strong> 现已创建一个包含多个交互元素的页面，素材任务10.2（素材）.html。实现了包括颜色、大小、位置、按钮、卡片和图片的悬停状态。本任务要求基于提供的素材文件，为网页元素添加平滑过渡的交互效果，使交互更加自然流畅。利用CSS的transition属性可以优化过渡的持续时间、缓动函数和触发条件。实现多种平滑交互效果：颜色过渡、大小过渡、位置过渡、按钮过渡、卡片过渡、图片过渡。</p>
+                    </div>
+                    
+                    <!-- 知识链接：过渡属性 -->
+                    <div class="task-objectives">
+                        <h4>📘 知识链接：过渡核心属性</h4>
+                        <ul>
+                            <li><i class="fas fa-book"></i> <strong>transition-property</strong>：指定过渡属性（all | none | 属性名）。</li>
+                            <li><i class="fas fa-book"></i> <strong>transition-duration</strong>：持续时间（s/ms）。</li>
+                            <li><i class="fas fa-book"></i> <strong>transition-timing-function</strong>：缓动曲线（linear, ease, ease-in, ease-out, ease-in-out, cubic-bezier）。</li>
+                            <li><i class="fas fa-book"></i> <strong>transition-delay</strong>：延迟时间。</li>
+                            <li><i class="fas fa-book"></i> 简写：<code>transition: property duration timing-function delay;</code> 多组用逗号分隔。</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 过渡效果演示 -->
+                    <h4>CSS过渡效果示例</h4>
+                    <div class="transition-demo">
+                        <div class="transition-card">
+                            <div class="transition-icon">
+                                <i class="fas fa-arrows-alt"></i>
+                            </div>
+                            <h3 class="transition-title">基本过渡</h3>
+                            <div class="transition-preview"></div>
+                            <p>鼠标悬停查看基本过渡效果</p>
+                        </div>
+                        
+                        <div class="transition-card">
+                            <div class="transition-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h3 class="transition-title">过渡时长</h3>
+                            <div class="transition-preview transition-duration"></div>
+                            <p>宽度变化过渡效果</p>
+                        </div>
+                        
+                        <div class="transition-card">
+                            <div class="transition-icon">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <h3 class="transition-title">过渡延迟</h3>
+                            <div class="transition-preview transition-delay"></div>
+                            <p>0.5秒延迟后旋转</p>
+                        </div>
+                        
+                        <div class="transition-card">
+                            <div class="transition-icon">
+                                <i class="fas fa-wave-square"></i>
+                            </div>
+                            <h3 class="transition-title">时序函数</h3>
+                            <div class="transition-preview transition-timing"></div>
+                            <p>自定义缓动函数效果</p>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">任务10.2 实施代码 (过渡效果)</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+/* 1.颜色过渡效果 */
+.color-box {
+    transition: background-color 0.5s ease;
+}
+
+/* 2.大小过渡效果 */
+.size-box {
+    transition: all 0.4s ease-in-out;
+}
+
+/* 3.位置过渡效果 */
+.position-box {
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* 4.按钮过渡效果 */
+.transition-btn {
+    transition: all 0.3s ease;
+}
+
+/* 5.卡片过渡效果 */
+.hover-card {
+    transition: all 0.4s ease;
+}
+.hover-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+.card-icon {
+    transition: all 0.4s ease;
+}
+.hover-card:hover .card-icon {
+    color: var(--accent);
+    transform: rotate(15deg) scale(1.2);
+}
+
+/* 6.图片悬停效果 */
+.hover-image {
+    transition: all 0.5s ease;
+}
+.image-container:hover .hover-image {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+}
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> 创建一个导航菜单，当鼠标悬停在菜单项上时，背景色和文字颜色平滑过渡。</li>
+                            <li><i class="fas fa-lightbulb"></i> 设计一个图片画廊，当鼠标悬停在图片上时，图片放大并显示描述文字。</li>
+                            <li><i class="fas fa-lightbulb"></i> 制作一个进度条，当数值变化时，进度条宽度平滑过渡。</li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <!-- 任务10.3：使用关键帧动画打造高级动画效果 -->
+                <li class="task-item">
+                    <div class="task-header">
+                        <h3 class="task-title">任务10.3：使用关键帧动画打造高级动画效果</h3>
+                        <span class="task-tag">进阶</span>
+                    </div>
+                    <div class="task-description">
+                        <p><strong>【任务描述】</strong> 现已创建一个包含多个交互元素的页面，素材任务10.3.html。请使用CSS关键帧动画的元素，实现复杂的自定义动画序列，包括循环动画、交替动画和基于状态变化的动画。关键帧动画可以创建比过渡更复杂的动画效果。常用的效果设置包括：动画名称、动画持续时间、延迟、播放次数、方向、速度曲线等。</p>
+                    </div>
+                    
+                    <!-- 知识链接：动画属性 -->
+                    <div class="task-objectives">
+                        <h4>📘 知识链接：关键帧动画核心</h4>
+                        <ul>
+                            <li><i class="fas fa-book"></i> <strong>@keyframes</strong> 定义动画序列，可使用百分比或from/to。</li>
+                            <li><i class="fas fa-book"></i> <strong>animation-name</strong> / <strong>animation-duration</strong> 必需。</li>
+                            <li><i class="fas fa-book"></i> <strong>animation-timing-function</strong>：缓动曲线。</li>
+                            <li><i class="fas fa-book"></i> <strong>animation-delay</strong>：延迟，负值可跳过前N秒。</li>
+                            <li><i class="fas fa-book"></i> <strong>animation-iteration-count</strong>：次数或infinite。</li>
+                            <li><i class="fas fa-book"></i> <strong>animation-direction</strong>：normal, reverse, alternate, alternate-reverse。</li>
+                            <li><i class="fas fa-book"></i> <strong>animation-fill-mode</strong>：forwards/backwards/both 保持结束/开始状态。</li>
+                            <li><i class="fas fa-book"></i> <strong>animation-play-state</strong>：running/paused。</li>
+                            <li><i class="fas fa-book"></i> 简写：animation: name duration timing-function delay count direction fill-mode play-state;</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 动画效果演示 -->
+                    <h4>CSS动画效果示例</h4>
+                    <div class="animation-demo">
+                        <div class="animation-card">
+                            <h3 class="animation-title">弹跳动画</h3>
+                            <div class="animation-preview animation-bounce">弹跳</div>
+                            <p>无限循环的弹跳效果</p>
+                        </div>
+                        
+                        <div class="animation-card">
+                            <h3 class="animation-title">脉冲动画</h3>
+                            <div class="animation-preview animation-pulse">脉冲</div>
+                            <p>呼吸效果的脉冲动画</p>
+                        </div>
+                        
+                        <div class="animation-card">
+                            <h3 class="animation-title">旋转动画</h3>
+                            <div class="animation-preview animation-rotate">旋转</div>
+                            <p>持续旋转效果</p>
+                        </div>
+                        
+                        <div class="animation-card">
+                            <h3 class="animation-title">滑动动画</h3>
+                            <div class="animation-preview animation-slide">滑动</div>
+                            <p>左右滑动效果</p>
+                        </div>
+                        
+                        <div class="animation-card">
+                            <h3 class="animation-title">淡入淡出</h3>
+                            <div class="animation-preview animation-fade">淡入淡出</div>
+                            <p>透明度变化动画</p>
+                        </div>
+                        
+                        <div class="animation-card">
+                            <h3 class="animation-title">颜色变化</h3>
+                            <div class="animation-preview animation-color">颜色</div>
+                            <p>循环颜色变化</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 加载动画演示 -->
+                    <h4>加载动画示例</h4>
+                    <div class="loading-demo">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-dots">
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                            <div class="loading-dot"></div>
+                        </div>
+                        <div class="loading-bar">
+                            <div class="loading-progress"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example">
+                        <div class="code-header">
+                            <div class="code-title">任务10.3 实施代码 (关键帧动画)</div>
+                            <div class="code-actions">
+                                <button class="code-btn">复制</button>
+                                <button class="code-btn">运行</button>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <pre>
+/* 1.颜色变化动画 */
+@keyframes colorChange {
+    0% { background-color: var(--secondary); }
+    50% { background-color: var(--accent); }
+    100% { background-color: var(--success); }
+}
+#colorAnimationBox { animation: colorChange 3s infinite alternate; }
+
+/* 2.移动动画 */
+@keyframes move {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(100px); }
+}
+#moveAnimationBox { animation: move 2s infinite alternate; }
+
+/* 3.缩放动画 */
+@keyframes scale {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1); }
+}
+#scaleAnimationBox { animation: scale 2s infinite; }
+
+/* 4.旋转动画 */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+#rotateAnimationBox { animation: rotate 3s linear infinite; }
+
+/* 5.多重动画 */
+@keyframes multi {
+    0% { transform: translateX(0) rotate(0deg); background-color: var(--secondary); }
+    50% { transform: translateX(50px) rotate(180deg); background-color: var(--accent); }
+    100% { transform: translateX(0) rotate(360deg); background-color: var(--success); }
+}
+#multiAnimationBox { animation: multi 4s ease-in-out infinite; }
+
+/* 6.弹跳动画 */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+}
+#bounceAnimationBox { animation: bounce 1s ease-in-out infinite; }
+
+/* 7.旋转加载器 */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+#spinnerLoader { border: 5px solid #f3f3f3; border-top: 5px solid var(--secondary); animation: spin 1s linear infinite; }
+
+/* 8.脉冲加载器 */
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.7; }
+}
+#pulseLoader { background-color: var(--secondary); animation: pulse 1.5s ease-in-out infinite; }
+
+/* 9.进度条动画 */
+@keyframes progress {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(400%); }
+}
+#animatedProgressBar { animation: progress 2s linear infinite; width: 25%; }
+
+/* 10.悬停触发动画 */
+@keyframes hoverEffect {
+    0% { transform: scale(1) rotate(0deg); background-color: var(--secondary); }
+    100% { transform: scale(1.2) rotate(10deg); background-color: var(--accent); }
+}
+#hoverAnimationBox:hover { animation: hoverEffect 0.5s forwards; }
+
+/* 11.按钮点击动画 */
+@keyframes clickAnimation {
+    0% { transform: scale(1); background-color: var(--secondary); }
+    50% { transform: scale(0.9); background-color: var(--accent); }
+    100% { transform: scale(1); background-color: var(--secondary); }
+}
+#clickAnimationBtn:active { animation: clickAnimation 0.3s ease; }
+                            </pre>
+                        </div>
+                    </div>
+                    
+                    <div class="task-objectives">
+                        <h4>试一试：</h4>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> 创建一个心跳动画，使用关键帧实现缩放效果模拟心跳。</li>
+                            <li><i class="fas fa-lightbulb"></i> 设计一个文字打字机效果，使用关键帧动画逐字显示文本。</li>
+                            <li><i class="fas fa-lightbulb"></i> 制作一个波浪动画，使用多个元素和延迟动画创建波浪效果。</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 实训任务 -->
+        <section class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> 实训任务</h2>
+            
+            <div class="task-item">
+                <div class="task-header">
+                    <h3 class="task-title">实训10.1：制作创意图片画廊 —— 综合运用过渡、变形和动画</h3>
+                    <span class="task-tag">综合</span>
+                </div>
+                <div class="task-description">
+                    <p>综合运用过渡、变形和动画技术，制作一个具有丰富悬停和加载动画效果的创意图片画廊。要求：响应式图片画廊，包含多张图片；使用过渡实现平滑悬停交互；使用变形实现图片缩放、旋转；使用关键帧动画实现加载动效；所有效果协调统一。</p>
+                </div>
+                
+                <!-- 创意图片画廊 -->
+                <h4>创意图片画廊示例</h4>
+                <div class="gallery-container">
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/3498db/ffffff?text=自然" alt="自然" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">自然风光</h3>
+                                <p class="gallery-desc">探索大自然的美丽与神秘</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/2ecc71/ffffff?text=城市" alt="城市" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">城市景观</h3>
+                                <p class="gallery-desc">现代都市的繁华与活力</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/e74c3c/ffffff?text=建筑" alt="建筑" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">建筑艺术</h3>
+                                <p class="gallery-desc">人类智慧的结晶与创造</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/f39c12/ffffff?text=人物" alt="人物" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">人物肖像</h3>
+                                <p class="gallery-desc">捕捉瞬间的情感与故事</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/9b59b6/ffffff?text=动物" alt="动物" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">动物世界</h3>
+                                <p class="gallery-desc">野性之美与生命的力量</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x300/1abc9c/ffffff?text=抽象" alt="抽象" class="gallery-img">
+                            <div class="gallery-overlay">
+                                <h3 class="gallery-title">抽象艺术</h3>
+                                <p class="gallery-desc">想象力的无限延伸</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="code-example">
+                    <div class="code-header">
+                        <div class="code-title">实训10.1 完整CSS代码 (模块10.doc 步骤1-27)</div>
+                        <div class="code-actions">
+                            <button class="code-btn">复制</button>
+                            <button class="code-btn">运行</button>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <pre>
+/* 1.全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* 2.全局变量 */
+:root {
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --accent: #e74c3c;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+    --success: #2ecc71;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+/* 3.网页基础属性 */
+body {
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+/* 4.容器 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+/* 5.标题样式 */
+h1 { text-align: center; margin-bottom: 2rem; color: var(--primary); }
+/* 6.画廊介绍 */
+.gallery-intro { text-align: center; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+/* 7.画廊网格 */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+/* 8.画廊项 */
+.gallery-item {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+/* 9.淡入上升动画 */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* 10.动画延迟 */
+.gallery-item:nth-child(1) { animation-delay: 0.2s; }
+.gallery-item:nth-child(2) { animation-delay: 0.4s; }
+.gallery-item:nth-child(3) { animation-delay: 0.6s; }
+.gallery-item:nth-child(4) { animation-delay: 0.8s; }
+.gallery-item:nth-child(5) { animation-delay: 1.0s; }
+.gallery-item:nth-child(6) { animation-delay: 1.2s; }
+/* 11.图片容器 */
+.image-container { position: relative; overflow: hidden; height: 250px; background-color: #ddd; }
+/* 12.画廊图片 */
+.gallery-image { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); display: block; }
+/* 13.遮罩层 */
+.image-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: var(--transition);
+}
+/* 14.遮罩内容 */
+.overlay-content { text-align: center; color: white; padding: 1rem; transform: translateY(20px); transition: var(--transition); }
+/* 15.遮罩标题 */
+.overlay-content h3 { margin-bottom: 0.5rem; font-size: 1.5rem; }
+/* 16.遮罩段落 */
+.overlay-content p { margin-bottom: 1rem; opacity: 0.9; }
+/* 17.查看按钮 */
+.view-btn { background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 600; cursor: pointer; transition: var(--transition); }
+/* 18.悬停效果 */
+.gallery-item:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); }
+.gallery-item:hover .gallery-image { transform: scale(1.1); }
+.gallery-item:hover .image-overlay { opacity: 1; }
+.gallery-item:hover .overlay-content { transform: translateY(0); }
+/* 19.按钮悬停 */
+.view-btn:hover { background: #c0392b; transform: scale(1.05); }
+/* 20.特殊动画 */
+.gallery-item:nth-child(odd):hover .gallery-image { transform: scale(1.1) rotate(1deg); }
+.gallery-item:nth-child(even):hover .gallery-image { transform: scale(1.1) rotate(-1deg); }
+/* 21.3D翻转效果 */
+.gallery-item:nth-child(2) { perspective: 1000px; }
+.gallery-item:nth-child(2) .image-container { transform-style: preserve-3d; transition: transform 0.8s; }
+.gallery-item:nth-child(2):hover .image-container { transform: rotateY(180deg); }
+.gallery-item:nth-child(2) .image-overlay { transform: rotateY(180deg); backface-visibility: hidden; }
+/* 22.缩放淡入 */
+.gallery-item:nth-child(4) { animation-name: zoomIn, fadeInUp; animation-duration: 0.8s, 0.8s; animation-fill-mode: forwards, forwards; }
+/* 23.缩放动画 */
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+    50% { opacity: 1; }
+}
+/* 24.怀旧效果 */
+.gallery-item:nth-child(3) .gallery-image { filter: sepia(0.3); }
+.gallery-item:nth-child(3):hover .gallery-image { filter: sepia(0); }
+/* 25.脉冲效果 */
+.gallery-item:nth-child(5) { position: relative; }
+.gallery-item:nth-child(5)::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 10px; animation: pulse 2s infinite; pointer-events: none;
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+}
+/* 26.摇摆效果 */
+.gallery-item:nth-child(6):hover { animation: swing 1s; transform-origin: top center; }
+@keyframes swing {
+    20% { transform: rotate3d(0, 0, 1, 15deg); }
+    40% { transform: rotate3d(0, 0, 1, -10deg); }
+    60% { transform: rotate3d(0, 0, 1, 5deg); }
+    80% { transform: rotate3d(0, 0, 1, -5deg); }
+    to { transform: rotate3d(0, 0, 1, 0deg); }
+}
+/* 27.响应式 */
+@media (max-width: 768px) {
+    .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; }
+    .image-container { height: 200px; }
+}
+@media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .container { padding: 1rem; }
+}
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 总结与回顾 -->
+        <section class="content-section summary-section">
+            <h2><i class="fas fa-chalkboard-teacher"></i> 总结与回顾</h2>
+            <p>本项目围绕 CSS 动效三大核心技术展开教学，构建了过渡（状态触发平滑过渡）、变形（2D/3D 空间变换）、动画（多关键帧自定义序列）的完整知识框架；掌握了属性配置、函数应用、关键帧定义等实操技巧，能独立实现平移、旋转、缩放、循环动画等基础效果；具备了 "按需择术" 的综合应用能力 —— 简单交互用过渡、空间变换用变形、复杂序列用动画，可设计开发富有吸引力的现代化交互界面。</p>
+        </section>
+
+        <!-- 拓展练习 -->
+        <section class="content-section">
+            <h2><i class="fas fa-pencil-alt"></i> 拓展练习</h2>
+            <p>以下拓展练习将帮助您巩固本项目所学知识：</p>
+            
+            <ul class="practice-list">
+                <li><i class="fas fa-star"></i> 尝试为导航菜单设计一个滑入动画，当页面加载时菜单项依次滑入。</li>
+                <li><i class="fas fa-star"></i> 使用scale和rotate函数制作一个加载中的动画图标。</li>
+                <li><i class="fas fa-star"></i> 创建一个图片轮播组件，使用CSS动画实现自动切换效果。</li>
+                <li><i class="fas fa-star"></i> 设计一个带有动画效果的登录表单，当输入框获得焦点时有放大和阴影效果。</li>
+            </ul>
+        </section>
+
+        <!-- 习题（依据模块10.doc 扩充至10题，答案留空/占位） -->
+        <section class="content-section quiz-section">
+            <h2><i class="fas fa-question-circle"></i> 习题</h2>
+            
+            <div class="quiz-category">
+                <h3>一、选择题</h3>
+                <!-- 10个选择题 -->
+                <div class="quiz-item"><div class="quiz-question">1. 以下哪个属性用于设置CSS过渡效果？</div><ul class="quiz-options"><li>A. animation</li><li>B. transform</li><li>C. transition</li><li>D. translate</li></ul></div>
+                <div class="quiz-item"><div class="quiz-question">2. 哪个函数用于旋转元素？</div><ul class="quiz-options"><li>A. rotate()</li><li>B. spin()</li><li>C. turn()</li><li>D. skew()</li></ul></div>
+                <div class="quiz-item"><div class="quiz-question">3. 设置动画播放次数的属性是？</div><ul class="quiz-options"><li>A. animation-count</li><li>B. animation-iteration</li><li>C. animation-repeat</li><li>D. animation-iteration-count</li></ul></div>
+                <div class="quiz-item"><div class="quiz-question">4. 哪个属性用于定义动画序列？</div><ul class="quiz-options"><li>A. @keyframes</li><li>B. @animation</li><li>C. @sequence</li><li>D. @frameset</li></ul></div>
+                <div class="quiz-item"><div class="quiz-question">5. 设置过渡延迟的属性是？</div><ul class="quiz-options"><li>A. transition-wait</li><li>B. transition-delay</li><li>C. transition-pause</li><li>D. transition-time</li></ul></div>
+                <div class="quiz-item"><div class="quiz-question">6. 哪个变形函数用于倾斜元素？</div><ul class="quiz-options"><li>A. tilt()</li><li>B. slant()</li><li>C. skew()</li><li>D. incline()</li></ul></div>
+                <div class="quiz-item"><div class="quiz-question">7. 设置动画速度曲线的属性是？</div><ul class="quiz-options"><li>A. animation-curve</li><li>B. animation-speed</li><li>C. animation-timing-function</li><li>D. animation-easing</li></ul></div>
+                <div class="quiz-item"><div class="quiz-question">8. 哪个属性用于设置3D变形的透视效果？</div><ul class="quiz-options"><li>A. perspective</li><li>B. 3d-view</li><li>C. depth</li><li>D. view-3d</li></ul></div>
+                <div class="quiz-item"><div class="quiz-question">9. 设置动画播放状态的属性是？</div><ul class="quiz-options"><li>A. animation-status</li><li>B. animation-state</li><li>C. animation-play</li><li>D. animation-play-state</li></ul></div>
+                <div class="quiz-item"><div class="quiz-question">10. 哪个函数用于同时沿X轴和Y轴移动元素？</div><ul class="quiz-options"><li>A. move()</li><li>B. position()</li><li>C. translate()</li><li>D. relocate()</li></ul></div>
+            </div>
+            
+            <div class="quiz-category">
+                <h3>二、填空题</h3>
+                <!-- 10个填空，去除答案，保留下划线占位符 -->
+                <div class="quiz-item"><div class="quiz-question">1. 用于定义动画序列关键帧的 CSS 规则是<span class="quiz-fill">________</span>。</div></div>
+                <div class="quiz-item"><div class="quiz-question">2. 设置过渡效果持续时间的属性是<span class="quiz-fill">________</span>。</div></div>
+                <div class="quiz-item"><div class="quiz-question">3. 使用<span class="quiz-fill">________</span>函数可以将元素放大1.5倍。</div></div>
+                <div class="quiz-item"><div class="quiz-question">4. 设置动画播放方向的属性是<span class="quiz-fill">________</span>。</div></div>
+                <div class="quiz-item"><div class="quiz-question">5. 使用<span class="quiz-fill">________</span>属性可以同时设置多个过渡效果。</div></div>
+                <div class="quiz-item"><div class="quiz-question">6. 设置变形原点的属性是<span class="quiz-fill">________</span>。</div></div>
+                <div class="quiz-item"><div class="quiz-question">7. 使用<span class="quiz-fill">________</span>函数可以将元素沿Y轴移动50像素。</div></div>
+                <div class="quiz-item"><div class="quiz-question">8. 设置动画填充模式的属性是<span class="quiz-fill">________</span>。</div></div>
+                <div class="quiz-item"><div class="quiz-question">9. 使用<span class="quiz-fill">________</span>值可以让动画无限循环播放。</div></div>
+                <div class="quiz-item"><div class="quiz-question">10. 设置3D变形样式的属性是<span class="quiz-fill">________</span>。</div></div>
+            </div>
+            
+            <div class="quiz-category">
+                <h3>三、判断题</h3>
+                <!-- 10个判断题，移除答案标记，只留括号 -->
+                <div class="quiz-item"><div class="quiz-question">1. 过渡效果只能应用于:hover伪类。 ( <span class="quiz-fill"> </span> )</div></div>
+                <div class="quiz-item"><div class="quiz-question">2. transform属性不会影响文档流。 ( <span class="quiz-fill"> </span> )</div></div>
+                <div class="quiz-item"><div class="quiz-question">3. 动画可以使用百分比或from/to关键字定义关键帧。 ( <span class="quiz-fill"> </span> )</div></div>
+                <div class="quiz-item"><div class="quiz-question">4. transition属性必须指定要过渡的属性名。 ( <span class="quiz-fill"> </span> )</div></div>
+                <div class="quiz-item"><div class="quiz-question">5. 变形效果可以同时应用多个函数。 ( <span class="quiz-fill"> </span> )</div></div>
+                <div class="quiz-item"><div class="quiz-question">6. 动画延迟只能在动画开始时应用一次。 ( <span class="quiz-fill"> </span> )</div></div>
+                <div class="quiz-item"><div class="quiz-question">7. 过渡效果可以使用steps()函数实现步进动画。 ( <span class="quiz-fill"> </span> )</div></div>
+                <div class="quiz-item"><div class="quiz-question">8. 变形原点默认是元素的中心点。 ( <span class="quiz-fill"> </span> )</div></div>
+                <div class="quiz-item"><div class="quiz-question">9. 动画播放状态可以在JavaScript中动态控制。 ( <span class="quiz-fill"> </span> )</div></div>
+                <div class="quiz-item"><div class="quiz-question">10. 所有浏览器对CSS动画的支持完全一致。 ( <span class="quiz-fill"> </span> )</div></div>
+            </div>
+            
+            <div class="quiz-category">
+                <h3>四、实操题</h3>
+                <div class="quiz-item"><div class="quiz-question">1. 创建一个导航菜单，当鼠标悬停在菜单项上时，使用 transition 实现背景色和文字颜色的平滑过渡，并使用 transform: scale() 实现轻微缩放效果。</div></div>
+                <div class="quiz-item"><div class="quiz-question">2. 使用关键帧动画制作一个跳动的心形图标。</div></div>
+                <div class="quiz-item"><div class="quiz-question">3. 设计一个卡片翻转效果，当鼠标悬停时卡片3D翻转显示背面内容。</div></div>
+                <div class="quiz-item"><div class="quiz-question">4. 制作一个加载动画，包含旋转、缩放和颜色变化效果。</div></div>
+            </div>
+        </section>
+
+        <!-- 学习资源 -->
+        <section class="content-section">
+            <h2><i class="fas fa-book-open"></i> 学习资源</h2>
+            <p>以下资源将帮助您更好地完成模块10的学习：</p>
+            
+            <div class="resource-cards">
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-book"></i></div>
+                    <h3>教材章节</h3>
+                    <p>模块10完整教材内容，包含过渡、变形和动画技术的详细讲解。</p>
+                    <a href="#" class="btn-resource">查看教材</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-video"></i></div>
+                    <h3>视频教程</h3>
+                    <p>过渡效果、变形技术、关键帧动画等核心知识点视频讲解。</p>
+                    <a href="#" class="btn-resource">观看视频</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-code"></i></div>
+                    <h3>示例代码</h3>
+                    <p>模块10所有任务的完整示例代码，包含各种动画效果实现。</p>
+                    <a href="#" class="btn-resource">下载代码</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-tasks"></i></div>
+                    <h3>练习任务</h3>
+                    <p>巩固动画知识的练习题，提升动态效果设计能力。</p>
+                    <a href="#" class="btn-resource">开始练习</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section"><h3>关于我们</h3><p>我们致力于提供高质量的网页设计与制作教育，帮助学生掌握前沿技术，实现职业发展。</p></div>
+                <div class="footer-section"><h3>联系方式</h3><div class="footer-contact"><span><i class="fas fa-map-marker-alt"></i> 郑州市郑东新区金龙路188号</span><span><i class="fas fa-phone"></i> 010-12345678</span><span><i class="fas fa-envelope"></i> contact@webcourse.com</span></div></div>
+                <div class="footer-section"><h3>快速链接</h3><div class="footer-links"><ul><li><a href="../index.html">课程首页</a></li><li><a href="../started/课程概况.html">课程概况</a></li><li><a href="../started/入门攻略.html">入门攻略</a></li><li><a href="课程学习.html">课程学习</a></li><li><a href="../resources/教学资源.html">教学资源</a></li><li><a href="../综合测试.html">综合测试</a></li></ul></div></div>
+                <div class="footer-section"><h3>关注我们</h3><p>在社交媒体上关注我们，获取最新课程更新和学习资源。</p><div class="footer-social"><a href="#"><i class="fab fa-weixin"></i></a><a href="#"><i class="fab fa-weibo"></i></a><a href="#"><i class="fab fa-qq"></i></a><a href="#"><i class="fab fa-github"></i></a></div></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2023 网页设计与制作课程 | 版权所有</p></div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.code-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.textContent === '复制') {
+                    const codeContent = button.closest('.code-example').querySelector('pre').textContent;
+                    navigator.clipboard.writeText(codeContent).then(() => {
+                        button.textContent = '已复制';
+                        setTimeout(() => { button.textContent = '复制'; }, 2000);
+                    });
+                }
+            });
+        });
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('.gallery-title').textContent;
+                alert(`您点击了: ${title}`);
+            });
+        });
+    </script>
+</body>
+</html>
